@@ -11,7 +11,7 @@
 #include "String.h"
 
 const std::string kGameExecName { "RichardBurnsRally_SSE.exe" };
-const std::chrono::duration<float> kCheckInterval { 2.f };
+const timing::seconds kCheckInterval { 2.f };
 
 ProcessManager& ProcessManager::getSingleton()
 {
