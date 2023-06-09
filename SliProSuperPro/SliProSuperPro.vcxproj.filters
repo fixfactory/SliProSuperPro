@@ -1,0 +1,125 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="External Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="External Files\PhysicsNG">
+      <UniqueIdentifier>{80b2c548-c9d6-4385-b14f-c0a2f859c796}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="External Files\hidapi">
+      <UniqueIdentifier>{84ef238f-a87b-4be7-9189-b734081765fd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="External Files\SLI-Pro">
+      <UniqueIdentifier>{fa16c34a-4fe6-4e58-a526-013197ebcd0f}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="hidapi\hid.c">
+      <Filter>External Files\hidapi</Filter>
+    </ClCompile>
+    <ClCompile Include="Application.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Network.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SLIProDevice.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Timing.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Log.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Telemetry.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Process.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Config.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="NGP.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Device.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Blackboard.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CommandLine.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="String.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="PhysicsNG\rbr.telemetry.data.TelemetryData.h">
+      <Filter>External Files\PhysicsNG</Filter>
+    </ClInclude>
+    <ClInclude Include="hidapi\hidapi.h">
+      <Filter>External Files\hidapi</Filter>
+    </ClInclude>
+    <ClInclude Include="SLI-Pro\SLI-Pro_samplecode.h">
+      <Filter>External Files\SLI-Pro</Filter>
+    </ClInclude>
+    <ClInclude Include="Network.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="NGP.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Process.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Application.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Libraries.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Timing.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SLIProDevice.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Log.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Telemetry.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Config.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Device.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Blackboard.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CommandLine.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Version.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="String.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
