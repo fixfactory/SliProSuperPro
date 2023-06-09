@@ -6,16 +6,18 @@
 
 #include "Timing.h"
 
-class ProcessManager
+class ProcessManager : public Updateable
 {
 public:
+    static ProcessManager& getSingleton();
+
     ProcessManager();
     ~ProcessManager();
 
     void init();
     void deinit();
 
-    void update(timing::seconds deltaTime);
+    void update(timing::seconds deltaTime) override;
 
     bool isGameRunning() const { return !m_gamePath.empty(); }
     const std::string& getGamePath() const { return m_gamePath;  }

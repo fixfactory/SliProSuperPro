@@ -13,6 +13,12 @@
 const std::string kGameExecName { "RichardBurnsRally_SSE.exe" };
 const std::chrono::duration<float> kCheckInterval { 2.f };
 
+ProcessManager& ProcessManager::getSingleton()
+{
+    static ProcessManager s_singleton;
+    return s_singleton;
+}
+
 ProcessManager::ProcessManager()
 {
 
@@ -25,12 +31,13 @@ ProcessManager::~ProcessManager()
 
 void ProcessManager::init()
 {
-
+    TimingManager::getSingleton().registerUpdateable(this);
 }
 
 void ProcessManager::deinit()
 {
     blackboard::gamePath.clear();
+    TimingManager::getSingleton().unregisterUpdateable(this);
 }
 
 void ProcessManager::update(timing::seconds deltaTime)

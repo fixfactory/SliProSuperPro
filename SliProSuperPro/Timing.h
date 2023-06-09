@@ -1,6 +1,7 @@
 #pragma once
 
 #include <chrono>
+#include <vector>
 
 namespace timing
 {
@@ -10,10 +11,35 @@ namespace timing
     constexpr FrameDuration kMinFrameTime{ 1 };
     constexpr std::chrono::seconds kMaxFrameTime{ 2 };
     constexpr std::chrono::milliseconds kMinWaitTime{ 1 };
-
-    extern seconds frameTime;
-    extern seconds elapsedTime;
-    extern int frameNumber;
-
-    void preciseSleep(std::chrono::duration<float> duration);
 }
+
+class Updateable
+{
+public:
+    virtual void update(timing::seconds deltaTime) = 0;
+};
+
+class TimingManager
+{
+public:
+    static TimingManager& getSingleton();
+
+    TimingManager();
+    ~TimingManager();
+
+    void init();
+    void deinit();
+
+    void registerUpdateable(Updateable *updateadle);
+    void unregisterUpdateable(Updateable* updateadle);
+
+    void run();
+
+private:
+    void preciseSleep(timing::seconds duration) const;
+
+    std::vector<Updateable*> m_updateables;
+    int m_frameNumber{ 0 };
+    timing::seconds m_deltaTime{ 0.f };
+    timing::seconds m_elapsedTime{ 0.f };
+};

@@ -6,6 +6,12 @@
 
 static const std::chrono::duration<float> kDataTimeout{ 2.f };
 
+TelemetryManager& TelemetryManager::getSingleton()
+{
+    static TelemetryManager s_singleton;
+    return s_singleton;
+}
+
 TelemetryManager::TelemetryManager()
 {
 
@@ -18,6 +24,8 @@ TelemetryManager::~TelemetryManager()
 
 void TelemetryManager::init()
 {
+    TimingManager::getSingleton().registerUpdateable(this);
+
     m_session = new WSASession();
     m_udpSocket = new UDPSocket();
 
@@ -37,6 +45,8 @@ void TelemetryManager::init()
 
 void TelemetryManager::deinit()
 {
+    TimingManager::getSingleton().unregisterUpdateable(this);
+
     delete m_udpSocket;
     m_udpSocket = nullptr;
 

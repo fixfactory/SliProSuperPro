@@ -132,7 +132,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Application.cpp" />
     <ClCompile Include="Blackboard.cpp" />
     <ClCompile Include="CommandLine.cpp" />
     <ClCompile Include="Config.cpp" />
@@ -149,7 +148,6 @@
     <ClCompile Include="Timing.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Application.h" />
     <ClInclude Include="Blackboard.h" />
     <ClInclude Include="CommandLine.h" />
     <ClInclude Include="Config.h" />

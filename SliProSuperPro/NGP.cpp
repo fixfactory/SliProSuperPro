@@ -22,6 +22,12 @@ namespace ngp
     };
 }
 
+NgpManager& NgpManager::getSingleton()
+{
+    static NgpManager s_singleton;
+    return s_singleton;
+}
+
 NgpManager::NgpManager()
 {
 
@@ -34,12 +40,14 @@ NgpManager::~NgpManager()
 
 void NgpManager::init()
 {
+    TimingManager::getSingleton().registerUpdateable(this);
     memset(&m_carPhysics.controlUnit, 0, sizeof(m_carPhysics.controlUnit));
     blackboard::carPhysics = &m_carPhysics;
 }
 
 void NgpManager::deinit()
 {
+    TimingManager::getSingleton().unregisterUpdateable(this);
     blackboard::carPhysics = nullptr;
 }
 

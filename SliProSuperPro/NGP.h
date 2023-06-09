@@ -29,16 +29,18 @@ namespace ngp
     };
 }
 
-class NgpManager
+class NgpManager : public Updateable
 {
 public:
+    static NgpManager& getSingleton();
+
     NgpManager();
     ~NgpManager();
 
     void init();
     void deinit();
 
-    void update(timing::seconds deltaTime);
+    void update(timing::seconds deltaTime) override;
 
 private:
     void readCommon(unsigned int carIndex, const std::string& gamePath);

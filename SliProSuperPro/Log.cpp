@@ -38,8 +38,8 @@ void LogManager::deinit()
 
 LogManager& LogManager::getSingleton()
 {
-    static LogManager s_logManager;
-    return s_logManager;
+    static LogManager s_singleton;
+    return s_singleton;
 }
 
 void LogManager::info(const char* format, ...)

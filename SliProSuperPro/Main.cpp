@@ -6,9 +6,12 @@
 #include "Version.h"
 #include "Log.h"
 #include "CommandLine.h"
-#include "Application.h"
 #include "Timing.h"
 #include "Config.h"
+#include "Process.h"
+#include "Device.h"
+#include "NGP.h"
+#include "Telemetry.h"
 
 std::atomic<bool> g_programShouldExit = false;
 constexpr DWORD kProgramCloseTimeoutMs = 2000;
@@ -49,56 +52,25 @@ int main(int argc, char* argv[])
         return -1;
     }
 
-    Application app;
-    app.init();
-
-    timing::seconds deltaTime = std::chrono::duration_cast<timing::seconds>(timing::kMinFrameTime);
+    TimingManager::getSingleton().init();
+    TelemetryManager::getSingleton().init();
+    ProcessManager::getSingleton().init();
+    NgpManager::getSingleton().init();
+    DeviceManager::getSingleton().init();
 
     while (!g_programShouldExit.load())
     {
-        auto before = std::chrono::steady_clock::now();
-        app.update(deltaTime);
-
-        timing::seconds appTime = std::chrono::steady_clock::now() - before;
-        timing::seconds waitTime{ 0.f };
-
-        deltaTime = appTime;
-        if (deltaTime < timing::kMinFrameTime)
-        {
-            waitTime = timing::kMinFrameTime - deltaTime - timing::kMinWaitTime;
-            if (waitTime >= timing::kMinWaitTime)
-            {
-                timing::preciseSleep(waitTime);
-            }
-            else
-            {
-                waitTime = timing::seconds{ 0.f };
-            }
-            deltaTime = std::chrono::steady_clock::now() - before;
-        }
-
-        if (deltaTime > timing::kMaxFrameTime)
-        {
-            deltaTime = timing::kMaxFrameTime;
-        }
-
-        timing::elapsedTime += deltaTime;
-        timing::frameTime = deltaTime;
-        timing::frameNumber++;
-
-        if (config::debugTiming)
-        {
-            LOG_INFO("Frame %i, appTime %.3f, waitTime %.3f, frameTime %.3f, elapsedTime %.3f\n",
-                timing::frameNumber,
-                appTime.count(),
-                waitTime.count(),
-                timing::frameTime.count(),
-                timing::elapsedTime.count());
-        }
+        TimingManager::getSingleton().run();
     }
     
     LOG_INFO("Program terminating...");
-    app.deinit();
-    LogManager::getSingleton().deinit();
+
+    DeviceManager::getSingleton().init();
+    NgpManager::getSingleton().init();
+    ProcessManager::getSingleton().init();
+    TelemetryManager::getSingleton().init();
+    TimingManager::getSingleton().deinit();
+    LogManager::getSingleton().deinit();\
+
     return 0;
 }

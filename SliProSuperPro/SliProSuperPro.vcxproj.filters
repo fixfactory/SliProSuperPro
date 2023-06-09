@@ -26,9 +26,6 @@
     <ClCompile Include="hidapi\hid.c">
       <Filter>External Files\hidapi</Filter>
     </ClCompile>
-    <ClCompile Include="Application.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Network.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -83,9 +80,6 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="Process.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Application.h">
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="Libraries.h">

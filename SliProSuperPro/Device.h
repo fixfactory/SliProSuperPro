@@ -6,16 +6,18 @@
 
 class SLIProDevice;
 
-class DeviceManager
+class DeviceManager : public Updateable
 {
 public:
+    static DeviceManager& getSingleton();
+
     DeviceManager();
     ~DeviceManager();
 
     void init();
     void deinit();
 
-    void update(timing::seconds deltaTime);
+    void update(timing::seconds deltaTime) override;
 
 private:
     using time_point = std::chrono::steady_clock::time_point;

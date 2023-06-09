@@ -14,6 +14,12 @@ constexpr float kStalledBlinkHz = 8.f;
 constexpr float kStalledRPM = 750.f;
 const std::chrono::milliseconds kStartupAnimationDuration { 2000 };
 
+DeviceManager& DeviceManager::getSingleton()
+{
+    static DeviceManager s_singleton;
+    return s_singleton;
+}
+
 DeviceManager::DeviceManager()
 {
 
@@ -26,12 +32,16 @@ DeviceManager::~DeviceManager()
 
 void DeviceManager::init()
 {
+    TimingManager::getSingleton().registerUpdateable(this);
+
     m_sliPro = new SLIProDevice();
     m_sliPro->init();
 }
 
 void DeviceManager::deinit()
 {
+    TimingManager::getSingleton().unregisterUpdateable(this);
+
     if (m_sliPro->isOpen())
     {
         // Write a clear before closing so we don't leave the device illuminated.
