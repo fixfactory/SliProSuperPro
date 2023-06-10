@@ -160,7 +160,6 @@
     <ClInclude Include="PhysicsNG\rbr.telemetry.data.TelemetryData.h" />
     <ClInclude Include="Process.h" />
     <ClInclude Include="SLIProDevice.h" />
-    <ClInclude Include="SLI-Pro\SLI-Pro_samplecode.h" />
     <ClInclude Include="String.h" />
     <ClInclude Include="Telemetry.h" />
     <ClInclude Include="Timing.h" />

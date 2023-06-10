@@ -7,7 +7,6 @@
 #include "hidapi/hidapi.h"
 
 constexpr size_t kMaxStr = 1024;
-constexpr unsigned int kMaxBrightness = 254;
 
 SLIProDevice::SLIProDevice()
 {
@@ -25,11 +24,11 @@ void SLIProDevice::init()
     int res = hid_init();
 
     memset(&m_boardGlobal, 0, sizeof(m_boardGlobal));
-    m_boardGlobal.ReportType = 1;
+    m_boardGlobal.reportType = 1;
 
     memset(&m_boardBrightness, 0, sizeof(m_boardBrightness));
-    m_boardBrightness.ReportType = 2;
-    m_boardBrightness.GlobalBrightness = kMaxBrightness;
+    m_boardBrightness.reportType = 2;
+    m_boardBrightness.globalBrightness = sliPro::kMaxBrightness;
 }
 
 void SLIProDevice::deinit()
@@ -43,7 +42,7 @@ void SLIProDevice::open()
     // Open the device using the VID & PID.
     // If multiple SLI-Pro devices are connected, only the first one
     // will be used.
-    m_handle = hid_open(kSLI_PRO_vendorId, kSLI_PRO_productId, NULL);
+    m_handle = hid_open(sliPro::kVendorId, sliPro::kProductId, NULL);
     if (!m_handle)
     {
         return;
@@ -93,23 +92,23 @@ bool SLIProDevice::isOpen()
 
 void SLIProDevice::clear()
 {
-    m_boardGlobal.Gear = ' ';
-    memset(&m_boardGlobal.RPMLED, 0, sizeof(m_boardGlobal.RPMLED));
+    m_boardGlobal.gear = ' ';
+    memset(&m_boardGlobal.rpmLED, 0, sizeof(m_boardGlobal.rpmLED));
     memset(&m_boardGlobal.LED, 0, sizeof(m_boardGlobal.LED));
-    memset(&m_boardGlobal.Left7Segs, ' ', sizeof(m_boardGlobal.Left7Segs));
-    memset(&m_boardGlobal.Right7Segs, ' ', sizeof(m_boardGlobal.Right7Segs));
+    memset(&m_boardGlobal.leftSegments, ' ', sizeof(m_boardGlobal.leftSegments));
+    memset(&m_boardGlobal.rightSegments, ' ', sizeof(m_boardGlobal.rightSegments));
     m_boardGlobalChanged = true;
 }
 
 void SLIProDevice::setBrightness(int brightness)
 {
-    m_boardBrightness.GlobalBrightness = (unsigned char)(brightness * kMaxBrightness / 100);
+    m_boardBrightness.globalBrightness = (unsigned char)(brightness * sliPro::kMaxBrightness / 100);
     m_boardBrightnessChanged = true;
 }
 
 void SLIProDevice::setGear(unsigned char gear)
 {
-    m_boardGlobal.Gear = gear;
+    m_boardGlobal.gear = gear;
     m_boardGlobalChanged = true;
 }
 
@@ -119,7 +118,7 @@ void SLIProDevice::setRpmLed(float percent)
     for (int i = 0; i < 13; ++i)
     {
         unsigned char isOn = i < count ? 1 : 0;
-        m_boardGlobal.RPMLED[i] = isOn;
+        m_boardGlobal.rpmLED[i] = isOn;
     }
 
     m_boardGlobalChanged = true;
@@ -137,7 +136,7 @@ void SLIProDevice::setLeftString(const char* string)
     int len = std::min<int>((int)strlen(string), 6);
     for (int i = 0; i < len; ++i)
     {
-        m_boardGlobal.Left7Segs[i] = string[i];
+        m_boardGlobal.leftSegments[i] = string[i];
     }
 
     m_boardGlobalChanged = true;
@@ -148,7 +147,7 @@ void SLIProDevice::setRightString(const char* string)
     int len = std::min<int>((int)strlen(string), 6);
     for (int i = 0; i < len; ++i)
     {
-        m_boardGlobal.Right7Segs[i] = string[i];
+        m_boardGlobal.rightSegments[i] = string[i];
     }
 
     m_boardGlobalChanged = true;

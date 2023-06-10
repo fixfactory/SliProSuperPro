@@ -15,9 +15,6 @@
     <Filter Include="External Files\hidapi">
       <UniqueIdentifier>{84ef238f-a87b-4be7-9189-b734081765fd}</UniqueIdentifier>
     </Filter>
-    <Filter Include="External Files\SLI-Pro">
-      <UniqueIdentifier>{fa16c34a-4fe6-4e58-a526-013197ebcd0f}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -69,9 +66,6 @@
     </ClInclude>
     <ClInclude Include="hidapi\hidapi.h">
       <Filter>External Files\hidapi</Filter>
-    </ClInclude>
-    <ClInclude Include="SLI-Pro\SLI-Pro_samplecode.h">
-      <Filter>External Files\SLI-Pro</Filter>
     </ClInclude>
     <ClInclude Include="Network.h">
       <Filter>Source Files</Filter>

@@ -10,8 +10,8 @@
 #include "Blackboard.h"
 #include "String.h"
 
-const std::string kGameExecName { "RichardBurnsRally_SSE.exe" };
-const timing::seconds kCheckInterval { 2.f };
+const std::string kGameExecName{ "RichardBurnsRally_SSE.exe" };
+const timing::seconds kCheckInterval{ 2.f };
 
 ProcessManager& ProcessManager::getSingleton()
 {
