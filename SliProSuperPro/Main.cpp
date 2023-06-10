@@ -1,5 +1,3 @@
-#include <iostream>
-#include <chrono>
 #include <Windows.h>
 
 #include "Libraries.h"
@@ -65,12 +63,12 @@ int main(int argc, char* argv[])
     
     LOG_INFO("Program terminating...");
 
-    DeviceManager::getSingleton().init();
-    NgpManager::getSingleton().init();
-    ProcessManager::getSingleton().init();
-    TelemetryManager::getSingleton().init();
+    DeviceManager::getSingleton().deinit();
+    NgpManager::getSingleton().deinit();
+    ProcessManager::getSingleton().deinit();
+    TelemetryManager::getSingleton().deinit();
     TimingManager::getSingleton().deinit();
-    LogManager::getSingleton().deinit();\
+    LogManager::getSingleton().deinit();
 
     return 0;
 }
