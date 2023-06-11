@@ -187,7 +187,7 @@ void DeviceManager::setState(State state)
 {
     if (m_state != state)
     {
-        // Clear when changing state so there isn't left-over LEDs turned on.
+        // Clear when changing state so there isn't any left-over LEDs turned on.
         m_sliPro->clear();
     }
     m_state = state;
