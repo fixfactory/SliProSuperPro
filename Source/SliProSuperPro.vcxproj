@@ -106,6 +106,7 @@
       <ConformanceMode>true</ConformanceMode>
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalIncludeDirectories>..\External;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -123,6 +124,7 @@
       <ConformanceMode>true</ConformanceMode>
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalIncludeDirectories>..\External;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -132,11 +134,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\External\hidapi\hid.c" />
     <ClCompile Include="Blackboard.cpp" />
     <ClCompile Include="CommandLine.cpp" />
     <ClCompile Include="Config.cpp" />
     <ClCompile Include="Device.cpp" />
-    <ClCompile Include="hidapi\hid.c" />
     <ClCompile Include="Log.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Network.cpp" />
@@ -148,16 +150,16 @@
     <ClCompile Include="Timing.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\External\hidapi\hidapi.h" />
+    <ClInclude Include="..\External\PhysicsNG\rbr.telemetry.data.TelemetryData.h" />
     <ClInclude Include="Blackboard.h" />
     <ClInclude Include="CommandLine.h" />
     <ClInclude Include="Config.h" />
     <ClInclude Include="Device.h" />
-    <ClInclude Include="hidapi\hidapi.h" />
     <ClInclude Include="Libraries.h" />
     <ClInclude Include="Log.h" />
     <ClInclude Include="Network.h" />
     <ClInclude Include="NGP.h" />
-    <ClInclude Include="PhysicsNG\rbr.telemetry.data.TelemetryData.h" />
     <ClInclude Include="Process.h" />
     <ClInclude Include="SLIProDevice.h" />
     <ClInclude Include="String.h" />

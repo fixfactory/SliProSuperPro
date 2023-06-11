@@ -20,9 +20,6 @@
     <ClCompile Include="Main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="hidapi\hid.c">
-      <Filter>External Files\hidapi</Filter>
-    </ClCompile>
     <ClCompile Include="Network.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -59,14 +56,11 @@
     <ClCompile Include="String.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\External\hidapi\hid.c">
+      <Filter>External Files\hidapi</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="PhysicsNG\rbr.telemetry.data.TelemetryData.h">
-      <Filter>External Files\PhysicsNG</Filter>
-    </ClInclude>
-    <ClInclude Include="hidapi\hidapi.h">
-      <Filter>External Files\hidapi</Filter>
-    </ClInclude>
     <ClInclude Include="Network.h">
       <Filter>Source Files</Filter>
     </ClInclude>
@@ -108,6 +102,12 @@
     </ClInclude>
     <ClInclude Include="String.h">
       <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\External\hidapi\hidapi.h">
+      <Filter>External Files\hidapi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\External\PhysicsNG\rbr.telemetry.data.TelemetryData.h">
+      <Filter>External Files\PhysicsNG</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
