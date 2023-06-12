@@ -53,12 +53,17 @@ void NgpManager::deinit()
 
 void NgpManager::update(timing::seconds deltaTime)
 {
+    // Read the car physics file when we start receiving telemetry.
     if (!m_wasReceivingTelemetry
         && blackboard::telemetryData != nullptr
         && !blackboard::gamePath.empty())
     {
-        readCommon(blackboard::telemetryData->car_.index_, blackboard::gamePath);
         m_wasReceivingTelemetry = true;
+        readCommon(blackboard::telemetryData->car_.index_, blackboard::gamePath);
+    }
+    else if (m_wasReceivingTelemetry && blackboard::telemetryData == nullptr)
+    {
+        m_wasReceivingTelemetry = false;
     }
 }
 
@@ -66,9 +71,11 @@ void NgpManager::readCommon(unsigned int carIndex, const std::string& gamePath)
 {
     memset(&m_carPhysics, 0, sizeof(m_carPhysics));
 
+    LOG_INFO("Reading physics file for car index %u", carIndex);
+
     if (carIndex >= ngp::kFolderNameCount)
     {
-        LOG_ERROR("Invalid car index %ui", carIndex);
+        LOG_ERROR("Invalid car index %u", carIndex);
         return;
     }
 
