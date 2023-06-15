@@ -9,8 +9,8 @@
 
 namespace ngp
 {
-const char* kFolderNames[kFolderNameCount] = { "c_xsara", "h_accent", "mg_zr",    "m_lancer",
-                                               "p_206",   "s_i2003",  "t_coroll", "s_i2000" };
+    const char* kFolderNames[kFolderNameCount] = { "c_xsara", "h_accent", "mg_zr",    "m_lancer",
+                                                   "p_206",   "s_i2003",  "t_coroll", "s_i2000" };
 }
 
 NgpManager& NgpManager::getSingleton()
