@@ -6,28 +6,28 @@
 
 namespace ngp
 {
-    constexpr unsigned int kFolderNameCount = 8;
-    extern const char* kFolderNames[kFolderNameCount];
-    constexpr unsigned int kGearCount = 8;
+constexpr unsigned int kFolderNameCount = 8;
+extern const char* kFolderNames[kFolderNameCount];
+constexpr unsigned int kGearCount = 8;
 
-    struct Drive
-    {
-        int numberOfGears;
-    };
+struct Drive
+{
+    int numberOfGears;
+};
 
-    struct ControlUnit
-    {
-        float gearUpShift[kGearCount];
-        float gearDownShift[kGearCount];
-        float rpmLimit;
-    };
+struct ControlUnit
+{
+    float gearUpShift[kGearCount];
+    float gearDownShift[kGearCount];
+    float rpmLimit;
+};
 
-    struct CarPhysics
-    {
-        Drive drive;
-        ControlUnit controlUnit;
-    };
-}
+struct CarPhysics
+{
+    Drive drive;
+    ControlUnit controlUnit;
+};
+} // namespace ngp
 
 class NgpManager : public Updateable
 {

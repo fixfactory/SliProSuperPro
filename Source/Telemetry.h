@@ -26,8 +26,15 @@ public:
     void update(timing::seconds deltaTime) override;
     void sleep(float sleepTime);
 
-    bool isReceivingTelemetry() const { return m_receivingTelemetry; }
-    const TelemetryData* getTelemetryData() const { return &m_telemetryData; }
+    bool isReceivingTelemetry() const
+    {
+        return m_receivingTelemetry;
+    }
+
+    const TelemetryData* getTelemetryData() const
+    {
+        return &m_telemetryData;
+    }
 
 private:
     void recvTelemetry();
@@ -37,7 +44,7 @@ private:
     std::vector<char> m_recvBuf;
     bool m_receivingTelemetry = false;
     TelemetryData m_telemetryData = {};
-    
+
     using time_point = std::chrono::steady_clock::time_point;
     time_point m_lastDataTime = {};
 };

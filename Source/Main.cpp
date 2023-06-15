@@ -21,13 +21,12 @@ BOOL consoleCtrlHandler(DWORD ctrlType)
     case CTRL_C_EVENT:
     case CTRL_CLOSE_EVENT:
     case CTRL_LOGOFF_EVENT:
-    case CTRL_SHUTDOWN_EVENT:
-    {
+    case CTRL_SHUTDOWN_EVENT: {
         // Sleep for a few seconds to let the application finish on the main thread.
         // After this returns the program will be terminated if it hasn't already.
         g_programShouldExit = true;
         Sleep(kProgramCloseTimeoutMs);
-        return(TRUE);
+        return (TRUE);
     }
 
     default:
@@ -60,7 +59,7 @@ int main(int argc, char* argv[])
     {
         TimingManager::getSingleton().run();
     }
-    
+
     LOG_INFO("Program terminating...");
 
     DeviceManager::getSingleton().deinit();

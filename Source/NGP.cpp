@@ -9,17 +9,8 @@
 
 namespace ngp
 {
-    const char* kFolderNames[kFolderNameCount] =
-    {
-        "c_xsara",
-        "h_accent",
-        "mg_zr",
-        "m_lancer",
-        "p_206",
-        "s_i2003",
-        "t_coroll",
-        "s_i2000"
-    };
+const char* kFolderNames[kFolderNameCount] = { "c_xsara", "h_accent", "mg_zr",    "m_lancer",
+                                               "p_206",   "s_i2003",  "t_coroll", "s_i2000" };
 }
 
 NgpManager& NgpManager::getSingleton()
@@ -30,12 +21,10 @@ NgpManager& NgpManager::getSingleton()
 
 NgpManager::NgpManager()
 {
-
 }
 
 NgpManager::~NgpManager()
 {
-
 }
 
 void NgpManager::init()
@@ -54,9 +43,7 @@ void NgpManager::deinit()
 void NgpManager::update(timing::seconds deltaTime)
 {
     // Read the car physics file when we start receiving telemetry.
-    if (!m_wasReceivingTelemetry
-        && blackboard::telemetryData != nullptr
-        && !blackboard::gamePath.empty())
+    if (!m_wasReceivingTelemetry && blackboard::telemetryData != nullptr && !blackboard::gamePath.empty())
     {
         m_wasReceivingTelemetry = true;
         readCommon(blackboard::telemetryData->car_.index_, blackboard::gamePath);
@@ -69,9 +56,8 @@ void NgpManager::update(timing::seconds deltaTime)
 
 void NgpManager::readCommon(unsigned int carIndex, const std::string& gamePath)
 {
-    memset(&m_carPhysics, 0, sizeof(m_carPhysics));
-
     LOG_INFO("Reading physics file for car index %u", carIndex);
+    memset(&m_carPhysics, 0, sizeof(m_carPhysics));
 
     if (carIndex >= ngp::kFolderNameCount)
     {

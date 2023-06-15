@@ -21,12 +21,10 @@ ProcessManager& ProcessManager::getSingleton()
 
 ProcessManager::ProcessManager()
 {
-
 }
 
 ProcessManager::~ProcessManager()
 {
-
 }
 
 void ProcessManager::init()
@@ -58,7 +56,7 @@ void ProcessManager::update(timing::seconds deltaTime)
             LOG_INFO("Game closed");
             m_gamePath.clear();
             blackboard::gamePath.clear();
-        }        
+        }
         return;
     }
 
@@ -85,7 +83,8 @@ void ProcessManager::update(timing::seconds deltaTime)
 DWORD ProcessManager::findProcessId(const std::string& name) const
 {
     HANDLE snapshot = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, NULL);
-    if (snapshot == INVALID_HANDLE_VALUE) {
+    if (snapshot == INVALID_HANDLE_VALUE)
+    {
         return 0;
     }
 
@@ -126,7 +125,7 @@ std::string ProcessManager::findProcessPath(DWORD pid) const
     processHandle = OpenProcess(PROCESS_QUERY_INFORMATION | PROCESS_VM_READ, FALSE, pid);
     if (processHandle == NULL)
     {
-        return std::string{ };
+        return std::string{};
     }
 
     std::wstring fileName(MAX_PATH, 0);
@@ -137,10 +136,10 @@ std::string ProcessManager::findProcessPath(DWORD pid) const
     {
         return string::convertFromWide(fileName);
     }
-    catch (const std::exception &exception)
+    catch (const std::exception& exception)
     {
         LOG_ERROR(exception);
     }
 
-    return std::string{ };
+    return std::string{};
 }

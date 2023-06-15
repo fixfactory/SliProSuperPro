@@ -12,7 +12,7 @@
 constexpr float kShiftLightBlinkHz = 4.f;
 constexpr float kStalledBlinkHz = 8.f;
 constexpr float kStalledRPM = 750.f;
-const std::chrono::milliseconds kStartupAnimationDuration { 2000 };
+const std::chrono::milliseconds kStartupAnimationDuration{ 2000 };
 
 DeviceManager& DeviceManager::getSingleton()
 {
@@ -22,12 +22,10 @@ DeviceManager& DeviceManager::getSingleton()
 
 DeviceManager::DeviceManager()
 {
-
 }
 
 DeviceManager::~DeviceManager()
 {
-
 }
 
 void DeviceManager::init()
@@ -70,7 +68,7 @@ void DeviceManager::update(timing::seconds deltaTime)
             m_sliPro->clear();
             m_sliPro->setBrightness(config::brightness);
         }
-        
+
         auto openedDuration = std::chrono::steady_clock::now() - m_openedTime;
         if (openedDuration < kStartupAnimationDuration)
         {
@@ -143,7 +141,7 @@ void DeviceManager::setTelemetry()
     auto duration = std::chrono::steady_clock::now().time_since_epoch();
     auto milliseconds = std::chrono::duration_cast<std::chrono::milliseconds>(duration);
     if (rpm >= highRPM && !isReverse && !isLastGear)
-    {        
+    {
         int blinkSteps = (int)(milliseconds.count() / (500 / kShiftLightBlinkHz));
         isShiftLightOn = blinkSteps % 2;
     }

@@ -30,7 +30,7 @@ void TimingManager::deinit()
 {
 }
 
-void TimingManager::registerUpdateable(Updateable *updateable)
+void TimingManager::registerUpdateable(Updateable* updateable)
 {
     if (std::find(begin(m_updateables), end(m_updateables), updateable) != m_updateables.end())
     {
@@ -91,12 +91,8 @@ void TimingManager::run()
 
     if (config::debugTiming)
     {
-        LOG_INFO("Frame %i, updateTime %.3f, sleepTime %.3f, deltaTime %.3f, elapsedTime %.3f",
-            m_frameNumber,
-            updateTime.count(),
-            sleepTime.count(),
-            m_deltaTime.count(),
-            m_elapsedTime.count());
+        LOG_INFO("Frame %i, updateTime %.3f, sleepTime %.3f, deltaTime %.3f, elapsedTime %.3f", m_frameNumber,
+                 updateTime.count(), sleepTime.count(), m_deltaTime.count(), m_elapsedTime.count());
     }
 }
 

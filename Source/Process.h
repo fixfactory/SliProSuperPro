@@ -19,8 +19,15 @@ public:
 
     void update(timing::seconds deltaTime) override;
 
-    bool isGameRunning() const { return !m_gamePath.empty(); }
-    const std::string& getGamePath() const { return m_gamePath;  }
+    bool isGameRunning() const
+    {
+        return !m_gamePath.empty();
+    }
+
+    const std::string& getGamePath() const
+    {
+        return m_gamePath;
+    }
 
 private:
     DWORD findProcessId(const std::string& name) const;

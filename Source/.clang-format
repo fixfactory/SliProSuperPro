@@ -1,0 +1,8 @@
+# Format Style Options - Created with Clang Power Tools
+---
+BasedOnStyle: Microsoft
+AccessModifierOffset: -4
+Cpp11BracedListStyle: false
+DerivePointerAlignment: true
+SortIncludes: false
+...

@@ -4,6 +4,6 @@
 
 namespace string
 {
-    std::wstring convertToWide(const std::string& string);
-    std::string convertFromWide(const std::wstring& wideString);
-}
+std::wstring convertToWide(const std::string& string);
+std::string convertFromWide(const std::wstring& wideString);
+} // namespace string

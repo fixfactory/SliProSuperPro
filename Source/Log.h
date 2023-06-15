@@ -3,14 +3,11 @@
 #include <fstream>
 #include <system_error>
 
-#define LOG_INFO(format, ...) \
-LogManager::getSingleton().info(format, ##__VA_ARGS__);
+#define LOG_INFO(format, ...) LogManager::getSingleton().info(format, ##__VA_ARGS__);
 
-#define LOG_WARN(format, ...) \
-LogManager::getSingleton().warn(format, ##__VA_ARGS__);
+#define LOG_WARN(format, ...) LogManager::getSingleton().warn(format, ##__VA_ARGS__);
 
-#define LOG_ERROR(format, ...) \
-LogManager::getSingleton().error(format, ##__VA_ARGS__);
+#define LOG_ERROR(format, ...) LogManager::getSingleton().error(format, ##__VA_ARGS__);
 
 class LogManager
 {
@@ -28,6 +25,7 @@ public:
     void error(const char* format, ...);
     void error(const std::system_error& error);
     void error(const std::exception& exception);
+
 private:
     std::string getTimestamp() const;
 

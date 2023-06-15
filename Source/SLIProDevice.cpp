@@ -10,12 +10,10 @@ constexpr size_t kMaxStr = 1024;
 
 SLIProDevice::SLIProDevice()
 {
-
 }
 
 SLIProDevice::~SLIProDevice()
 {
-
 }
 
 void SLIProDevice::init()
@@ -168,7 +166,8 @@ bool SLIProDevice::write()
 
     if (m_boardBrightnessChanged)
     {
-        int res = hid_write(m_handle, reinterpret_cast<const unsigned char*>(&m_boardBrightness), sizeof(m_boardBrightness));
+        int res =
+            hid_write(m_handle, reinterpret_cast<const unsigned char*>(&m_boardBrightness), sizeof(m_boardBrightness));
         if (res < 0)
         {
             lost();

@@ -6,7 +6,7 @@
 
 static const std::chrono::duration<float> kDataTimeout{ 2.f };
 
-TelemetryManager& TelemetryManager::getSingleton()
+TelemetryManager &TelemetryManager::getSingleton()
 {
     static TelemetryManager s_singleton;
     return s_singleton;
@@ -14,12 +14,10 @@ TelemetryManager& TelemetryManager::getSingleton()
 
 TelemetryManager::TelemetryManager()
 {
-
 }
 
 TelemetryManager::~TelemetryManager()
 {
-
 }
 
 void TelemetryManager::init()
@@ -85,14 +83,14 @@ void TelemetryManager::recvTelemetry()
         auto time = std::chrono::steady_clock::now();
         while (m_udpSocket->hasData())
         {
-            m_udpSocket->recvData(m_recvBuf, fromAddr);         
+            m_udpSocket->recvData(m_recvBuf, fromAddr);
             if (m_recvBuf.size() != sizeof(TelemetryData))
             {
                 LOG_ERROR("Malformed TelemetryData (size %i)", m_recvBuf.size());
                 continue;
             }
-            
-            m_telemetryData = *reinterpret_cast<TelemetryData*>(m_recvBuf.data());
+
+            m_telemetryData = *reinterpret_cast<TelemetryData *>(m_recvBuf.data());
 
             if (!m_receivingTelemetry)
             {

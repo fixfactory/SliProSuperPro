@@ -24,7 +24,6 @@ WSASession::~WSASession()
     WSACleanup();
 }
 
-
 UDPSocket::UDPSocket()
 {
     m_socket = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
@@ -68,7 +67,10 @@ bool UDPSocket::hasData()
     FD_ZERO(&sockets);
     FD_SET(m_socket, &sockets);
 
-    struct timeval timeout { .tv_sec = 0, .tv_usec = 0 };
+    struct timeval timeout
+    {
+        .tv_sec = 0, .tv_usec = 0
+    };
 
     int ret = select(0, &sockets, NULL, NULL, &timeout);
     if (ret < 0)
@@ -78,12 +80,13 @@ bool UDPSocket::hasData()
     return ret > 0;
 }
 
-void UDPSocket::recvData(std::vector<char> &outData, sockaddr_in& outFromAddr)
+void UDPSocket::recvData(std::vector<char>& outData, sockaddr_in& outFromAddr)
 {
     int fromLen = sizeof(outFromAddr);
     int flags = 0;
 
-    int ret = recvfrom(m_socket, outData.data(), (int)outData.size(), flags, reinterpret_cast<SOCKADDR*>(&outFromAddr), &fromLen);
+    int ret = recvfrom(m_socket, outData.data(), (int)outData.size(), flags, reinterpret_cast<SOCKADDR*>(&outFromAddr),
+                       &fromLen);
     if (ret < 0)
     {
         throw std::system_error(WSAGetLastError(), std::system_category(), "recvfrom() failed");
@@ -115,7 +118,7 @@ void UDPSocket::sleep(float sleepTime)
 
     if (m_socket == INVALID_SOCKET)
     {
-        //std::this_thread::sleep_for(fsec{ seconds });
+        // std::this_thread::sleep_for(fsec{ seconds });
         DWORD msec = (DWORD)(sleepTime * 1000);
         SleepEx(msec, 0);
         return;
@@ -127,8 +130,7 @@ void UDPSocket::sleep(float sleepTime)
 
     struct timeval timeout
     {
-        .tv_sec = (long)sleepTime,
-        .tv_usec = ((long)(sleepTime * 1000) % 1000) * 1000
+        .tv_sec = (long)sleepTime, .tv_usec = ((long)(sleepTime * 1000) % 1000) * 1000
     };
 
     int ret = select(0, &sockets, NULL, NULL, &timeout);
