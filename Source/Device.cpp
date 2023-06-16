@@ -105,16 +105,19 @@ void DeviceManager::setStartupAnimation(std::chrono::milliseconds openedDuration
 void DeviceManager::setTelemetry()
 {
     const ngp::CarPhysics& car = *blackboard::carPhysics;
-    int gearIndex = std::clamp<int>(blackboard::telemetryData->control_.gear_, 0, ngp::kGearCount - 1);
-    float rpm = std::max<float>(blackboard::telemetryData->car_.engine_.rpm_, 0.f);
+    const int gearIndex = std::clamp<int>(blackboard::telemetryData->control_.gear_, 0, ngp::kGearCount - 1);
+    const float rpm = std::max<float>(blackboard::telemetryData->car_.engine_.rpm_, 0.f);
     float lowRPM = std::max<float>(car.controlUnit.gearDownShift[gearIndex], 0.f);
     float highRPM = std::max<float>(car.controlUnit.gearUpShift[gearIndex], 0.f);
-    bool isReverse = gearIndex == 0;
-    bool isNeutral = gearIndex == 1;
-    bool isLastGear = gearIndex == car.drive.numberOfGears - 1;
+    const bool isReverse = gearIndex == 0;
+    const bool isNeutral = gearIndex == 1;
+    const bool isLastGear = gearIndex == car.drive.numberOfGears - 1;
+
     if (isReverse || isNeutral)
     {
-        highRPM = car.controlUnit.rpmLimit;
+        // Use the shift points of 1st gear so the range feels familiar.
+        lowRPM = car.controlUnit.gearDownShift[2];
+        highRPM = car.controlUnit.gearUpShift[2];
     }
     else if (isLastGear)
     {
