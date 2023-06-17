@@ -10,6 +10,7 @@
 #include "Device.h"
 #include "NGP.h"
 #include "Telemetry.h"
+#include "Plugin.h"
 
 std::atomic<bool> g_programShouldExit = false;
 constexpr DWORD kProgramCloseTimeoutMs = 2000;
@@ -54,6 +55,7 @@ int main(int argc, char *argv[])
     ProcessManager::getSingleton().init();
     NgpManager::getSingleton().init();
     DeviceManager::getSingleton().init();
+    PluginManager::getSingleton().init();
 
     while (!g_programShouldExit.load())
     {
@@ -62,6 +64,7 @@ int main(int argc, char *argv[])
 
     LOG_INFO("Program terminating...");
 
+    PluginManager::getSingleton().deinit();
     DeviceManager::getSingleton().deinit();
     NgpManager::getSingleton().deinit();
     ProcessManager::getSingleton().deinit();

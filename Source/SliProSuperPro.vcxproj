@@ -149,6 +149,7 @@
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Network.cpp" />
     <ClCompile Include="NGP.cpp" />
+    <ClCompile Include="Plugin.cpp" />
     <ClCompile Include="Process.cpp" />
     <ClCompile Include="SLIProDevice.cpp" />
     <ClCompile Include="String.cpp" />
@@ -166,6 +167,7 @@
     <ClInclude Include="Log.h" />
     <ClInclude Include="Network.h" />
     <ClInclude Include="NGP.h" />
+    <ClInclude Include="Plugin.h" />
     <ClInclude Include="Process.h" />
     <ClInclude Include="SLIProDevice.h" />
     <ClInclude Include="String.h" />

@@ -59,6 +59,9 @@
     <ClCompile Include="..\External\hidapi\hid.c">
       <Filter>External Files\hidapi</Filter>
     </ClCompile>
+    <ClCompile Include="Plugin.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Network.h">
@@ -108,6 +111,9 @@
     </ClInclude>
     <ClInclude Include="..\External\PhysicsNG\rbr.telemetry.data.TelemetryData.h">
       <Filter>External Files\PhysicsNG</Filter>
+    </ClInclude>
+    <ClInclude Include="Plugin.h">
+      <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
