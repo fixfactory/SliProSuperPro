@@ -46,7 +46,7 @@ int main(int argc, char* argv[])
 
     if (!cmdLine::parseOptions(argc, argv))
     {
-        return -1;
+        return EXIT_FAILURE;
     }
 
     TimingManager::getSingleton().init();
@@ -69,5 +69,5 @@ int main(int argc, char* argv[])
     TimingManager::getSingleton().deinit();
     LogManager::getSingleton().deinit();
 
-    return 0;
+    return EXIT_SUCCESS;
 }
