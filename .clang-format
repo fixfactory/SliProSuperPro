@@ -3,9 +3,8 @@
 BasedOnStyle: Microsoft
 AccessModifierOffset: -4
 Cpp11BracedListStyle: false
-DerivePointerAlignment: true
-SortIncludes: false
-NamespaceIndentation: All
 DerivePointerAlignment: false
 PointerAlignment: Right
+SortIncludes: false
+NamespaceIndentation: All
 ...
