@@ -14,7 +14,7 @@ constexpr float kStalledBlinkHz = 8.f;
 constexpr float kStalledRPM = 750.f;
 const std::chrono::milliseconds kStartupAnimationDuration{ 2000 };
 
-DeviceManager& DeviceManager::getSingleton()
+DeviceManager &DeviceManager::getSingleton()
 {
     static DeviceManager s_singleton;
     return s_singleton;
@@ -104,7 +104,7 @@ void DeviceManager::setStartupAnimation(std::chrono::milliseconds openedDuration
 
 void DeviceManager::setTelemetry()
 {
-    const ngp::CarPhysics& car = *blackboard::carPhysics;
+    const ngp::CarPhysics &car = *blackboard::carPhysics;
     const int gearIndex = std::clamp<int>(blackboard::telemetryData->control_.gear_, 0, ngp::kGearCount - 1);
     const float rpm = std::max<float>(blackboard::telemetryData->car_.engine_.rpm_, 0.f);
     float lowRPM = std::max<float>(car.controlUnit.gearDownShift[gearIndex], 0.f);

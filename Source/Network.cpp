@@ -38,23 +38,23 @@ UDPSocket::~UDPSocket()
     closesocket(m_socket);
 }
 
-void UDPSocket::sendTo(const std::string& address, unsigned short port, const char* buffer, int len, int flags)
+void UDPSocket::sendTo(const std::string &address, unsigned short port, const char *buffer, int len, int flags)
 {
     sockaddr_in add;
     add.sin_family = AF_INET;
     add.sin_addr.s_addr = inet_addr(address.c_str());
     add.sin_port = htons(port);
 
-    int ret = sendto(m_socket, buffer, len, flags, reinterpret_cast<SOCKADDR*>(&add), sizeof(add));
+    int ret = sendto(m_socket, buffer, len, flags, reinterpret_cast<SOCKADDR *>(&add), sizeof(add));
     if (ret < 0)
     {
         throw std::system_error(WSAGetLastError(), std::system_category(), "sendto() failed");
     }
 }
 
-void UDPSocket::sendTo(sockaddr_in& address, const char* buffer, int len, int flags)
+void UDPSocket::sendTo(sockaddr_in &address, const char *buffer, int len, int flags)
 {
-    int ret = sendto(m_socket, buffer, len, flags, reinterpret_cast<SOCKADDR*>(&address), sizeof(address));
+    int ret = sendto(m_socket, buffer, len, flags, reinterpret_cast<SOCKADDR *>(&address), sizeof(address));
     if (ret < 0)
     {
         throw std::system_error(WSAGetLastError(), std::system_category(), "sendto() failed");
@@ -80,12 +80,12 @@ bool UDPSocket::hasData()
     return ret > 0;
 }
 
-void UDPSocket::recvData(std::vector<char>& outData, sockaddr_in& outFromAddr)
+void UDPSocket::recvData(std::vector<char> &outData, sockaddr_in &outFromAddr)
 {
     int fromLen = sizeof(outFromAddr);
     int flags = 0;
 
-    int ret = recvfrom(m_socket, outData.data(), (int)outData.size(), flags, reinterpret_cast<SOCKADDR*>(&outFromAddr),
+    int ret = recvfrom(m_socket, outData.data(), (int)outData.size(), flags, reinterpret_cast<SOCKADDR *>(&outFromAddr),
                        &fromLen);
     if (ret < 0)
     {
@@ -101,7 +101,7 @@ void UDPSocket::bindTo(unsigned short port)
     add.sin_addr.s_addr = htonl(INADDR_ANY);
     add.sin_port = htons(port);
 
-    int ret = bind(m_socket, reinterpret_cast<SOCKADDR*>(&add), sizeof(add));
+    int ret = bind(m_socket, reinterpret_cast<SOCKADDR *>(&add), sizeof(add));
     if (ret < 0)
     {
         throw std::system_error(WSAGetLastError(), std::system_category(), "bind() failed");

@@ -9,7 +9,7 @@ class SLIProDevice;
 class DeviceManager : public Updateable
 {
 public:
-    static DeviceManager& getSingleton();
+    static DeviceManager &getSingleton();
 
     DeviceManager();
     ~DeviceManager();
@@ -34,7 +34,7 @@ private:
     void setTelemetry();
     void setDashes();
     void setState(State state);
-    SLIProDevice* m_sliPro = nullptr;
+    SLIProDevice *m_sliPro = nullptr;
     time_point m_openedTime = {};
     State m_state = State::kIdle;
 };

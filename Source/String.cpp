@@ -5,7 +5,7 @@
 
 namespace string
 {
-    std::wstring convertToWide(const std::string& string)
+    std::wstring convertToWide(const std::string &string)
     {
         if (string.empty())
         {
@@ -23,7 +23,7 @@ namespace string
         return ret;
     }
 
-    std::string convertFromWide(const std::wstring& wideString)
+    std::string convertFromWide(const std::wstring &wideString)
     {
         if (wideString.empty())
         {

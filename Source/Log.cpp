@@ -36,13 +36,13 @@ void LogManager::deinit()
     }
 }
 
-LogManager& LogManager::getSingleton()
+LogManager &LogManager::getSingleton()
 {
     static LogManager s_singleton;
     return s_singleton;
 }
 
-void LogManager::info(const char* format, ...)
+void LogManager::info(const char *format, ...)
 {
     va_list args1;
     va_start(args1, format);
@@ -62,7 +62,7 @@ void LogManager::info(const char* format, ...)
     }
 }
 
-void LogManager::warn(const char* format, ...)
+void LogManager::warn(const char *format, ...)
 {
     va_list args1;
     va_start(args1, format);
@@ -82,7 +82,7 @@ void LogManager::warn(const char* format, ...)
     }
 }
 
-void LogManager::error(const char* format, ...)
+void LogManager::error(const char *format, ...)
 {
     va_list args1;
     va_start(args1, format);
@@ -102,12 +102,12 @@ void LogManager::error(const char* format, ...)
     }
 }
 
-void LogManager::error(const std::system_error& error)
+void LogManager::error(const std::system_error &error)
 {
     LOG_ERROR("%i %s", error.code().value(), error.what());
 }
 
-void LogManager::error(const std::exception& exception)
+void LogManager::error(const std::exception &exception)
 {
     LOG_ERROR("%s", exception.what());
 }

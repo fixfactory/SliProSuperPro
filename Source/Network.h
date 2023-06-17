@@ -20,10 +20,10 @@ public:
     UDPSocket();
     ~UDPSocket();
 
-    void sendTo(const std::string& address, unsigned short port, const char* buffer, int len, int flags = 0);
-    void sendTo(sockaddr_in& address, const char* buffer, int len, int flags = 0);
+    void sendTo(const std::string &address, unsigned short port, const char *buffer, int len, int flags = 0);
+    void sendTo(sockaddr_in &address, const char *buffer, int len, int flags = 0);
     bool hasData();
-    void recvData(std::vector<char>& outData, sockaddr_in& outFromAddr);
+    void recvData(std::vector<char> &outData, sockaddr_in &outFromAddr);
     void bindTo(unsigned short port);
     bool isBound()
     {

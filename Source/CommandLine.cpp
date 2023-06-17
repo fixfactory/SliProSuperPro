@@ -24,7 +24,7 @@ namespace cmdLine
         LOG_INFO("      Default: 75");
     }
 
-    std::string_view getOption(const std::vector<std::string_view>& args, const std::string_view& optionName)
+    std::string_view getOption(const std::vector<std::string_view> &args, const std::string_view &optionName)
     {
         for (auto it = args.begin(), end = args.end(); it != end; ++it)
         {
@@ -40,7 +40,7 @@ namespace cmdLine
         return "";
     }
 
-    bool hasOption(const std::vector<std::string_view>& args, const std::string_view& optionName)
+    bool hasOption(const std::vector<std::string_view> &args, const std::string_view &optionName)
     {
         for (auto it = args.begin(), end = args.end(); it != end; ++it)
         {
@@ -53,7 +53,7 @@ namespace cmdLine
         return false;
     }
 
-    bool parseOptions(int argc, char* argv[])
+    bool parseOptions(int argc, char *argv[])
     {
         // Security check.
         if (argc > 32)

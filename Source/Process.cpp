@@ -13,7 +13,7 @@
 const std::string kGameExecName{ "RichardBurnsRally_SSE.exe" };
 const timing::seconds kCheckInterval{ 2.f };
 
-ProcessManager& ProcessManager::getSingleton()
+ProcessManager &ProcessManager::getSingleton()
 {
     static ProcessManager s_singleton;
     return s_singleton;
@@ -80,7 +80,7 @@ void ProcessManager::update(timing::seconds deltaTime)
     LOG_INFO("Game path: %s", m_gamePath.c_str());
 }
 
-DWORD ProcessManager::findProcessId(const std::string& name) const
+DWORD ProcessManager::findProcessId(const std::string &name) const
 {
     HANDLE snapshot = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, NULL);
     if (snapshot == INVALID_HANDLE_VALUE)
@@ -110,7 +110,7 @@ DWORD ProcessManager::findProcessId(const std::string& name) const
             }
         }
     }
-    catch (const std::exception& exception)
+    catch (const std::exception &exception)
     {
         LOG_ERROR(exception);
     }
@@ -136,7 +136,7 @@ std::string ProcessManager::findProcessPath(DWORD pid) const
     {
         return string::convertFromWide(fileName);
     }
-    catch (const std::exception& exception)
+    catch (const std::exception &exception)
     {
         LOG_ERROR(exception);
     }

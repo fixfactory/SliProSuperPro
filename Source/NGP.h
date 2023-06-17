@@ -7,7 +7,7 @@
 namespace ngp
 {
     constexpr unsigned int kFolderNameCount = 8;
-    extern const char* kFolderNames[kFolderNameCount];
+    extern const char *kFolderNames[kFolderNameCount];
     constexpr unsigned int kGearCount = 8;
 
     struct Drive
@@ -32,7 +32,7 @@ namespace ngp
 class NgpManager : public Updateable
 {
 public:
-    static NgpManager& getSingleton();
+    static NgpManager &getSingleton();
 
     NgpManager();
     ~NgpManager();
@@ -43,7 +43,7 @@ public:
     void update(timing::seconds deltaTime) override;
 
 private:
-    void readCommon(unsigned int carIndex, const std::string& gamePath);
+    void readCommon(unsigned int carIndex, const std::string &gamePath);
 
     bool m_wasReceivingTelemetry = false;
     ngp::CarPhysics m_carPhysics = {};

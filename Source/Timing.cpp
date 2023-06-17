@@ -6,7 +6,7 @@
 #include "Log.h"
 #include "Config.h"
 
-TimingManager& TimingManager::getSingleton()
+TimingManager &TimingManager::getSingleton()
 {
     static TimingManager s_singleton;
     return s_singleton;
@@ -30,7 +30,7 @@ void TimingManager::deinit()
 {
 }
 
-void TimingManager::registerUpdateable(Updateable* updateable)
+void TimingManager::registerUpdateable(Updateable *updateable)
 {
     if (std::find(begin(m_updateables), end(m_updateables), updateable) != m_updateables.end())
     {
@@ -40,7 +40,7 @@ void TimingManager::registerUpdateable(Updateable* updateable)
     m_updateables.push_back(updateable);
 }
 
-void TimingManager::unregisterUpdateable(Updateable* updateable)
+void TimingManager::unregisterUpdateable(Updateable *updateable)
 {
     if (std::find(begin(m_updateables), end(m_updateables), updateable) == m_updateables.end())
     {

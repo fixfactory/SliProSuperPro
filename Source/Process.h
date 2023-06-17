@@ -9,7 +9,7 @@
 class ProcessManager : public Updateable
 {
 public:
-    static ProcessManager& getSingleton();
+    static ProcessManager &getSingleton();
 
     ProcessManager();
     ~ProcessManager();
@@ -24,13 +24,13 @@ public:
         return !m_gamePath.empty();
     }
 
-    const std::string& getGamePath() const
+    const std::string &getGamePath() const
     {
         return m_gamePath;
     }
 
 private:
-    DWORD findProcessId(const std::string& name) const;
+    DWORD findProcessId(const std::string &name) const;
     std::string findProcessPath(DWORD pid) const;
 
     std::string m_gamePath;

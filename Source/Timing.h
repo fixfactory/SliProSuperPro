@@ -22,7 +22,7 @@ public:
 class TimingManager
 {
 public:
-    static TimingManager& getSingleton();
+    static TimingManager &getSingleton();
 
     TimingManager();
     ~TimingManager();
@@ -30,15 +30,15 @@ public:
     void init();
     void deinit();
 
-    void registerUpdateable(Updateable* updateadle);
-    void unregisterUpdateable(Updateable* updateadle);
+    void registerUpdateable(Updateable *updateadle);
+    void unregisterUpdateable(Updateable *updateadle);
 
     void run();
 
 private:
     void preciseSleep(timing::seconds duration) const;
 
-    std::vector<Updateable*> m_updateables;
+    std::vector<Updateable *> m_updateables;
     int m_frameNumber{ 0 };
     timing::seconds m_deltaTime{ 0.f };
     timing::seconds m_elapsedTime{ 0.f };

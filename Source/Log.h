@@ -12,7 +12,7 @@
 class LogManager
 {
 public:
-    static LogManager& getSingleton();
+    static LogManager &getSingleton();
 
     LogManager();
     ~LogManager();
@@ -20,11 +20,11 @@ public:
     void init();
     void deinit();
 
-    void info(const char* format, ...);
-    void warn(const char* format, ...);
-    void error(const char* format, ...);
-    void error(const std::system_error& error);
-    void error(const std::exception& exception);
+    void info(const char *format, ...);
+    void warn(const char *format, ...);
+    void error(const char *format, ...);
+    void error(const std::system_error &error);
+    void error(const std::exception &exception);
 
 private:
     std::string getTimestamp() const;

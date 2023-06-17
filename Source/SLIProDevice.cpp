@@ -129,7 +129,7 @@ void SLIProDevice::setShiftLights(bool isOn)
     m_boardGlobalChanged = true;
 }
 
-void SLIProDevice::setLeftString(const char* string)
+void SLIProDevice::setLeftString(const char *string)
 {
     int len = std::min<int>((int)strlen(string), 6);
     for (int i = 0; i < len; ++i)
@@ -140,7 +140,7 @@ void SLIProDevice::setLeftString(const char* string)
     m_boardGlobalChanged = true;
 }
 
-void SLIProDevice::setRightString(const char* string)
+void SLIProDevice::setRightString(const char *string)
 {
     int len = std::min<int>((int)strlen(string), 6);
     for (int i = 0; i < len; ++i)
@@ -155,7 +155,7 @@ bool SLIProDevice::write()
 {
     if (m_boardGlobalChanged)
     {
-        int res = hid_write(m_handle, reinterpret_cast<const unsigned char*>(&m_boardGlobal), sizeof(m_boardGlobal));
+        int res = hid_write(m_handle, reinterpret_cast<const unsigned char *>(&m_boardGlobal), sizeof(m_boardGlobal));
         if (res < 0)
         {
             lost();
@@ -167,7 +167,7 @@ bool SLIProDevice::write()
     if (m_boardBrightnessChanged)
     {
         int res =
-            hid_write(m_handle, reinterpret_cast<const unsigned char*>(&m_boardBrightness), sizeof(m_boardBrightness));
+            hid_write(m_handle, reinterpret_cast<const unsigned char *>(&m_boardBrightness), sizeof(m_boardBrightness));
         if (res < 0)
         {
             lost();

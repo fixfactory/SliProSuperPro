@@ -34,7 +34,7 @@ BOOL consoleCtrlHandler(DWORD ctrlType)
     }
 }
 
-int main(int argc, char* argv[])
+int main(int argc, char *argv[])
 {
     LogManager::getSingleton().init();
     LOG_INFO("%s version %s", version::kName.c_str(), version::getString().c_str());

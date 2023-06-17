@@ -86,15 +86,15 @@ public:
     void setGear(unsigned char gear);
     void setRpmLed(float percent);
     void setShiftLights(bool isOn);
-    void setLeftString(const char* string);
-    void setRightString(const char* string);
+    void setLeftString(const char *string);
+    void setRightString(const char *string);
 
     bool write();
 
 private:
     void lost();
 
-    hid_device* m_handle = nullptr;
+    hid_device *m_handle = nullptr;
 
     sliPro::BoardGlobalOutput m_boardGlobal = {};
     bool m_boardGlobalChanged = true;

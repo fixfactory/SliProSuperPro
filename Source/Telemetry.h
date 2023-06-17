@@ -15,7 +15,7 @@ class UDPSocket;
 class TelemetryManager : public Updateable
 {
 public:
-    static TelemetryManager& getSingleton();
+    static TelemetryManager &getSingleton();
 
     TelemetryManager();
     ~TelemetryManager();
@@ -31,7 +31,7 @@ public:
         return m_receivingTelemetry;
     }
 
-    const TelemetryData* getTelemetryData() const
+    const TelemetryData *getTelemetryData() const
     {
         return &m_telemetryData;
     }
@@ -39,8 +39,8 @@ public:
 private:
     void recvTelemetry();
 
-    WSASession* m_session = nullptr;
-    UDPSocket* m_udpSocket = nullptr;
+    WSASession *m_session = nullptr;
+    UDPSocket *m_udpSocket = nullptr;
     std::vector<char> m_recvBuf;
     bool m_receivingTelemetry = false;
     TelemetryData m_telemetryData = {};

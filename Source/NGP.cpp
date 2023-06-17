@@ -9,11 +9,11 @@
 
 namespace ngp
 {
-    const char* kFolderNames[kFolderNameCount] = { "c_xsara", "h_accent", "mg_zr",    "m_lancer",
+    const char *kFolderNames[kFolderNameCount] = { "c_xsara", "h_accent", "mg_zr",    "m_lancer",
                                                    "p_206",   "s_i2003",  "t_coroll", "s_i2000" };
 }
 
-NgpManager& NgpManager::getSingleton()
+NgpManager &NgpManager::getSingleton()
 {
     static NgpManager s_singleton;
     return s_singleton;
@@ -54,7 +54,7 @@ void NgpManager::update(timing::seconds deltaTime)
     }
 }
 
-void NgpManager::readCommon(unsigned int carIndex, const std::string& gamePath)
+void NgpManager::readCommon(unsigned int carIndex, const std::string &gamePath)
 {
     LOG_INFO("Reading physics file for car index %u", carIndex);
     memset(&m_carPhysics, 0, sizeof(m_carPhysics));
