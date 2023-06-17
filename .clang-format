@@ -6,4 +6,6 @@ Cpp11BracedListStyle: false
 DerivePointerAlignment: true
 SortIncludes: false
 NamespaceIndentation: All
+DerivePointerAlignment: false
+PointerAlignment: Right
 ...
