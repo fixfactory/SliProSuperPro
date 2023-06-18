@@ -154,7 +154,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Shared\Log.h" />
-    <ClInclude Include="..\..\Shared\PluginData.h" />
+    <ClInclude Include="..\..\Shared\PluginInterface.h" />
     <ClInclude Include="..\..\Shared\StringHelper.h" />
   </ItemGroup>
   <ItemGroup>

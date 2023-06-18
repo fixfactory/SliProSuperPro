@@ -160,7 +160,7 @@
     <ClInclude Include="..\..\External\hidapi\hidapi.h" />
     <ClInclude Include="..\..\External\PhysicsNG\rbr.telemetry.data.TelemetryData.h" />
     <ClInclude Include="..\Shared\Log.h" />
-    <ClInclude Include="..\Shared\PluginData.h" />
+    <ClInclude Include="..\Shared\PluginInterface.h" />
     <ClInclude Include="..\Shared\StringHelper.h" />
     <ClInclude Include="Blackboard.h" />
     <ClInclude Include="CommandLine.h" />

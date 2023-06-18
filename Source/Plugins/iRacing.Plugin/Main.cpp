@@ -6,7 +6,7 @@
 #include <atomic>
 
 #include "Log.h"
-#include "PluginData.h"
+#include "PluginInterface.h"
 
 std::atomic<int> g_attachCount = 0;
 

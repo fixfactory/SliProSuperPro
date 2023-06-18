@@ -13,10 +13,10 @@
     <ClInclude Include="..\..\Shared\Log.h">
       <Filter>Shared Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Shared\PluginData.h">
+    <ClInclude Include="..\..\Shared\StringHelper.h">
       <Filter>Shared Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Shared\StringHelper.h">
+    <ClInclude Include="..\..\Shared\PluginInterface.h">
       <Filter>Shared Files</Filter>
     </ClInclude>
   </ItemGroup>
