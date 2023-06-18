@@ -28,6 +28,7 @@ public:
 
 private:
     std::string getTimestamp() const;
+    std::string getLogFileName() const;
 
     std::ofstream m_file;
 };

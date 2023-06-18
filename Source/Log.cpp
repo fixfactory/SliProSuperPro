@@ -1,13 +1,13 @@
 #include "Log.h"
 
+#include <Windows.h>
 #include <vector>
 #include <chrono>
 #include <stdio.h>
 #include <stdarg.h>
 #include <assert.h>
 #include <time.h>
-
-const std::string kLogFileName{ "SliProSuperPro.log" };
+#include <sstream>
 
 LogManager::LogManager()
 {
@@ -20,10 +20,11 @@ LogManager::~LogManager()
 void LogManager::init()
 {
     assert(!m_file.is_open());
-    m_file.open(kLogFileName, std::ios::out | std::ios::trunc);
+    std::string fileName{ getLogFileName() };
+    m_file.open(fileName, std::ios::out | std::ios::trunc);
     if (!m_file.is_open())
     {
-        LOG_ERROR("Failed to open log file %s", kLogFileName);
+        LOG_ERROR("Failed to open log file %s", fileName);
     }
 }
 
@@ -121,4 +122,22 @@ std::string LogManager::getTimestamp() const
     localtime_s(&buf, &in_time_t);
     timestamp << '[' << std::put_time(&buf, "%T") << ']';
     return timestamp.str();
+}
+
+std::string LogManager::getLogFileName() const
+{
+    char buf[MAX_PATH];
+    GetModuleFileNameA(nullptr, buf, MAX_PATH);
+    std::string fileName{ buf };
+
+    size_t pos = fileName.rfind(".");
+    if (pos != std::string::npos)
+    {
+        fileName.erase(pos, fileName.length() - pos);
+    }
+
+    std::stringstream stream;
+    stream << fileName << ".log";
+
+    return stream.str();
 }
