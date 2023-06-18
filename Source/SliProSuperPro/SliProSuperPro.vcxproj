@@ -142,6 +142,7 @@
   <ItemGroup>
     <ClCompile Include="..\..\External\hidapi\hid.c" />
     <ClCompile Include="..\Shared\Log.cpp" />
+    <ClCompile Include="..\Shared\StringHelper.cpp" />
     <ClCompile Include="Blackboard.cpp" />
     <ClCompile Include="CommandLine.cpp" />
     <ClCompile Include="Config.cpp" />
@@ -152,7 +153,6 @@
     <ClCompile Include="Plugin.cpp" />
     <ClCompile Include="Process.cpp" />
     <ClCompile Include="SLIProDevice.cpp" />
-    <ClCompile Include="String.cpp" />
     <ClCompile Include="Telemetry.cpp" />
     <ClCompile Include="Timing.cpp" />
   </ItemGroup>
@@ -160,6 +160,8 @@
     <ClInclude Include="..\..\External\hidapi\hidapi.h" />
     <ClInclude Include="..\..\External\PhysicsNG\rbr.telemetry.data.TelemetryData.h" />
     <ClInclude Include="..\Shared\Log.h" />
+    <ClInclude Include="..\Shared\PluginData.h" />
+    <ClInclude Include="..\Shared\StringHelper.h" />
     <ClInclude Include="Blackboard.h" />
     <ClInclude Include="CommandLine.h" />
     <ClInclude Include="Config.h" />
@@ -170,7 +172,6 @@
     <ClInclude Include="Plugin.h" />
     <ClInclude Include="Process.h" />
     <ClInclude Include="SLIProDevice.h" />
-    <ClInclude Include="String.h" />
     <ClInclude Include="Telemetry.h" />
     <ClInclude Include="Timing.h" />
     <ClInclude Include="Version.h" />

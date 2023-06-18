@@ -1,7 +1,7 @@
-#include "String.h"
-
-#include <stdexcept>
 #include <Windows.h>
+#include <stdexcept>
+
+#include "StringHelper.h"
 
 namespace string
 {

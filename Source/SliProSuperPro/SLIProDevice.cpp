@@ -2,7 +2,7 @@
 
 #include "SLIProDevice.h"
 #include "Log.h"
-#include "String.h"
+#include "StringHelper.h"
 
 #include "hidapi/hidapi.h"
 

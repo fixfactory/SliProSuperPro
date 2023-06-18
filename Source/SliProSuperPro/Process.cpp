@@ -8,7 +8,7 @@
 #include "Log.h"
 #include "Config.h"
 #include "Blackboard.h"
-#include "String.h"
+#include "StringHelper.h"
 
 const std::string kGameExecName{ "RichardBurnsRally_SSE.exe" };
 const timing::seconds kCheckInterval{ 2.f };

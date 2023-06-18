@@ -154,9 +154,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Shared\Log.h" />
+    <ClInclude Include="..\..\Shared\PluginData.h" />
+    <ClInclude Include="..\..\Shared\StringHelper.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Shared\Log.cpp" />
+    <ClCompile Include="..\..\Shared\StringHelper.cpp" />
     <ClCompile Include="Main.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

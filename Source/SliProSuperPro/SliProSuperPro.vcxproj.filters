@@ -53,9 +53,6 @@
     <ClCompile Include="CommandLine.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="String.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\External\hidapi\hid.c">
       <Filter>External Files\hidapi</Filter>
     </ClCompile>
@@ -63,6 +60,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\Shared\Log.cpp">
+      <Filter>Shared Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Shared\StringHelper.cpp">
       <Filter>Shared Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -103,9 +103,6 @@
     <ClInclude Include="Version.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="String.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\External\hidapi\hidapi.h">
       <Filter>External Files\hidapi</Filter>
     </ClInclude>
@@ -116,6 +113,12 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="..\Shared\Log.h">
+      <Filter>Shared Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Shared\PluginData.h">
+      <Filter>Shared Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Shared\StringHelper.h">
       <Filter>Shared Files</Filter>
     </ClInclude>
   </ItemGroup>

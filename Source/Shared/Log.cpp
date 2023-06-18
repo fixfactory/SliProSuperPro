@@ -1,6 +1,5 @@
-#include "Log.h"
-
 #include <Windows.h>
+#include <string>
 #include <vector>
 #include <chrono>
 #include <stdio.h>
@@ -8,6 +7,9 @@
 #include <assert.h>
 #include <time.h>
 #include <sstream>
+
+#include "Log.h"
+#include "StringHelper.h"
 
 LogManager::LogManager()
 {
@@ -126,9 +128,9 @@ std::string LogManager::getTimestamp() const
 
 std::string LogManager::getLogFileName() const
 {
-    char buf[MAX_PATH];
-    GetModuleFileNameA(nullptr, buf, MAX_PATH);
-    std::string fileName{ buf };
+    wchar_t buf[MAX_PATH];
+    GetModuleFileName(nullptr, buf, MAX_PATH);
+    std::string fileName{ string::convertFromWide(buf) };
 
     size_t pos = fileName.rfind(".");
     if (pos != std::string::npos)

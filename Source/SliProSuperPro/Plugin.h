@@ -5,11 +5,15 @@
 
 #include "Timing.h"
 
-typedef int(__stdcall *GetPluginVersion)();
+typedef int(__stdcall *GetPluginInterfaceVersion)();
+typedef int(__stdcall *GetPluginDataVersion)();
 
 struct Plugin
 {
-    std::string execName = { };
+    HINSTANCE library{ nullptr };
+    std::string path{ };
+    int interfaceVersion{ 0 };
+    int dataVersion{ 0 };
 };
 
 class PluginManager : public Updateable
@@ -26,7 +30,8 @@ public:
     void update(timing::seconds deltaTime) override;
 
  private:
-    void findPlugins();
+    void loadPlugins();
+    void unloadPlugins();
 
-    std::vector<Plugin> m_plugins;
+    std::vector<Plugin *> m_plugins;
 };
