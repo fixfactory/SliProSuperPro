@@ -3,6 +3,11 @@
 
 #include <string>
 #include <iostream>
+#include <atomic>
+
+#include "Log.h"
+
+std::atomic<int> g_attachCount = 0;
 
 BOOL APIENTRY DllMain(HMODULE hModule, DWORD ul_reason_for_call, LPVOID lpReserved)
 {
@@ -10,11 +15,27 @@ BOOL APIENTRY DllMain(HMODULE hModule, DWORD ul_reason_for_call, LPVOID lpReserv
     {
     case DLL_PROCESS_ATTACH:
     case DLL_THREAD_ATTACH:
+        // Initialize library the first time it is attached.
+        // operator++ on atomic is thread-safe.
+        if (g_attachCount++ == 0)
+        {
+            LogManager::getSingleton().init();
+            LOG_INFO("Loaded iRacing Plugin version 0.1.0");
+        }
+        break;
+
     case DLL_THREAD_DETACH:
     case DLL_PROCESS_DETACH:
+        // Deinitialize library the last time it detached.
+        // operator-- on atomic is thread-safe.
+        if (--g_attachCount == 0)
+        {
+            LOG_INFO("iRacing Plugin unloaded");
+            LogManager::getSingleton().deinit();
+        }
         break;
     }
-    printf("DllMain() called\n");
+
     return TRUE;
 }
 
@@ -22,7 +43,7 @@ extern "C"
 {
     int __declspec(dllexport) __stdcall getPluginVersion()
     {
-        printf("getPluginVersion() called\n");
+        LOG_INFO("getPluginVersion() called");
         return 1;
     }
 }

@@ -1,4 +1,5 @@
 #include <Windows.h>
+#include <atomic>
 
 #include "Libraries.h"
 #include "Version.h"
