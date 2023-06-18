@@ -153,6 +153,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Shared\Defines.h" />
     <ClInclude Include="..\..\Shared\Log.h" />
     <ClInclude Include="..\..\Shared\PluginInterface.h" />
     <ClInclude Include="..\..\Shared\StringHelper.h" />

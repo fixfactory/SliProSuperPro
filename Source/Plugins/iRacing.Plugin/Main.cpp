@@ -7,6 +7,7 @@
 
 #include "Log.h"
 #include "PluginInterface.h"
+#include "Defines.h"
 
 std::atomic<int> g_attachCount = 0;
 
@@ -42,12 +43,12 @@ BOOL APIENTRY DllMain(HMODULE hModule, DWORD ul_reason_for_call, LPVOID lpReserv
 
 extern "C"
 {
-    int __declspec(dllexport) __stdcall getPluginInterfaceVersion()
+    int DLL_EXPORT getPluginInterfaceVersion()
     {
         return kPluginInterfaceVersion;
     }
 
-    int __declspec(dllexport) __stdcall getPluginDataVersion()
+    int DLL_EXPORT getPluginDataVersion()
     {
         return kPluginDataVersion;
     }
