@@ -56,13 +56,13 @@
     <ClCompile Include="String.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\External\hidapi\hid.c">
+    <ClCompile Include="..\..\External\hidapi\hid.c">
       <Filter>External Files\hidapi</Filter>
     </ClCompile>
     <ClCompile Include="Plugin.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Log.cpp">
+    <ClCompile Include="..\Shared\Log.cpp">
       <Filter>Shared Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -106,16 +106,16 @@
     <ClInclude Include="String.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\External\hidapi\hidapi.h">
+    <ClInclude Include="..\..\External\hidapi\hidapi.h">
       <Filter>External Files\hidapi</Filter>
     </ClInclude>
-    <ClInclude Include="..\External\PhysicsNG\rbr.telemetry.data.TelemetryData.h">
+    <ClInclude Include="..\..\External\PhysicsNG\rbr.telemetry.data.TelemetryData.h">
       <Filter>External Files\PhysicsNG</Filter>
     </ClInclude>
     <ClInclude Include="Plugin.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="Log.h">
+    <ClInclude Include="..\..\Shared\Log.h">
       <Filter>Shared Files</Filter>
     </ClInclude>
   </ItemGroup>

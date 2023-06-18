@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.6.33723.286
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SliProSuperPro", "Source\SliProSuperPro.vcxproj", "{1F27FB11-A49F-4028-B7E6-EFA2929EB07E}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SliProSuperPro", "Source\SliProSuperPro\SliProSuperPro.vcxproj", "{1F27FB11-A49F-4028-B7E6-EFA2929EB07E}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "iRacing.Plugin", "Source\iRacing.Plugin\iRacing.Plugin.vcxproj", "{D79AE91B-6AAD-4734-8E4D-231C81552A1A}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "iRacing.Plugin", "Source\Plugins\iRacing.Plugin\iRacing.Plugin.vcxproj", "{D79AE91B-6AAD-4734-8E4D-231C81552A1A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
