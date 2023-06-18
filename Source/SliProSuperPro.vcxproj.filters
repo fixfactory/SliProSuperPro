@@ -15,6 +15,9 @@
     <Filter Include="External Files\hidapi">
       <UniqueIdentifier>{84ef238f-a87b-4be7-9189-b734081765fd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Shared Files">
+      <UniqueIdentifier>{8969af80-acac-4a4b-a4d4-9750ea668beb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -27,9 +30,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Timing.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Log.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Telemetry.cpp">
@@ -62,6 +62,9 @@
     <ClCompile Include="Plugin.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Log.cpp">
+      <Filter>Shared Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Network.h">
@@ -80,9 +83,6 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="SLIProDevice.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Log.h">
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="Telemetry.h">
@@ -114,6 +114,9 @@
     </ClInclude>
     <ClInclude Include="Plugin.h">
       <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Log.h">
+      <Filter>Shared Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
