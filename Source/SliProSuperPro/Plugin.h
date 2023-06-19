@@ -45,9 +45,13 @@ public:
     using PluginList = std::vector<Plugin *>;
     const PluginList &getPluginList();
 
+    void setActivePlugin(const Plugin *plugin);
+    const Plugin *getActivePlugin() const;
+
 private:
     void loadPlugins();
     void unloadPlugins();
 
     PluginList m_plugins;
+    const Plugin *m_activePlugin{ nullptr };
 };

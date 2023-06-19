@@ -52,7 +52,7 @@ bool TelemetryManager::fetchTelemetryData()
     if (m_udpSocket->isBound())
     {
         recvTelemetry();
-        return true;
+        return m_receivingTelemetry;
     }
     return false;
 }

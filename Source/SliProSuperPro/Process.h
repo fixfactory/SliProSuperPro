@@ -19,10 +19,14 @@ public:
 
     void update(timing::seconds deltaTime) override;
 
+    const std::string &getGamePath() const;
+
 private:
     DWORD findProcessId(const std::string &name) const;
     std::string findProcessPath(DWORD pid) const;
 
     using time_point = std::chrono::steady_clock::time_point;
     time_point m_lastCheckTime = {};
+
+    std::string m_gamePath{};
 };

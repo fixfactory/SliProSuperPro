@@ -7,7 +7,6 @@
 #include "Process.h"
 #include "Log.h"
 #include "Config.h"
-#include "Blackboard.h"
 #include "StringHelper.h"
 #include "Plugin.h"
 
@@ -34,8 +33,8 @@ void ProcessManager::init()
 
 void ProcessManager::deinit()
 {
-    blackboard::activePlugin = nullptr;
-    blackboard::gamePath.clear();
+    m_gamePath.clear();
+    PluginManager::getSingleton().setActivePlugin(nullptr);
     TimingManager::getSingleton().unregisterUpdateable(this);
 }
 
@@ -51,9 +50,10 @@ void ProcessManager::update(timing::seconds deltaTime)
     m_lastCheckTime = time;
 
     // Check if the currently active game is still running.
-    if (blackboard::activePlugin != nullptr)
+    const Plugin *activePlugin = PluginManager::getSingleton().getActivePlugin();
+    if (activePlugin != nullptr)
     {
-        if (findProcessId(blackboard::activePlugin->gameExecFileName) != 0)
+        if (findProcessId(activePlugin->gameExecFileName) != 0)
         {
             // The game is still running.
             return;
@@ -61,43 +61,49 @@ void ProcessManager::update(timing::seconds deltaTime)
         else
         {
             LOG_INFO("Game closed");
-            blackboard::activePlugin->setGameIsRunning(false, "");
-            blackboard::activePlugin = nullptr;
-            blackboard::gamePath.clear();
+            activePlugin->setGameIsRunning(false, "");
+            activePlugin = nullptr;
+            PluginManager::getSingleton().setActivePlugin(nullptr);
+            m_gamePath.clear();
         }
     }
 
     // Check if any of the supported games is running.
     auto &plugins = PluginManager::getSingleton().getPluginList();
-    DWORD pid = 0; 
+    DWORD pid = 0;
     for (auto &plugin : plugins)
     {
         pid = findProcessId(plugin->gameExecFileName);
         if (pid != 0)
         {
             LOG_INFO("Game running: %s (pid %ul)", plugin->gameExecFileName.c_str(), pid);
-            blackboard::activePlugin = plugin;
+            activePlugin = plugin;
             break;
         }
     }
 
-    if (blackboard::activePlugin == nullptr)
+    if (activePlugin == nullptr)
     {
         // None of the supported games is running.
         return;
     }
 
-    std::string gamePath = findProcessPath(pid);
-    size_t pos = gamePath.rfind("\\");
+    m_gamePath = findProcessPath(pid);
+    size_t pos = m_gamePath.rfind("\\");
     if (pos != std::string::npos)
     {
-        gamePath.erase(pos, gamePath.length() - pos);
-        //gamePath.erase(std::find(gamePath.begin(), gamePath.end(), '\0'), gamePath.end());
+        m_gamePath.erase(pos, m_gamePath.length() - pos);
+        // gamePath.erase(std::find(gamePath.begin(), gamePath.end(), '\0'), gamePath.end());
     }
 
-    LOG_INFO("Game path: %s", gamePath.c_str());
-    blackboard::gamePath = gamePath;
-    blackboard::activePlugin->setGameIsRunning(true, gamePath);
+    LOG_INFO("Game path: %s", m_gamePath.c_str());
+    activePlugin->setGameIsRunning(true, m_gamePath);
+    PluginManager::getSingleton().setActivePlugin(activePlugin);
+}
+
+const std::string &ProcessManager::getGamePath() const
+{
+    return m_gamePath;
 }
 
 DWORD ProcessManager::findProcessId(const std::string &name) const

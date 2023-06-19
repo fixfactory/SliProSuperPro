@@ -6,6 +6,8 @@
 #include "Blackboard.h"
 #include "Config.h"
 #include "PluginInterface.h"
+#include "Process.h"
+#include "Telemetry.h"
 
 constexpr float kShiftLightBlinkHz = 4.f;
 constexpr float kStalledBlinkHz = 8.f;
@@ -73,12 +75,12 @@ void DeviceManager::update(timing::seconds deltaTime)
             setState(State::kStartupAnimation);
             setStartupAnimation(std::chrono::duration_cast<std::chrono::milliseconds>(openedDuration));
         }
-        else if (blackboard::telemetryData != nullptr && blackboard::physicsData != nullptr)
+        else if (TelemetryManager::getSingleton().isReceivingTelemetry() && blackboard::physicsData != nullptr)
         {
             setState(State::kReceivingTelemetry);
             setTelemetry();
         }
-        else if (!blackboard::gamePath.empty())
+        else if (!ProcessManager::getSingleton().getGamePath().empty())
         {
             setState(State::kGameRunningNoTelemetry);
             setDashes();
@@ -103,14 +105,14 @@ void DeviceManager::setStartupAnimation(std::chrono::milliseconds openedDuration
 void DeviceManager::setTelemetry()
 {
     const plugin::PhysicsData &physics = *blackboard::physicsData;
-    const plugin::TelemetryData &telemetry = *blackboard::telemetryData;
+    const plugin::TelemetryData *telemetry = TelemetryManager::getSingleton().getTelemetryData();
 
-    const int gearIndex = std::clamp<int>(telemetry.gear, 0, plugin::kMaxGearCount - 1);
+    const int gearIndex = std::clamp<int>(telemetry->gear, 0, plugin::kMaxGearCount - 1);
     const bool isReverse = gearIndex == 0;
     const bool isNeutral = gearIndex == 1;
     const bool isLastGear = gearIndex == physics.gearCount - 1;
 
-    const float rpm = std::max<float>(telemetry.rpm, 0.f);
+    const float rpm = std::max<float>(telemetry->rpm, 0.f);
     float lowRPM = std::max<float>(physics.rpmDownshift[gearIndex], 0.f);
     float highRPM = std::max<float>(physics.rpmUpshift[gearIndex], 0.f);    
 
@@ -134,7 +136,7 @@ void DeviceManager::setTelemetry()
     float rpmClamped = std::clamp<float>(rpm, lowRPM, highRPM);
     float rpmPercent = (rpmClamped - lowRPM) / (highRPM - lowRPM);
 
-    int speed = std::max<int>((int)telemetry.speedKph % 1000, 0);
+    int speed = std::max<int>((int)telemetry->speedKph % 1000, 0);
     char leftString[7];
     sprintf_s(leftString, "   %3i", speed);
 

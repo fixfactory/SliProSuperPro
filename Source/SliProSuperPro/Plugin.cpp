@@ -34,15 +34,21 @@ void PluginManager::deinit()
 
 void PluginManager::update(timing::seconds deltaTime)
 {
-    for (auto &plugin : m_plugins)
-    {
-        
-    }
 }
 
 const PluginManager::PluginList &PluginManager::getPluginList()
 {
     return m_plugins;
+}
+
+void PluginManager::setActivePlugin(const Plugin *plugin)
+{
+    m_activePlugin = plugin;
+}
+
+const Plugin *PluginManager::getActivePlugin() const
+{
+    return m_activePlugin;
 }
 
 void PluginManager::loadPlugins()
