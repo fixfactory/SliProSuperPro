@@ -73,18 +73,8 @@ extern "C"
         {
             NgpManager::getSingleton().deinit();
             TelemetryManager::getSingleton().deinit();
-            g_gameExecPath = std::string{};
+            g_gameExecPath.clear();
         }
-    }
-
-    bool DLL_EXPORT fetchTelemetryData()
-    {
-        return false;
-    }
-
-    bool DLL_EXPORT fetchPhysicsData()
-    {
-        return false;
     }
 
     bool DLL_EXPORT getTelemetryData(plugin::TelemetryData *outTelemetryData, size_t telemetryDataSize)

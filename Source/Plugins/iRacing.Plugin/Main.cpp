@@ -9,6 +9,7 @@
 #include "Defines.h"
 
 std::atomic<int> g_dllAttachCount = 0;
+std::string g_gameExecPath{};
 
 BOOL APIENTRY DllMain(HMODULE hModule, DWORD ul_reason_for_call, LPVOID lpReserved)
 {
@@ -59,16 +60,14 @@ extern "C"
 
     void DLL_EXPORT setGameIsRunning(bool isRunning, std::string execPath)
     {
-    }
-
-    bool DLL_EXPORT fetchTelemetryData()
-    {
-        return false;
-    }
-
-    bool DLL_EXPORT fetchPhysicsData()
-    {
-        return false;
+        if (isRunning)
+        {
+            g_gameExecPath = execPath;
+        }
+        else
+        {
+            g_gameExecPath.clear();
+        }
     }
 
     bool DLL_EXPORT getTelemetryData(plugin::TelemetryData *outTelemetryData, size_t telemetryDataSize)
