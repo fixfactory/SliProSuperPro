@@ -10,6 +10,7 @@
 #include "PluginInterface.h"
 #include "Defines.h"
 #include "Telemetry.h"
+#include "NGP.h"
 
 std::atomic<int> g_attachCount = 0;
 std::string g_gameExecPath{};
@@ -67,11 +68,13 @@ extern "C"
         {
             g_gameExecPath = execPath;
             TelemetryManager::getSingleton().init();
+            NgpManager::getSingleton().init();
         }
         else
         {
-            g_gameExecPath = std::string{};
+            NgpManager::getSingleton().deinit();
             TelemetryManager::getSingleton().deinit();
+            g_gameExecPath = std::string{};
         }
     }
 
