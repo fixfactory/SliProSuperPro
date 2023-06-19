@@ -11,6 +11,8 @@
 #include "Log.h"
 #include "StringHelper.h"
 
+EXTERN_C IMAGE_DOS_HEADER __ImageBase;
+
 LogManager::LogManager()
 {
 }
@@ -129,7 +131,7 @@ std::string LogManager::getTimestamp() const
 std::string LogManager::getLogFileName() const
 {
     wchar_t buf[MAX_PATH];
-    GetModuleFileName(nullptr, buf, MAX_PATH);
+    GetModuleFileName((HINSTANCE)&__ImageBase, buf, MAX_PATH);
     std::string fileName{ string::convertFromWide(buf) };
 
     size_t pos = fileName.rfind(".");
