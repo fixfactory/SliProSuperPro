@@ -4,8 +4,9 @@
 #include <chrono>
 
 #include "PhysicsNG/rbr.telemetry.data.TelemetryData.h"
+#include "PluginInterface.h"
 
-using TelemetryData = rbr::telemetry::data::TelemetryData;
+using RBRTelemetryData = rbr::telemetry::data::TelemetryData;
 
 class WSASession;
 class UDPSocket;
@@ -23,15 +24,9 @@ public:
 
     bool fetchTelemetryData();
 
-    bool isReceivingTelemetry() const
-    {
-        return m_receivingTelemetry;
-    }
-
-    const TelemetryData *getTelemetryData() const
-    {
-        return &m_telemetryData;
-    }
+    bool isReceivingTelemetry() const;
+    const plugin::TelemetryData &getTelemetryData() const;
+    const RBRTelemetryData &getRBRTelemetryData() const;
 
 private:
     void recvTelemetry();
@@ -40,7 +35,8 @@ private:
     UDPSocket *m_udpSocket = nullptr;
     std::vector<char> m_recvBuf;
     bool m_receivingTelemetry = false;
-    TelemetryData m_telemetryData = {};
+    plugin::TelemetryData m_telemetryData{};
+    RBRTelemetryData m_rbrTelemetryData{};
 
     using time_point = std::chrono::steady_clock::time_point;
     time_point m_lastDataTime = {};

@@ -143,11 +143,11 @@
     <ClCompile Include="..\..\External\hidapi\hid.c" />
     <ClCompile Include="..\Shared\Log.cpp" />
     <ClCompile Include="..\Shared\StringHelper.cpp" />
-    <ClCompile Include="Blackboard.cpp" />
     <ClCompile Include="CommandLine.cpp" />
     <ClCompile Include="Config.cpp" />
     <ClCompile Include="Device.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Physics.cpp" />
     <ClCompile Include="Plugin.cpp" />
     <ClCompile Include="Process.cpp" />
     <ClCompile Include="SLIProDevice.cpp" />
@@ -160,11 +160,11 @@
     <ClInclude Include="..\Shared\Log.h" />
     <ClInclude Include="..\Shared\PluginInterface.h" />
     <ClInclude Include="..\Shared\StringHelper.h" />
-    <ClInclude Include="Blackboard.h" />
     <ClInclude Include="CommandLine.h" />
     <ClInclude Include="Config.h" />
     <ClInclude Include="Device.h" />
     <ClInclude Include="Libraries.h" />
+    <ClInclude Include="Physics.h" />
     <ClInclude Include="Plugin.h" />
     <ClInclude Include="Process.h" />
     <ClInclude Include="SLIProDevice.h" />

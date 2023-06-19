@@ -34,8 +34,8 @@ void TelemetryManager::init()
         LOG_ERROR(error);
     }
 
-    m_recvBuf.resize(sizeof(TelemetryData));
-    memset(&m_telemetryData, 0, sizeof(TelemetryData));
+    m_recvBuf.resize(sizeof(RBRTelemetryData));
+    memset(&m_rbrTelemetryData, 0, sizeof(RBRTelemetryData));
 }
 
 void TelemetryManager::deinit()
@@ -52,9 +52,30 @@ bool TelemetryManager::fetchTelemetryData()
     if (m_udpSocket->isBound())
     {
         recvTelemetry();
-        return m_receivingTelemetry;
+        if (m_receivingTelemetry)
+        {
+            m_telemetryData.gear = m_rbrTelemetryData.control_.gear_;
+            m_telemetryData.rpm = m_rbrTelemetryData.car_.engine_.rpm_;
+            m_telemetryData.speedKph = m_rbrTelemetryData.car_.speed_;
+            return true;
+        }
     }
     return false;
+}
+
+bool TelemetryManager::isReceivingTelemetry() const
+{
+    return m_receivingTelemetry;
+}
+
+const plugin::TelemetryData &TelemetryManager::getTelemetryData() const
+{
+    return m_telemetryData;
+}
+
+const RBRTelemetryData &TelemetryManager::getRBRTelemetryData() const
+{
+    return m_rbrTelemetryData;
 }
 
 void TelemetryManager::recvTelemetry()
@@ -67,13 +88,13 @@ void TelemetryManager::recvTelemetry()
         while (m_udpSocket->hasData())
         {
             m_udpSocket->recvData(m_recvBuf, fromAddr);
-            if (m_recvBuf.size() != sizeof(TelemetryData))
+            if (m_recvBuf.size() != sizeof(RBRTelemetryData))
             {
                 LOG_ERROR("Malformed TelemetryData (size %i)", m_recvBuf.size());
                 continue;
             }
 
-            m_telemetryData = *reinterpret_cast<TelemetryData *>(m_recvBuf.data());
+            m_rbrTelemetryData = *reinterpret_cast<RBRTelemetryData *>(m_recvBuf.data());
 
             if (!m_receivingTelemetry)
             {

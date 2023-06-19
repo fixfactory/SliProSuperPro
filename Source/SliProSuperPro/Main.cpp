@@ -10,6 +10,8 @@
 #include "Process.h"
 #include "Device.h"
 #include "Plugin.h"
+#include "Telemetry.h"
+#include "Physics.h"
 
 std::atomic<bool> g_programShouldExit = false;
 constexpr DWORD kProgramCloseTimeoutMs = 2000;
@@ -50,9 +52,11 @@ int main(int argc, char *argv[])
     }
 
     TimingManager::getSingleton().init();
-    ProcessManager::getSingleton().init();
-    DeviceManager::getSingleton().init();
     PluginManager::getSingleton().init();
+    ProcessManager::getSingleton().init();
+    TelemetryManager::getSingleton().init();
+    PhysicsManager::getSingleton().init();
+    DeviceManager::getSingleton().init();
 
     while (!g_programShouldExit.load())
     {
@@ -61,9 +65,11 @@ int main(int argc, char *argv[])
 
     LOG_INFO("Program terminating...");
 
-    PluginManager::getSingleton().deinit();
     DeviceManager::getSingleton().deinit();
+    PhysicsManager::getSingleton().deinit();
+    TelemetryManager::getSingleton().deinit();
     ProcessManager::getSingleton().deinit();
+    PluginManager::getSingleton().deinit();
     TimingManager::getSingleton().deinit();
     LogManager::getSingleton().deinit();
 

@@ -17,7 +17,7 @@ public:
     void update(timing::seconds deltaTimeSecs) override;
 
     bool isReceivingTelemetry() const;
-    const plugin::TelemetryData *getTelemetryData() const;
+    const plugin::TelemetryData &getTelemetryData() const;
 
 private:
     plugin::TelemetryData m_telemetryData{};

@@ -18,10 +18,12 @@ TelemetryManager::~TelemetryManager()
 void TelemetryManager::init()
 {
     memset(&m_telemetryData, 0, sizeof(m_telemetryData));
+    TimingManager::getSingleton().registerUpdateable(this);
 }
 
 void TelemetryManager::deinit()
 {
+    TimingManager::getSingleton().unregisterUpdateable(this);
     m_receivingTelemetry = false;
 }
 
@@ -41,7 +43,7 @@ bool TelemetryManager::isReceivingTelemetry() const
     return m_receivingTelemetry;
 }
 
-const plugin::TelemetryData *TelemetryManager::getTelemetryData() const
+const plugin::TelemetryData &TelemetryManager::getTelemetryData() const
 {
-    return &m_telemetryData;
+    return m_telemetryData;
 }

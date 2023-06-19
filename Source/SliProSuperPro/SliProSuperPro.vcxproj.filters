@@ -38,9 +38,6 @@
     <ClCompile Include="Device.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Blackboard.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="CommandLine.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -57,6 +54,9 @@
       <Filter>Shared Files</Filter>
     </ClCompile>
     <ClCompile Include="Telemetry.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Physics.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -77,9 +77,6 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="Device.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Blackboard.h">
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="CommandLine.h">
@@ -107,6 +104,9 @@
       <Filter>Shared Files</Filter>
     </ClInclude>
     <ClInclude Include="Telemetry.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Physics.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>

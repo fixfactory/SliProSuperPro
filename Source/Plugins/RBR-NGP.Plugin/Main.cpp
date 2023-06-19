@@ -90,11 +90,29 @@ extern "C"
 
     bool DLL_EXPORT getTelemetryData(plugin::TelemetryData *outTelemetryData, size_t telemetryDataSize)
     {
+        if (TelemetryManager::getSingleton().fetchTelemetryData())
+        {
+            auto &telemetryData = TelemetryManager::getSingleton().getTelemetryData();
+            if (sizeof(telemetryData) >= telemetryDataSize)
+            {
+                memcpy(outTelemetryData, &telemetryData, telemetryDataSize);
+                return true;
+            }
+        }
         return false;
     }
 
     bool DLL_EXPORT getPhysicsData(plugin::PhysicsData *outPhysicsData, size_t physicsDataSize)
     {
+        if (NgpManager::getSingleton().fetchPhysicsData(g_gameExecPath))
+        {
+            auto &physicsData = NgpManager::getSingleton().getPhysicsData();
+            if (sizeof(physicsData) >= physicsDataSize)
+            {
+                memcpy(outPhysicsData, &physicsData, physicsDataSize);
+                return true;
+            }
+        }
         return false;
     }
 }

@@ -2,6 +2,8 @@
 
 #include <string>
 
+#include "PluginInterface.h"
+
 namespace ngp
 {
     constexpr unsigned int kFolderNameCount = 8;
@@ -38,11 +40,13 @@ public:
     void init();
     void deinit();
 
-    bool fetchPhysicsData();
+    bool fetchPhysicsData(const std::string &gamePath);
+    const plugin::PhysicsData &getPhysicsData() const;
 
 private:
     bool readCommon(unsigned int carIndex, const std::string &gamePath);
 
     bool m_wasReceivingTelemetry = false;
     ngp::CarPhysics m_carPhysics = {};
+    plugin::PhysicsData m_physicsData{};
 };

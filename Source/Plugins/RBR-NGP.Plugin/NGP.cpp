@@ -3,6 +3,7 @@
 
 #include "NGP.h"
 #include "Log.h"
+#include "Telemetry.h"
 
 #include "PhysicsNG/rbr.telemetry.data.TelemetryData.h"
 
@@ -35,9 +36,34 @@ void NgpManager::deinit()
 {
 }
 
-bool NgpManager::fetchPhysicsData()
+bool NgpManager::fetchPhysicsData(const std::string &gamePath)
 {
+    if (TelemetryManager::getSingleton().isReceivingTelemetry() && !gamePath.empty())
+    {
+        auto carIndex = TelemetryManager::getSingleton().getRBRTelemetryData().car_.index_;
+        if (readCommon(carIndex, gamePath))
+        {
+            m_physicsData.gearCount = m_carPhysics.drive.numberOfGears;
+            m_physicsData.rpmLimit = m_carPhysics.controlUnit.rpmLimit;
+
+            static_assert(sizeof(m_physicsData.rpmDownshift) >= sizeof(m_carPhysics.controlUnit.gearDownShift));
+            static_assert(sizeof(m_physicsData.rpmUpshift) >= sizeof(m_carPhysics.controlUnit.gearUpShift));
+
+            memcpy(m_physicsData.rpmDownshift, m_carPhysics.controlUnit.gearDownShift,
+                   sizeof(m_carPhysics.controlUnit.gearDownShift));
+
+            memcpy(m_physicsData.rpmUpshift, m_carPhysics.controlUnit.gearUpShift,
+                   sizeof(m_carPhysics.controlUnit.gearUpShift));
+
+            return true;
+        }
+    }
     return false;
+}
+
+const plugin::PhysicsData &NgpManager::getPhysicsData() const
+{
+    return m_physicsData;
 }
 
 bool NgpManager::readCommon(unsigned int carIndex, const std::string &gamePath)
@@ -52,7 +78,7 @@ bool NgpManager::readCommon(unsigned int carIndex, const std::string &gamePath)
     }
 
     std::stringstream filePath;
-    filePath << gamePath << "Physics\\" << ngp::kFolderNames[carIndex] << "\\common.lsp";
+    filePath << gamePath << "\\Physics\\" << ngp::kFolderNames[carIndex] << "\\common.lsp";
     std::ifstream file(filePath.str());
     if (!file.is_open())
     {
