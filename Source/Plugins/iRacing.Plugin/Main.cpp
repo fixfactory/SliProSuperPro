@@ -45,7 +45,7 @@ extern "C"
 {
     int DLL_EXPORT getPluginInterfaceVersion()
     {
-        return kPluginInterfaceVersion;
+        return plugin::kInterfaceVersion;
     }
 
     bool DLL_EXPORT supportsInterfaceVersion(int interfaceVersion)
@@ -62,12 +62,22 @@ extern "C"
     {
     }
 
-    bool DLL_EXPORT getTelemetryData(PluginTelemetryData &outTelemetryData)
+    bool DLL_EXPORT fetchTelemetryData()
     {
         return false;
     }
 
-    bool DLL_EXPORT getPhysicsData(PluginPhysicsData &outPhysicsData)
+    bool DLL_EXPORT fetchPhysicsData()
+    {
+        return false;
+    }
+
+    bool DLL_EXPORT getTelemetryData(plugin::TelemetryData *outTelemetryData, size_t telemetryDataSize)
+    {
+        return false;
+    }
+
+    bool DLL_EXPORT getPhysicsData(plugin::PhysicsData *outPhysicsData, size_t physicsDataSize)
     {
         return false;
     }
