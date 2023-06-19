@@ -52,4 +52,23 @@ extern "C"
     {
         return kPluginDataVersion;
     }
+
+    void DLL_EXPORT getGameExecFileName(std::string &outExecFileName)
+    {
+        outExecFileName = "iRacingSim64DX11.exe";
+    }
+
+    void DLL_EXPORT setGameIsRunning(bool isRunning, std::string execPath)
+    {
+    }
+
+    bool DLL_EXPORT getTelemetryData(PluginTelemetryData &outTelemetryData)
+    {
+        return false;
+    }
+
+    bool DLL_EXPORT getPhysicsData(PluginPhysicsData &outPhysicsData)
+    {
+        return false;
+    }
 }
