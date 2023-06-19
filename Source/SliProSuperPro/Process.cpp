@@ -95,9 +95,9 @@ void ProcessManager::update(timing::seconds deltaTime)
         //gamePath.erase(std::find(gamePath.begin(), gamePath.end(), '\0'), gamePath.end());
     }
 
-    blackboard::activePlugin->setGameIsRunning(true, gamePath);
-    blackboard::gamePath = gamePath;
     LOG_INFO("Game path: %s", gamePath.c_str());
+    blackboard::gamePath = gamePath;
+    blackboard::activePlugin->setGameIsRunning(true, gamePath);
 }
 
 DWORD ProcessManager::findProcessId(const std::string &name) const

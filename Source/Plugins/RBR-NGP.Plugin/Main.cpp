@@ -9,8 +9,10 @@
 #include "Log.h"
 #include "PluginInterface.h"
 #include "Defines.h"
+#include "Telemetry.h"
 
 std::atomic<int> g_attachCount = 0;
+std::string g_gameExecPath{};
 
 BOOL APIENTRY DllMain(HMODULE hModule, DWORD ul_reason_for_call, LPVOID lpReserved)
 {
@@ -61,6 +63,16 @@ extern "C"
 
     void DLL_EXPORT setGameIsRunning(bool isRunning, std::string execPath)
     {
+        if (isRunning)
+        {
+            g_gameExecPath = execPath;
+            TelemetryManager::getSingleton().init();
+        }
+        else
+        {
+            g_gameExecPath = std::string{};
+            TelemetryManager::getSingleton().deinit();
+        }
     }
 
     bool DLL_EXPORT fetchTelemetryData()
