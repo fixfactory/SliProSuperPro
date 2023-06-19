@@ -8,7 +8,7 @@
 #include "PluginInterface.h"
 #include "Defines.h"
 
-std::atomic<int> g_attachCount = 0;
+std::atomic<int> g_dllAttachCount = 0;
 
 BOOL APIENTRY DllMain(HMODULE hModule, DWORD ul_reason_for_call, LPVOID lpReserved)
 {
@@ -18,7 +18,7 @@ BOOL APIENTRY DllMain(HMODULE hModule, DWORD ul_reason_for_call, LPVOID lpReserv
     case DLL_THREAD_ATTACH:
         // Initialize library the first time it is attached.
         // operator++ on atomic is thread-safe.
-        if (g_attachCount++ == 0)
+        if (g_dllAttachCount++ == 0)
         {
             LogManager::getSingleton().init();
             LOG_INFO("Loaded iRacing Plugin version 0.1.0");
@@ -29,7 +29,7 @@ BOOL APIENTRY DllMain(HMODULE hModule, DWORD ul_reason_for_call, LPVOID lpReserv
     case DLL_PROCESS_DETACH:
         // Deinitialize library the last time it detached.
         // operator-- on atomic is thread-safe.
-        if (--g_attachCount == 0)
+        if (--g_dllAttachCount == 0)
         {
             LOG_INFO("iRacing Plugin unloaded");
             LogManager::getSingleton().deinit();
