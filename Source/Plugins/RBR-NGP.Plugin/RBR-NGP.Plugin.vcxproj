@@ -154,14 +154,21 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Shared\Log.cpp" />
+    <ClCompile Include="..\..\Shared\Network.cpp" />
     <ClCompile Include="..\..\Shared\StringHelper.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="NGP.cpp" />
+    <ClCompile Include="Telemetry.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Shared\Defines.h" />
     <ClInclude Include="..\..\Shared\Log.h" />
+    <ClInclude Include="..\..\Shared\Network.h" />
     <ClInclude Include="..\..\Shared\PluginInterface.h" />
     <ClInclude Include="..\..\Shared\StringHelper.h" />
+    <ClInclude Include="Libraries.h" />
+    <ClInclude Include="NGP.h" />
+    <ClInclude Include="Telemetry.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

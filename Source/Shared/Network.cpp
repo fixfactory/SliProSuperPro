@@ -1,7 +1,4 @@
-#pragma once
-
-#include "Log.h"
-
+#define _WINSOCK_DEPRECATED_NO_WARNINGS
 #include <WinSock2.h>
 #include <WS2tcpip.h>
 #include <system_error>
@@ -9,6 +6,7 @@
 #include <iostream>
 
 #include "Network.h"
+#include "Log.h"
 
 WSASession::WSASession()
 {

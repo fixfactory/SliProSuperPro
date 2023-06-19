@@ -5,6 +5,7 @@
 #include <iostream>
 #include <atomic>
 
+#include "Libraries.h"
 #include "Log.h"
 #include "PluginInterface.h"
 #include "Defines.h"

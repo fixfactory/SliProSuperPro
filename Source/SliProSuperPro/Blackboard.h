@@ -2,10 +2,7 @@
 
 #include <string>
 
-#include "PhysicsNG/rbr.telemetry.data.TelemetryData.h"
-#include "NGP.h"
-
-using TelemetryData = rbr::telemetry::data::TelemetryData;
+#include "PluginInterface.h"
 
 // The blackboard is for global variables to be exchanged between systems
 // without needing to create a direct dependency.
@@ -15,8 +12,8 @@ namespace blackboard
     extern std::string gamePath;
 
     // Live telemetry data received. `nullptr` when not driving.
-    extern const TelemetryData *telemetryData;
+    extern const plugin::TelemetryData *telemetryData;
 
     // Constant car physics properties for the last car driven.
-    extern const ngp::CarPhysics *carPhysics;
+    extern const plugin::PhysicsData *physicsData;
 } // namespace blackboard

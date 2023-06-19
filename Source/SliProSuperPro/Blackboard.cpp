@@ -3,6 +3,6 @@
 namespace blackboard
 {
     std::string gamePath{ "" };
-    const TelemetryData *telemetryData{ nullptr };
-    const ngp::CarPhysics *carPhysics{ nullptr };
+    const plugin::TelemetryData *telemetryData{ nullptr };
+    const plugin::PhysicsData *physicsData{ nullptr };
 } // namespace blackboard

@@ -18,14 +18,14 @@ typedef bool(__stdcall *GetPhysicsData)(plugin::PhysicsData *, size_t);
 struct Plugin
 {
     HINSTANCE library{ nullptr };
-    std::string path{};
+    std::string libraryPath{};
     int interfaceVersion{ 0 };
     std::string gameExecFileName{};
-    SetGameIsRunning setGameIsRunning;
-    FetchTelemetryData fetchTelemetryData;
-    FetchPhysicsData fetchPhysicsData;
-    GetTelemetryData getTelemetryData;
-    GetPhysicsData getPhysicsData;
+    SetGameIsRunning setGameIsRunning{ nullptr };
+    FetchTelemetryData fetchTelemetryData{ nullptr };
+    FetchPhysicsData fetchPhysicsData{ nullptr };
+    GetTelemetryData getTelemetryData{ nullptr };
+    GetPhysicsData getPhysicsData{ nullptr };
 };
 
 class PluginManager : public Updateable

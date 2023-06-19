@@ -9,8 +9,6 @@
 #include "Config.h"
 #include "Process.h"
 #include "Device.h"
-#include "NGP.h"
-#include "Telemetry.h"
 #include "Plugin.h"
 
 std::atomic<bool> g_programShouldExit = false;
@@ -52,9 +50,7 @@ int main(int argc, char *argv[])
     }
 
     TimingManager::getSingleton().init();
-    TelemetryManager::getSingleton().init();
     ProcessManager::getSingleton().init();
-    NgpManager::getSingleton().init();
     DeviceManager::getSingleton().init();
     PluginManager::getSingleton().init();
 
@@ -67,9 +63,7 @@ int main(int argc, char *argv[])
 
     PluginManager::getSingleton().deinit();
     DeviceManager::getSingleton().deinit();
-    NgpManager::getSingleton().deinit();
     ProcessManager::getSingleton().deinit();
-    TelemetryManager::getSingleton().deinit();
     TimingManager::getSingleton().deinit();
     LogManager::getSingleton().deinit();
 

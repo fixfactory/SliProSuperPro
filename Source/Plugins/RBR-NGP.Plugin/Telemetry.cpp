@@ -1,8 +1,6 @@
 #include "Telemetry.h"
 #include "Network.h"
 #include "Log.h"
-#include "Blackboard.h"
-#include "Config.h"
 
 static const std::chrono::duration<float> kDataTimeout{ 2.f };
 
@@ -22,15 +20,14 @@ TelemetryManager::~TelemetryManager()
 
 void TelemetryManager::init()
 {
-    TimingManager::getSingleton().registerUpdateable(this);
-
     m_session = new WSASession();
     m_udpSocket = new UDPSocket();
 
     try
     {
-        m_udpSocket->bindTo(config::udpPort);
-        LOG_INFO("Listening to telemetry on port %i", config::udpPort);
+        constexpr short kTempPort = 6777;
+        m_udpSocket->bindTo(kTempPort);
+        LOG_INFO("Listening to telemetry on port %i", kTempPort);
     }
     catch (const std::system_error &error)
     {
@@ -43,35 +40,21 @@ void TelemetryManager::init()
 
 void TelemetryManager::deinit()
 {
-    TimingManager::getSingleton().unregisterUpdateable(this);
-
     delete m_udpSocket;
     m_udpSocket = nullptr;
 
     delete m_session;
     m_session = nullptr;
-
-    blackboard::telemetryData = nullptr;
 }
 
-void TelemetryManager::update(timing::seconds deltaTime)
+bool TelemetryManager::fetchTelemetryData()
 {
     if (m_udpSocket->isBound())
     {
         recvTelemetry();
+        return true;
     }
-}
-
-void TelemetryManager::sleep(float sleepTime)
-{
-    try
-    {
-        m_udpSocket->sleep(sleepTime);
-    }
-    catch (const std::system_error &error)
-    {
-        LOG_ERROR(error);
-    }
+    return false;
 }
 
 void TelemetryManager::recvTelemetry()
@@ -96,7 +79,6 @@ void TelemetryManager::recvTelemetry()
             {
                 LOG_INFO("Started receiving telemetry data");
                 m_receivingTelemetry = true;
-                blackboard::telemetryData = &m_telemetryData;
             }
 
             m_lastDataTime = time;
@@ -106,13 +88,11 @@ void TelemetryManager::recvTelemetry()
         {
             LOG_INFO("Stopped receiving telemetry data");
             m_receivingTelemetry = false;
-            blackboard::telemetryData = nullptr;
         }
     }
     catch (const std::system_error &error)
     {
         LOG_ERROR(error);
         m_receivingTelemetry = false;
-        blackboard::telemetryData = nullptr;
     }
 }

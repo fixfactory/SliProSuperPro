@@ -3,7 +3,6 @@
 
 #include "NGP.h"
 #include "Log.h"
-#include "Blackboard.h"
 
 #include "PhysicsNG/rbr.telemetry.data.TelemetryData.h"
 
@@ -29,32 +28,19 @@ NgpManager::~NgpManager()
 
 void NgpManager::init()
 {
-    TimingManager::getSingleton().registerUpdateable(this);
     memset(&m_carPhysics.controlUnit, 0, sizeof(m_carPhysics.controlUnit));
-    blackboard::carPhysics = &m_carPhysics;
 }
 
 void NgpManager::deinit()
 {
-    TimingManager::getSingleton().unregisterUpdateable(this);
-    blackboard::carPhysics = nullptr;
 }
 
-void NgpManager::update(timing::seconds deltaTime)
+bool NgpManager::fetchPhysicsData()
 {
-    // Read the car physics file when we start receiving telemetry.
-    if (!m_wasReceivingTelemetry && blackboard::telemetryData != nullptr && !blackboard::gamePath.empty())
-    {
-        m_wasReceivingTelemetry = true;
-        readCommon(blackboard::telemetryData->car_.index_, blackboard::gamePath);
-    }
-    else if (m_wasReceivingTelemetry && blackboard::telemetryData == nullptr)
-    {
-        m_wasReceivingTelemetry = false;
-    }
+    return false;
 }
 
-void NgpManager::readCommon(unsigned int carIndex, const std::string &gamePath)
+bool NgpManager::readCommon(unsigned int carIndex, const std::string &gamePath)
 {
     LOG_INFO("Reading physics file for car index %u", carIndex);
     memset(&m_carPhysics, 0, sizeof(m_carPhysics));
@@ -62,7 +48,7 @@ void NgpManager::readCommon(unsigned int carIndex, const std::string &gamePath)
     if (carIndex >= ngp::kFolderNameCount)
     {
         LOG_ERROR("Invalid car index %u", carIndex);
-        return;
+        return false;
     }
 
     std::stringstream filePath;
@@ -71,7 +57,7 @@ void NgpManager::readCommon(unsigned int carIndex, const std::string &gamePath)
     if (!file.is_open())
     {
         LOG_ERROR("Could not open file %ls", filePath.str());
-        return;
+        return false;
     }
 
     std::string line;
@@ -115,4 +101,6 @@ void NgpManager::readCommon(unsigned int carIndex, const std::string &gamePath)
             }
         }
     }
+
+    return true;
 }

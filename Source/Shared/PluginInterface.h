@@ -1,3 +1,5 @@
+#pragma once
+
 namespace plugin
 {
     constexpr int kInterfaceVersion = 1;

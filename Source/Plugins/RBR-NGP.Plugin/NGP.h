@@ -2,8 +2,6 @@
 
 #include <string>
 
-#include "Timing.h"
-
 namespace ngp
 {
     constexpr unsigned int kFolderNameCount = 8;
@@ -29,7 +27,7 @@ namespace ngp
     };
 } // namespace ngp
 
-class NgpManager : public Updateable
+class NgpManager
 {
 public:
     static NgpManager &getSingleton();
@@ -40,10 +38,10 @@ public:
     void init();
     void deinit();
 
-    void update(timing::seconds deltaTime) override;
+    bool fetchPhysicsData();
 
 private:
-    void readCommon(unsigned int carIndex, const std::string &gamePath);
+    bool readCommon(unsigned int carIndex, const std::string &gamePath);
 
     bool m_wasReceivingTelemetry = false;
     ngp::CarPhysics m_carPhysics = {};

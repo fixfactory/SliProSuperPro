@@ -3,8 +3,6 @@
 #include <vector>
 #include <chrono>
 
-#include "Timing.h"
-
 #include "PhysicsNG/rbr.telemetry.data.TelemetryData.h"
 
 using TelemetryData = rbr::telemetry::data::TelemetryData;
@@ -12,7 +10,7 @@ using TelemetryData = rbr::telemetry::data::TelemetryData;
 class WSASession;
 class UDPSocket;
 
-class TelemetryManager : public Updateable
+class TelemetryManager
 {
 public:
     static TelemetryManager &getSingleton();
@@ -23,8 +21,7 @@ public:
     void init();
     void deinit();
 
-    void update(timing::seconds deltaTime) override;
-    void sleep(float sleepTime);
+    bool fetchTelemetryData();
 
     bool isReceivingTelemetry() const
     {

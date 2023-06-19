@@ -23,25 +23,16 @@
     <ClCompile Include="Main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Network.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="SLIProDevice.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Timing.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Telemetry.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Process.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Config.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="NGP.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Device.cpp">
@@ -67,12 +58,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Network.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="NGP.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="Process.h">
       <Filter>Source Files</Filter>
     </ClInclude>
@@ -83,9 +68,6 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="SLIProDevice.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Telemetry.h">
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="Config.h">

@@ -4,10 +4,8 @@
 #include "Device.h"
 #include "SLIProDevice.h"
 #include "Blackboard.h"
-#include "NGP.h"
 #include "Config.h"
-
-#include "PhysicsNG/rbr.telemetry.data.TelemetryData.h"
+#include "PluginInterface.h"
 
 constexpr float kShiftLightBlinkHz = 4.f;
 constexpr float kStalledBlinkHz = 8.f;
@@ -75,7 +73,7 @@ void DeviceManager::update(timing::seconds deltaTime)
             setState(State::kStartupAnimation);
             setStartupAnimation(std::chrono::duration_cast<std::chrono::milliseconds>(openedDuration));
         }
-        else if (blackboard::telemetryData != nullptr && blackboard::carPhysics != nullptr)
+        else if (blackboard::telemetryData != nullptr && blackboard::physicsData != nullptr)
         {
             setState(State::kReceivingTelemetry);
             setTelemetry();
@@ -104,25 +102,28 @@ void DeviceManager::setStartupAnimation(std::chrono::milliseconds openedDuration
 
 void DeviceManager::setTelemetry()
 {
-    const ngp::CarPhysics &car = *blackboard::carPhysics;
-    const int gearIndex = std::clamp<int>(blackboard::telemetryData->control_.gear_, 0, ngp::kGearCount - 1);
-    const float rpm = std::max<float>(blackboard::telemetryData->car_.engine_.rpm_, 0.f);
-    float lowRPM = std::max<float>(car.controlUnit.gearDownShift[gearIndex], 0.f);
-    float highRPM = std::max<float>(car.controlUnit.gearUpShift[gearIndex], 0.f);
+    const plugin::PhysicsData &physics = *blackboard::physicsData;
+    const plugin::TelemetryData &telemetry = *blackboard::telemetryData;
+
+    const int gearIndex = std::clamp<int>(telemetry.gear, 0, plugin::kMaxGearCount - 1);
     const bool isReverse = gearIndex == 0;
     const bool isNeutral = gearIndex == 1;
-    const bool isLastGear = gearIndex == car.drive.numberOfGears - 1;
+    const bool isLastGear = gearIndex == physics.gearCount - 1;
+
+    const float rpm = std::max<float>(telemetry.rpm, 0.f);
+    float lowRPM = std::max<float>(physics.rpmDownshift[gearIndex], 0.f);
+    float highRPM = std::max<float>(physics.rpmUpshift[gearIndex], 0.f);    
 
     if (isReverse || isNeutral)
     {
         // Use the shift points of 1st gear so the range feels familiar.
-        lowRPM = car.controlUnit.gearDownShift[2];
-        highRPM = car.controlUnit.gearUpShift[2];
+        lowRPM = physics.rpmDownshift[2];
+        highRPM = physics.rpmUpshift[2];
     }
     else if (isLastGear)
     {
         // Use the UpShift rpm from the previous gear so the range feels familiar.
-        highRPM = car.controlUnit.gearUpShift[gearIndex - 1];
+        highRPM = physics.rpmUpshift[gearIndex - 1];
     }
 
     if (highRPM < lowRPM)
@@ -133,7 +134,7 @@ void DeviceManager::setTelemetry()
     float rpmClamped = std::clamp<float>(rpm, lowRPM, highRPM);
     float rpmPercent = (rpmClamped - lowRPM) / (highRPM - lowRPM);
 
-    int speed = std::max<int>((int)blackboard::telemetryData->car_.speed_ % 1000, 0);
+    int speed = std::max<int>((int)telemetry.speedKph % 1000, 0);
     char leftString[7];
     sprintf_s(leftString, "   %3i", speed);
 

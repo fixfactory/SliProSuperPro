@@ -34,6 +34,10 @@ void PluginManager::deinit()
 
 void PluginManager::update(timing::seconds deltaTime)
 {
+    for (auto &plugin : m_plugins)
+    {
+        
+    }
 }
 
 void PluginManager::loadPlugins()
@@ -60,7 +64,7 @@ void PluginManager::loadPlugins()
             continue;
 
         Plugin *plugin = new Plugin();
-        plugin->path = entry.path().string();
+        plugin->libraryPath = entry.path().string();
 
         std::wstring path{ string::convertToWide(entry.path().string().c_str()) };
         plugin->library = LoadLibrary(path.c_str());
