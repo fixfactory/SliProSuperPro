@@ -9,8 +9,8 @@
 #include "Config.h"
 #include "Blackboard.h"
 #include "StringHelper.h"
+#include "Plugin.h"
 
-const std::string kGameExecName{ "RichardBurnsRally_SSE.exe" };
 const timing::seconds kCheckInterval{ 2.f };
 
 ProcessManager &ProcessManager::getSingleton()
@@ -34,13 +34,14 @@ void ProcessManager::init()
 
 void ProcessManager::deinit()
 {
+    blackboard::activePlugin = nullptr;
     blackboard::gamePath.clear();
     TimingManager::getSingleton().unregisterUpdateable(this);
 }
 
 void ProcessManager::update(timing::seconds deltaTime)
 {
-    // Every few seconds, check if the game is still running.
+    // Check only every few seconds to save CPU.
     auto time = std::chrono::steady_clock::now();
     if (time - m_lastCheckTime < kCheckInterval)
     {
@@ -48,36 +49,55 @@ void ProcessManager::update(timing::seconds deltaTime)
     }
 
     m_lastCheckTime = time;
-    DWORD pid = findProcessId(kGameExecName);
-    if (pid == 0)
+
+    // Check if the currently active game is still running.
+    if (blackboard::activePlugin != nullptr)
     {
-        if (!m_gamePath.empty())
+        if (findProcessId(blackboard::activePlugin->gameExecFileName) != 0)
+        {
+            // The game is still running.
+            return;
+        }
+        else
         {
             LOG_INFO("Game closed");
-            m_gamePath.clear();
+            blackboard::activePlugin->setGameIsRunning(false, "");
+            blackboard::activePlugin = nullptr;
             blackboard::gamePath.clear();
         }
-        return;
     }
 
-    if (!m_gamePath.empty())
+    // Check if any of the supported games is running.
+    auto &plugins = PluginManager::getSingleton().getPluginList();
+    DWORD pid = 0; 
+    for (auto &plugin : plugins)
     {
-        return;
+        pid = findProcessId(plugin->gameExecFileName);
+        if (pid != 0)
+        {
+            LOG_INFO("Game running: %s (pid %ul)", plugin->gameExecFileName.c_str(), pid);
+            blackboard::activePlugin = plugin;
+            break;
+        }
     }
 
-    LOG_INFO("Game running (pid %ul)", pid);
-    m_gamePath = findProcessPath(pid);
-    size_t pos = m_gamePath.rfind(kGameExecName);
-    if (pos == std::string::npos)
+    if (blackboard::activePlugin == nullptr)
     {
-        LOG_ERROR("Failed to parse path. Exec name not found. %s", m_gamePath.c_str());
+        // None of the supported games is running.
         return;
     }
 
-    m_gamePath.erase(pos, pos + kGameExecName.length());
-    m_gamePath.erase(std::find(m_gamePath.begin(), m_gamePath.end(), '\0'), m_gamePath.end());
-    blackboard::gamePath = m_gamePath;
-    LOG_INFO("Game path: %s", m_gamePath.c_str());
+    std::string gamePath = findProcessPath(pid);
+    size_t pos = gamePath.rfind("\\");
+    if (pos != std::string::npos)
+    {
+        gamePath.erase(pos, gamePath.length() - pos);
+        //gamePath.erase(std::find(gamePath.begin(), gamePath.end(), '\0'), gamePath.end());
+    }
+
+    blackboard::activePlugin->setGameIsRunning(true, gamePath);
+    blackboard::gamePath = gamePath;
+    LOG_INFO("Game path: %s", gamePath.c_str());
 }
 
 DWORD ProcessManager::findProcessId(const std::string &name) const
@@ -128,8 +148,8 @@ std::string ProcessManager::findProcessPath(DWORD pid) const
         return std::string{};
     }
 
-    std::wstring fileName(MAX_PATH, 0);
-    GetModuleFileNameEx(processHandle, NULL, fileName.data(), (DWORD)fileName.size());
+    wchar_t fileName[MAX_PATH];
+    GetModuleFileNameEx(processHandle, NULL, fileName, MAX_PATH);
     CloseHandle(processHandle);
 
     try

@@ -40,6 +40,11 @@ void PluginManager::update(timing::seconds deltaTime)
     }
 }
 
+const PluginManager::PluginList &PluginManager::getPluginList()
+{
+    return m_plugins;
+}
+
 void PluginManager::loadPlugins()
 {
     // Get the path of our executable. We'll search for plugin DLLs in the same directory.

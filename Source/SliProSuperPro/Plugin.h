@@ -1,5 +1,6 @@
 #pragma once
 
+#include <Windows.h>
 #include <string>
 #include <vector>
 
@@ -41,9 +42,12 @@ public:
 
     void update(timing::seconds deltaTime) override;
 
+    using PluginList = std::vector<Plugin *>;
+    const PluginList &getPluginList();
+
 private:
     void loadPlugins();
     void unloadPlugins();
 
-    std::vector<Plugin *> m_plugins;
+    PluginList m_plugins;
 };
