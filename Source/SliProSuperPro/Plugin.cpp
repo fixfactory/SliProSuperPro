@@ -141,26 +141,6 @@ void PluginManager::loadPlugins()
             continue;
         }
 
-        plugin->fetchTelemetryData = (FetchTelemetryData)GetProcAddress(plugin->library, "fetchTelemetryData");
-
-        if (!plugin->fetchTelemetryData)
-        {
-            LOG_ERROR("Could not locate the function fetchTelemetryData()");
-            FreeLibrary(plugin->library);
-            delete plugin;
-            continue;
-        }
-
-        plugin->fetchPhysicsData = (FetchPhysicsData)GetProcAddress(plugin->library, "fetchPhysicsData");
-
-        if (!plugin->fetchPhysicsData)
-        {
-            LOG_ERROR("Could not locate the function fetchPhysicsData()");
-            FreeLibrary(plugin->library);
-            delete plugin;
-            continue;
-        }
-
         plugin->getTelemetryData = (GetTelemetryData)GetProcAddress(plugin->library, "getTelemetryData");
 
         if (!plugin->getTelemetryData)
