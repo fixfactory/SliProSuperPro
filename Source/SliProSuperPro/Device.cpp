@@ -52,7 +52,7 @@ void DeviceManager::deinit()
     m_sliPro = nullptr;
 }
 
-void DeviceManager::update(timing::seconds deltaTime)
+void DeviceManager::update(timing::seconds deltaTimeSecs)
 {
     if (!m_sliPro->isOpen())
     {

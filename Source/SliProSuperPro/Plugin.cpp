@@ -32,7 +32,7 @@ void PluginManager::deinit()
     TimingManager::getSingleton().unregisterUpdateable(this);
 }
 
-void PluginManager::update(timing::seconds deltaTime)
+void PluginManager::update(timing::seconds deltaTimeSecs)
 {
 }
 

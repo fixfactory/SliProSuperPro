@@ -38,7 +38,7 @@ void ProcessManager::deinit()
     TimingManager::getSingleton().unregisterUpdateable(this);
 }
 
-void ProcessManager::update(timing::seconds deltaTime)
+void ProcessManager::update(timing::seconds deltaTimeSecs)
 {
     // Check only every few seconds to save CPU.
     auto time = std::chrono::steady_clock::now();

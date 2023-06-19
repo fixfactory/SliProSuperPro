@@ -17,7 +17,7 @@ public:
     void init();
     void deinit();
 
-    void update(timing::seconds deltaTime) override;
+    void update(timing::seconds deltaTimeSecs) override;
 
 private:
     using time_point = std::chrono::steady_clock::time_point;

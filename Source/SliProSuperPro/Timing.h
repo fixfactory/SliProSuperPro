@@ -16,7 +16,7 @@ namespace timing
 class Updateable
 {
 public:
-    virtual void update(timing::seconds deltaTime) = 0;
+    virtual void update(timing::seconds deltaTimeSecs) = 0;
 };
 
 class TimingManager

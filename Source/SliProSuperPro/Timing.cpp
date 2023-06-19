@@ -91,7 +91,7 @@ void TimingManager::run()
 
     if (config::debugTiming)
     {
-        LOG_INFO("Frame %i, updateTime %.3f, sleepTime %.3f, deltaTime %.3f, elapsedTime %.3f", m_frameNumber,
+        LOG_INFO("Frame %i, updateTime %.3f, sleepTime %.3f, deltaTimeSecs %.3f, elapsedTime %.3f", m_frameNumber,
                  updateTime.count(), sleepTime.count(), m_deltaTime.count(), m_elapsedTime.count());
     }
 }

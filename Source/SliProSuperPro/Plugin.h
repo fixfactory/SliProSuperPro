@@ -36,7 +36,7 @@ public:
     void init();
     void deinit();
 
-    void update(timing::seconds deltaTime) override;
+    void update(timing::seconds deltaTimeSecs) override;
 
     using PluginList = std::vector<Plugin *>;
     const PluginList &getPluginList();
