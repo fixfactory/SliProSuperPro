@@ -48,9 +48,9 @@ extern "C"
         return kPluginInterfaceVersion;
     }
 
-    int DLL_EXPORT getPluginDataVersion()
+    bool DLL_EXPORT supportsInterfaceVersion(int interfaceVersion)
     {
-        return kPluginDataVersion;
+        return interfaceVersion >= 1 && interfaceVersion <= 1;
     }
 
     void DLL_EXPORT getGameExecFileName(std::string &outExecFileName)

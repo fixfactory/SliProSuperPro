@@ -7,7 +7,7 @@
 #include "PluginInterface.h"
 
 typedef int(__stdcall *GetPluginInterfaceVersion)();
-typedef int(__stdcall *GetPluginDataVersion)();
+typedef bool(__stdcall *SupportsInterfaceVersion)(int);
 typedef void(__stdcall *GetGameExecFileName)(std::string &);
 typedef void(__stdcall *SetGameIsRunning)(bool, std::string);
 typedef bool(__stdcall *GetTelemetryData)(PluginTelemetryData &);
@@ -18,7 +18,6 @@ struct Plugin
     HINSTANCE library{ nullptr };
     std::string path{ };
     int interfaceVersion{ 0 };
-    int dataVersion{ 0 };
     std::string gameExecFileName{ };
     SetGameIsRunning setGameIsRunning;
     GetTelemetryData getTelemetryData;

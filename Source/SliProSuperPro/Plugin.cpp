@@ -84,18 +84,24 @@ void PluginManager::loadPlugins()
 
         plugin->interfaceVersion = getPluginInterfaceVersion();
 
-        GetPluginDataVersion getPluginDataVersion =
-            (GetPluginDataVersion)GetProcAddress(plugin->library, "getPluginDataVersion");
+        SupportsInterfaceVersion supportsInterfaceVersion =
+            (SupportsInterfaceVersion)GetProcAddress(plugin->library, "supportsInterfaceVersion");
 
-        if (!getPluginDataVersion)
+        if (!supportsInterfaceVersion)
         {
-            LOG_ERROR("Could not locate the function getPluginDataVersion()");
+            LOG_ERROR("Could not locate the function supportsInterfaceVersion()");
             FreeLibrary(plugin->library);
             delete plugin;
             continue;
         }
 
-        plugin->dataVersion = getPluginDataVersion();
+        if (!supportsInterfaceVersion(kPluginInterfaceVersion))
+        {
+            LOG_ERROR("Plugin does not support our interface version %i", kPluginInterfaceVersion);
+            FreeLibrary(plugin->library);
+            delete plugin;
+            continue;
+        }
 
         GetGameExecFileName getGameExecFileName =
             (GetGameExecFileName)GetProcAddress(plugin->library, "getGameExecFileName");
@@ -143,7 +149,6 @@ void PluginManager::loadPlugins()
         m_plugins.push_back(plugin);
 
         LOG_INFO("Plugin interface version: %i", plugin->interfaceVersion);
-        LOG_INFO("Plugin data version: %i", plugin->dataVersion);
     }
 }
 
