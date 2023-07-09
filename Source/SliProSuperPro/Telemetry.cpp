@@ -32,6 +32,7 @@ void TelemetryManager::update(timing::seconds deltaTimeSecs)
     const Plugin *activePlugin = PluginManager::getSingleton().getActivePlugin();
     if (activePlugin == nullptr)
     {
+        m_receivingTelemetry = false;
         return;
     }
 
