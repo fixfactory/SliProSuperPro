@@ -11,7 +11,7 @@ SliProSuperPro currently supports one game, [Richard Burns Rally with NGP7](http
 
 ## How To Get It
 
-Windows builds are available via the download page.
+Windows builds are available via the [releases page](https://github.com/fixfactory/SliProSuperPro/releases).
 
 
 ## How to Use
