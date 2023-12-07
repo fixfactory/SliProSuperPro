@@ -1,3 +1,18 @@
+                               SliProSuperPro
+                     A Shift Light Indicator controller.
+                        Copyright 2023 Fixfactory
+
+
+                      LICENSE AGREEMENT FOR SLIPROSUPERPRO
+
+
+SliProSuperPro is distributed as free software under the terms of the GNU General
+Public License, included below. See README.md for additional documentation.
+The source code may be obtained from the GitHub web site:
+
+    https://github.com/fixfactory/SliProSuperPro
+
+
                     GNU GENERAL PUBLIC LICENSE
                        Version 3, 29 June 2007
 
