@@ -45,7 +45,8 @@ void TelemetryManager::init()
 
     try
     {
-        constexpr short kTempPort = 6777;
+        // TODO: Port should be user configurable.
+        constexpr short kTempPort = 6776;
         m_udpSocket->bindTo(kTempPort);
         LOG_INFO("Listening to telemetry on port %i", kTempPort);
     }
