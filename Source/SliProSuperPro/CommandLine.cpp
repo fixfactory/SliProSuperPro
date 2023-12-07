@@ -35,10 +35,6 @@ namespace cmdLine
         LOG_INFO("   --help");
         LOG_INFO("      Show this help message.");
         LOG_INFO("");
-        LOG_INFO("   --port [port number]");
-        LOG_INFO("      Specify the UDP port number to listen to telemetry.");
-        LOG_INFO("      Default: 6776");
-        LOG_INFO("");
         LOG_INFO("   --brightness [value]");
         LOG_INFO("      Specify the the brightness level between 0-100.");
         LOG_INFO("      Default: 75");
@@ -89,19 +85,6 @@ namespace cmdLine
         {
             printHelp();
             return false;
-        }
-
-        if (hasOption(args, "--port"))
-        {
-            std::string option(getOption(args, "--port"));
-            int port = std::stoi(option);
-            if (option.empty() || port > 65535)
-            {
-                LOG_ERROR("Invalid port number. %i", port);
-                printHelp();
-                return false;
-            }
-            config::udpPort = port;
         }
 
         if (hasOption(args, "--brightness"))
