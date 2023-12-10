@@ -12,6 +12,7 @@ SliProSuperPro currently supports one game, [Richard Burns Rally with NGP7](http
   <img src="Docs/Images/SLI-Pro-Preview.gif" width="300" height="225" />
 </p>
 
+
 ## How To Get It
 
 Windows builds are available via the [releases page](https://github.com/fixfactory/SliProSuperPro/releases).
@@ -22,6 +23,10 @@ Windows builds are available via the [releases page](https://github.com/fixfacto
 Simply extract the zip content into a folder and run `SliProSuperPro.exe`. The application will automatically detect when a supported game is running, read the telemetry and display the data on the SLI-Pro device.
 
 Use `SliProSuperPro.exe --help` for a list of options.
+
+<p align="center">
+  <img src="Docs/Images/SliProSuperPro-Screenshot.png" width="412" height="239" />
+</p>
 
 
 ## Build Instructions
