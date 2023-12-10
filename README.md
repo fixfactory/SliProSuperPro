@@ -8,6 +8,9 @@ SliProSuperPro is a command line application that controls a [Leo Bodnar Electro
 
 SliProSuperPro currently supports one game, [Richard Burns Rally with NGP7](https://rallysimfans.hu/rbr/index.php), but is architected to support additional games via plugins.
 
+<p align="center">
+  <img src="Docs/Images/SLI-Pro-Preview.gif" width="300" height="225" />
+</p>
 
 ## How To Get It
 
