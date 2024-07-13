@@ -8,6 +8,12 @@
     <Filter Include="Shared Files">
       <UniqueIdentifier>{0821d9ed-fb90-457a-9ee1-d6ec21151a88}</UniqueIdentifier>
     </Filter>
+    <Filter Include="External Files">
+      <UniqueIdentifier>{2aa803c2-863e-4df9-bbff-54ca5a86b663}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="External Files\irsdk">
+      <UniqueIdentifier>{3bf5bceb-cc43-4d58-8a81-38bccfbd8541}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Shared\Log.h">
@@ -22,6 +28,18 @@
     <ClInclude Include="..\..\Shared\Defines.h">
       <Filter>Shared Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\External\irsdk\irsdk_client.h">
+      <Filter>External Files\irsdk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\External\irsdk\irsdk_defines.h">
+      <Filter>External Files\irsdk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\External\irsdk\irsdk_diskclient.h">
+      <Filter>External Files\irsdk</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\External\irsdk\yaml_parser.h">
+      <Filter>External Files\irsdk</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Shared\Log.cpp">
@@ -32,6 +50,18 @@
     </ClCompile>
     <ClCompile Include="..\..\Shared\StringHelper.cpp">
       <Filter>Shared Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\External\irsdk\irsdk_client.cpp">
+      <Filter>External Files\irsdk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\External\irsdk\irsdk_diskclient.cpp">
+      <Filter>External Files\irsdk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\External\irsdk\irsdk_utils.cpp">
+      <Filter>External Files\irsdk</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\External\irsdk\yaml_parser.cpp">
+      <Filter>External Files\irsdk</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

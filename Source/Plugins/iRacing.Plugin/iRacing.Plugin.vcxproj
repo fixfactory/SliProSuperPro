@@ -153,12 +153,20 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\External\irsdk\irsdk_client.h" />
+    <ClInclude Include="..\..\..\External\irsdk\irsdk_defines.h" />
+    <ClInclude Include="..\..\..\External\irsdk\irsdk_diskclient.h" />
+    <ClInclude Include="..\..\..\External\irsdk\yaml_parser.h" />
     <ClInclude Include="..\..\Shared\Defines.h" />
     <ClInclude Include="..\..\Shared\Log.h" />
     <ClInclude Include="..\..\Shared\PluginInterface.h" />
     <ClInclude Include="..\..\Shared\StringHelper.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\External\irsdk\irsdk_client.cpp" />
+    <ClCompile Include="..\..\..\External\irsdk\irsdk_diskclient.cpp" />
+    <ClCompile Include="..\..\..\External\irsdk\irsdk_utils.cpp" />
+    <ClCompile Include="..\..\..\External\irsdk\yaml_parser.cpp" />
     <ClCompile Include="..\..\Shared\Log.cpp" />
     <ClCompile Include="..\..\Shared\StringHelper.cpp" />
     <ClCompile Include="Main.cpp" />
