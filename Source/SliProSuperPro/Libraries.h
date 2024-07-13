@@ -22,3 +22,6 @@
 
 // SetupAPI for HID functions.
 #pragma comment(lib, "Setupapi.lib")
+
+// For timeBeginPeriod
+#pragma comment(lib, "Winmm")
