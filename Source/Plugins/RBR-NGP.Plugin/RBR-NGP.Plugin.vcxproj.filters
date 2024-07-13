@@ -8,6 +8,12 @@
     <Filter Include="Shared Files">
       <UniqueIdentifier>{16bec88d-0f8d-4c36-a74d-4aef82ddd8c6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="External Files">
+      <UniqueIdentifier>{084dce4d-86eb-4228-8746-0a00bcfb9b71}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="External Files\PhysicsNG">
+      <UniqueIdentifier>{61babe5a-b019-4c20-bacc-5a729fb1b5fb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -53,6 +59,9 @@
     </ClInclude>
     <ClInclude Include="Libraries.h">
       <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\External\PhysicsNG\rbr.telemetry.data.TelemetryData.h">
+      <Filter>External Files\PhysicsNG</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

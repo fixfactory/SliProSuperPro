@@ -9,9 +9,6 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
     </Filter>
-    <Filter Include="External Files\PhysicsNG">
-      <UniqueIdentifier>{80b2c548-c9d6-4385-b14f-c0a2f859c796}</UniqueIdentifier>
-    </Filter>
     <Filter Include="External Files\hidapi">
       <UniqueIdentifier>{84ef238f-a87b-4be7-9189-b734081765fd}</UniqueIdentifier>
     </Filter>
@@ -87,9 +84,6 @@
     </ClInclude>
     <ClInclude Include="..\..\External\hidapi\hidapi.h">
       <Filter>External Files\hidapi</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\External\PhysicsNG\rbr.telemetry.data.TelemetryData.h">
-      <Filter>External Files\PhysicsNG</Filter>
     </ClInclude>
     <ClInclude Include="Plugin.h">
       <Filter>Source Files</Filter>

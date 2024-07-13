@@ -161,6 +161,7 @@
     <ClCompile Include="Telemetry.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\External\PhysicsNG\rbr.telemetry.data.TelemetryData.h" />
     <ClInclude Include="..\..\Shared\Defines.h" />
     <ClInclude Include="..\..\Shared\Log.h" />
     <ClInclude Include="..\..\Shared\Network.h" />
