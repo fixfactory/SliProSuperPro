@@ -27,6 +27,7 @@
 #include "Log.h"
 #include "PluginInterface.h"
 #include "Defines.h"
+#include "Telemetry.h"
 
 std::atomic<int> g_dllAttachCount = 0;
 std::string g_gameExecPath{};
@@ -83,20 +84,40 @@ extern "C"
         if (isRunning)
         {
             g_gameExecPath = execPath;
+            TelemetryManager::getSingleton().init();
         }
         else
         {
+            TelemetryManager::getSingleton().deinit();
             g_gameExecPath.clear();
         }
     }
 
     bool DLL_EXPORT getTelemetryData(plugin::TelemetryData *outTelemetryData, size_t telemetryDataSize)
     {
+        if (TelemetryManager::getSingleton().isReceivingTelemetry())
+        {
+            auto &telemetryData = TelemetryManager::getSingleton().getTelemetryData();
+            if (sizeof(telemetryData) >= telemetryDataSize)
+            {
+                memcpy(outTelemetryData, &telemetryData, telemetryDataSize);
+                return true;
+            }
+        }
         return false;
     }
 
     bool DLL_EXPORT getPhysicsData(plugin::PhysicsData *outPhysicsData, size_t physicsDataSize)
     {
+        if (TelemetryManager::getSingleton().isReceivingTelemetry())
+        {
+            auto &physicsData = TelemetryManager::getSingleton().getPhysicsData();
+            if (sizeof(physicsData) >= physicsDataSize)
+            {
+                memcpy(outPhysicsData, &physicsData, physicsDataSize);
+                return true;
+            }
+        }
         return false;
     }
 }

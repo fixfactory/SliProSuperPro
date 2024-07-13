@@ -40,6 +40,9 @@
     <ClInclude Include="..\..\..\External\irsdk\yaml_parser.h">
       <Filter>External Files\irsdk</Filter>
     </ClInclude>
+    <ClInclude Include="Telemetry.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Shared\Log.cpp">
@@ -62,6 +65,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\External\irsdk\yaml_parser.cpp">
       <Filter>External Files\irsdk</Filter>
+    </ClCompile>
+    <ClCompile Include="Telemetry.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

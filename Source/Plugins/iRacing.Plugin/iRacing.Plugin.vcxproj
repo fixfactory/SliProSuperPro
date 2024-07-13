@@ -161,6 +161,7 @@
     <ClInclude Include="..\..\Shared\Log.h" />
     <ClInclude Include="..\..\Shared\PluginInterface.h" />
     <ClInclude Include="..\..\Shared\StringHelper.h" />
+    <ClInclude Include="Telemetry.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\External\irsdk\irsdk_client.cpp" />
@@ -170,6 +171,7 @@
     <ClCompile Include="..\..\Shared\Log.cpp" />
     <ClCompile Include="..\..\Shared\StringHelper.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Telemetry.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
