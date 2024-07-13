@@ -20,7 +20,6 @@
 
 #include <Windows.h>
 #include <atomic>
-#include <timeapi.h>
 
 #include "Libraries.h"
 #include "Version.h"
@@ -72,9 +71,6 @@ int main(int argc, char *argv[])
         return EXIT_FAILURE;
     }
 
-    // Ask for 1ms timer so sleeps are more precise
-    timeBeginPeriod(1);
-
     TimingManager::getSingleton().init();
     PluginManager::getSingleton().init();
     ProcessManager::getSingleton().init();
@@ -96,8 +92,6 @@ int main(int argc, char *argv[])
     PluginManager::getSingleton().deinit();
     TimingManager::getSingleton().deinit();
     LogManager::getSingleton().deinit();
-
-    timeEndPeriod(1);
 
     return EXIT_SUCCESS;
 }

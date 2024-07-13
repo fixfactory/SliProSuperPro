@@ -21,6 +21,7 @@
 #include <Windows.h>
 #include <thread>
 #include <math.h>
+#include <timeapi.h>
 
 #include "Timing.h"
 #include "Log.h"
@@ -42,12 +43,16 @@ TimingManager::~TimingManager()
 
 void TimingManager::init()
 {
+    // Ask for 1ms timer so sleeps are more precise
+    timeBeginPeriod(1);
+
     // The first delta time is the smallest value allowed.
     m_deltaTime = std::chrono::duration_cast<timing::seconds>(timing::kMinFrameTime);
 }
 
 void TimingManager::deinit()
 {
+    timeEndPeriod(1);
 }
 
 void TimingManager::registerUpdateable(Updateable *updateable)
