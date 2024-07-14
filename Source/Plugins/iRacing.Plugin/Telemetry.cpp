@@ -19,6 +19,7 @@
 //
 
 #include <Windows.h>
+#include <fstream>
 
 #include "Telemetry.h"
 #include "Log.h"
@@ -130,7 +131,7 @@ TelemetryManager::~TelemetryManager()
 
 void TelemetryManager::init()
 {
-
+    readCarOverrides();
 }
 
 void TelemetryManager::deinit()
@@ -154,11 +155,21 @@ bool TelemetryManager::fetchTelemetryData()
             const char *sessionStr = irsdkClient::instance().getSessionStr();
             if (sessionStr && sessionStr[0])
             {
+                char tstr[256];
+
+                int driverCarIdx;
+                char driverCarPath[256];
                 int gearNumForward;
                 float firstRPM;
                 float shiftRPM;
                 float lastRPM;
                 float blinkRPM;
+
+                parseYamlInt(sessionStr, "DriverInfo:DriverCarIdx:", &driverCarIdx);
+                sprintf_s(tstr, "DriverInfo:Drivers:CarIdx:{%d}CarPath:", driverCarIdx);
+                parseYamlStr(sessionStr, tstr, driverCarPath, sizeof(driverCarPath) - 1);
+                m_carPath = driverCarPath;
+                findCarOverrides();
 
                 parseYamlInt(sessionStr, "DriverInfo:DriverCarGearNumForward:", &gearNumForward);
                 parseYamlFloat(sessionStr, "DriverInfo:DriverCarSLFirstRPM:", &firstRPM);
@@ -168,7 +179,7 @@ bool TelemetryManager::fetchTelemetryData()
 
                 m_physicsData.gearCount = gearNumForward + 2; // Add reverse and neutral
 
-                // This is iRacing's old way of specifying Shift Light RPM. It was specified in Session Data
+                // This was iRacing's old way of specifying Shift Light RPM. It was specified in Session Data
                 // and each gear had the same RPM values.
                 for (int i = 0; i < plugin::kMaxGearCount; i++)
                 {
@@ -192,6 +203,8 @@ bool TelemetryManager::fetchTelemetryData()
             m_physicsData.rpmUpshift[m_telemetryData.gear] = gearLastRPM;
         }
 
+        applyCarOverrides();
+
         return true;
     }
 
@@ -206,4 +219,89 @@ const plugin::TelemetryData &TelemetryManager::getTelemetryData() const
 const plugin::PhysicsData &TelemetryManager::getPhysicsData() const
 {
     return m_physicsData;
+}
+
+void TelemetryManager::readCarOverrides()
+{
+    std::ifstream file("iRacing.Overrides.json");
+    if (file.good())
+    {
+        LOG_INFO("Reading iRacing.Overrides.json");
+        m_carOverrides = json::parse(file);
+    }
+}
+
+void TelemetryManager::findCarOverrides()
+{
+    m_currentOverrides = nullptr;
+
+    if (m_carPath.empty() || m_carOverrides.empty())
+    {
+        return;
+    }
+
+    for (auto &element : m_carOverrides["cars"].items())
+    {
+        auto carId = element.value()["id"].template get<std::string>();
+        if (carId == m_carPath)
+        {
+            m_currentOverrides = element.value();
+            break;
+        }
+    }
+}
+
+void TelemetryManager::applyCarOverrides()
+{
+    if (m_currentOverrides.empty())
+    {
+        return;
+    }
+
+    if (!m_currentOverrides["firstRPM"].empty() && !m_currentOverrides["lastRPM"].empty())
+    {
+        int firstRPM = m_currentOverrides["firstRPM"].template get<int>();
+        int lastRPM = m_currentOverrides["lastRPM"].template get<int>();
+
+        for (int i = 0; i < plugin::kMaxGearCount; i++)
+        {
+            m_physicsData.rpmDownshift[i] = (float)firstRPM;
+            m_physicsData.rpmUpshift[i] = (float)lastRPM;
+        }
+    }
+    else
+    {
+        for (auto &gear : m_currentOverrides["gears"].items())
+        {
+            if (gear.value()["gear"].empty() || gear.value()["firstRPM"].empty() || gear.value()["lastRPM"].empty())
+            {
+                continue;
+            }
+
+            std::string gearName = gear.value()["gear"].template get<std::string>();
+            int firstRPM = gear.value()["firstRPM"].template get<int>();
+            int lastRPM = gear.value()["lastRPM"].template get<int>();
+
+            int gearIdx = -1;
+            if (gearName == "R")
+            {
+                gearIdx = 0;
+            }
+            else if (gearName == "N")
+            {
+                gearIdx = 1;
+            }
+            else
+            {
+                gearIdx = atoi(gearName.c_str());
+                gearIdx++; // e.g. gear "1" is at index 2.
+            }
+
+            if (gearIdx >= 0 && gearIdx < plugin::kMaxGearCount)
+            {
+                m_physicsData.rpmDownshift[gearIdx] = (float)firstRPM;
+                m_physicsData.rpmUpshift[gearIdx] = (float)lastRPM;
+            }
+        }
+    }
 }

@@ -22,6 +22,9 @@
 
 #include "PluginInterface.h"
 
+#include "json/json.hpp"
+using json = nlohmann::json;
+
 class TelemetryManager
 {
 public:
@@ -41,4 +44,11 @@ private:
     bool m_receivingTelemetry{ false };
     plugin::TelemetryData m_telemetryData{};
     plugin::PhysicsData m_physicsData{};
+    json m_carOverrides;
+    json m_currentOverrides;
+    std::string m_carPath;
+
+    void readCarOverrides();
+    void findCarOverrides();
+    void applyCarOverrides();
 };
