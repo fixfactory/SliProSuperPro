@@ -28,6 +28,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #ifndef IRSDKCLIENT_H
 #define IRSDKCLIENT_H
 
+#include "irsdk_defines.h" // for irsdk_getSessionInfoStrUpdate()
+
 // A C++ wrapper around the irsdk calls that takes care of the details of maintaining a connection.
 // reads out the data into a cache so you don't have to worry about timming
 class irsdkClient
