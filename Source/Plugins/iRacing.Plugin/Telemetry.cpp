@@ -160,6 +160,7 @@ bool TelemetryManager::fetchTelemetryData()
                 int driverCarIdx;
                 char driverCarPath[256];
                 int gearNumForward;
+                float redLineRPM;
                 float firstRPM;
                 float shiftRPM;
                 float lastRPM;
@@ -172,12 +173,14 @@ bool TelemetryManager::fetchTelemetryData()
                 findCarOverrides();
 
                 parseYamlInt(sessionStr, "DriverInfo:DriverCarGearNumForward:", &gearNumForward);
+                parseYamlFloat(sessionStr, "DriverInfo:DriverCarRedLine:", &redLineRPM);
                 parseYamlFloat(sessionStr, "DriverInfo:DriverCarSLFirstRPM:", &firstRPM);
                 parseYamlFloat(sessionStr, "DriverInfo:DriverCarSLShiftRPM:", &shiftRPM);
                 parseYamlFloat(sessionStr, "DriverInfo:DriverCarSLLastRPM:", &lastRPM);
                 parseYamlFloat(sessionStr, "DriverInfo:DriverCarSLBlinkRPM:", &blinkRPM);
 
                 m_physicsData.gearCount = gearNumForward + 2; // Add reverse and neutral
+                m_physicsData.rpmLimit = redLineRPM;
 
                 // This was iRacing's old way of specifying Shift Light RPM. It was specified in Session Data
                 // and each gear had the same RPM values.
