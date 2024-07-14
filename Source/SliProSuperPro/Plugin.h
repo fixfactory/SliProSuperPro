@@ -33,6 +33,7 @@ typedef void(__stdcall *GetGameExecFileName)(std::string &);
 typedef void(__stdcall *SetGameIsRunning)(bool, std::string);
 typedef bool(__stdcall *GetTelemetryData)(plugin::TelemetryData *, size_t);
 typedef bool(__stdcall *GetPhysicsData)(plugin::PhysicsData *, size_t);
+typedef bool(__stdcall *GetPhysicsDataEveryFrame)();
 
 struct Plugin
 {
@@ -43,6 +44,7 @@ struct Plugin
     SetGameIsRunning setGameIsRunning{ nullptr };
     GetTelemetryData getTelemetryData{ nullptr };
     GetPhysicsData getPhysicsData{ nullptr };
+    GetPhysicsDataEveryFrame getPhysicsDataEveryFrame{ nullptr };
 };
 
 class PluginManager : public Updateable

@@ -56,15 +56,22 @@ void PhysicsManager::update(timing::seconds deltaTimeSecs)
         return;
     }
 
-    if (!m_wasReceivingTelemetry && TelemetryManager::getSingleton().isReceivingTelemetry())
+    if (activePlugin->getPhysicsDataEveryFrame())
     {
-        m_wasReceivingTelemetry = true;
         m_hasPhysicsData = activePlugin->getPhysicsData(&m_physicsData, sizeof(m_physicsData));
     }
-    else if (!TelemetryManager::getSingleton().isReceivingTelemetry())
+    else
     {
-        m_wasReceivingTelemetry = false;
-    }
+        if (!m_wasReceivingTelemetry && TelemetryManager::getSingleton().isReceivingTelemetry())
+        {
+            m_wasReceivingTelemetry = true;
+            m_hasPhysicsData = activePlugin->getPhysicsData(&m_physicsData, sizeof(m_physicsData));
+        }
+        else if (!TelemetryManager::getSingleton().isReceivingTelemetry())
+        {
+            m_wasReceivingTelemetry = false;
+        }
+    }    
 }
 
 bool PhysicsManager::hasPhysicsData() const

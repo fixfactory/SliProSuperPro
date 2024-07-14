@@ -33,7 +33,6 @@ public:
     void init();
     void deinit();
 
-    bool isReceivingTelemetry() const;
     bool fetchTelemetryData();
     const plugin::TelemetryData &getTelemetryData() const;
     const plugin::PhysicsData &getPhysicsData() const;

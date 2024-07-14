@@ -118,6 +118,7 @@ void PluginManager::loadPlugins()
         }
 
         plugin->interfaceVersion = getPluginInterfaceVersion();
+        LOG_INFO("Plugin interface version: %i", plugin->interfaceVersion);
 
         SupportsInterfaceVersion supportsInterfaceVersion =
             (SupportsInterfaceVersion)GetProcAddress(plugin->library, "supportsInterfaceVersion");
@@ -181,9 +182,17 @@ void PluginManager::loadPlugins()
             continue;
         }
 
-        m_plugins.push_back(plugin);
+        plugin->getPhysicsDataEveryFrame = (GetPhysicsDataEveryFrame)GetProcAddress(plugin->library, "getPhysicsDataEveryFrame");
 
-        LOG_INFO("Plugin interface version: %i", plugin->interfaceVersion);
+        if (!plugin->getPhysicsDataEveryFrame)
+        {
+            LOG_ERROR("Could not locate the function getPhysicsDataEveryFrame()");
+            FreeLibrary(plugin->library);
+            delete plugin;
+            continue;
+        }
+
+        m_plugins.push_back(plugin);
     }
 }
 

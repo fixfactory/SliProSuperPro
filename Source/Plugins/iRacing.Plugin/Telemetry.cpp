@@ -138,15 +138,10 @@ void TelemetryManager::deinit()
 
 }
 
-bool TelemetryManager::isReceivingTelemetry() const
-{
-    return m_receivingTelemetry;
-}
-
 bool TelemetryManager::fetchTelemetryData()
 {
     // Wait up to 16 ms for start of session or new data
-    if (irsdkClient::instance().waitForData(16))
+    if (irsdkClient::instance().waitForData(100))
     {
         m_telemetryData.gear = g_Gear.getInt() + 1;
         m_telemetryData.rpm = g_RPM.getFloat();
@@ -189,8 +184,6 @@ bool TelemetryManager::fetchTelemetryData()
         }
         return true;
     }
-
-    m_receivingTelemetry = irsdkClient::instance().isConnected();
 
     return false;
 }

@@ -120,4 +120,11 @@ extern "C"
         }
         return false;
     }
+
+    bool DLL_EXPORT getPhysicsDataEveryFrame()
+    {
+        // In iRacing, some cars will have different Shift Light RPM per gear and we get those in live telemetry
+        // rather than in Session Data. So the app should keep polling for new Physics Data every frame.
+        return true;
+    }
 }

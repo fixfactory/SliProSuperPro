@@ -124,4 +124,9 @@ extern "C"
         }
         return false;
     }
+
+    bool DLL_EXPORT getPhysicsDataEveryFrame()
+    {
+        return false;
+    }
 }
