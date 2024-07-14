@@ -140,17 +140,14 @@ void TelemetryManager::deinit()
 
 bool TelemetryManager::fetchTelemetryData()
 {
-    // Wait up to 16 ms for start of session or new data
+    // Wait up to 100 ms for start of session or new data
+    // We could put this on a thread if iRacing's rate fluctuates too much and is 
+    // causing issues with the animations.
     if (irsdkClient::instance().waitForData(100))
     {
         m_telemetryData.gear = g_Gear.getInt() + 1;
         m_telemetryData.rpm = g_RPM.getFloat();
         m_telemetryData.speedKph = g_Speed.getFloat();
-
-        float gearFirstRPM = g_PlayerCarSLFirstRPM.getFloat();
-        float gearShiftRPM = g_PlayerCarSLShiftRPM.getFloat();
-        float gearLastRPM = g_PlayerCarSLLastRPM.getFloat();
-        float gearBlinkRPM = g_PlayerCarSLBlinkRPM.getFloat();
 
         if (irsdkClient::instance().wasSessionStrUpdated())
         {
@@ -171,17 +168,30 @@ bool TelemetryManager::fetchTelemetryData()
 
                 m_physicsData.gearCount = gearNumForward + 2; // Add reverse and neutral
 
+                // This is iRacing's old way of specifying Shift Light RPM. It was specified in Session Data
+                // and each gear had the same RPM values.
                 for (int i = 0; i < plugin::kMaxGearCount; i++)
                 {
-                    if (i - 2 == m_telemetryData.gear)
-                    {
-                    }
-
                     m_physicsData.rpmDownshift[i] = firstRPM;
                     m_physicsData.rpmUpshift[i] = lastRPM;
                 }
             }
         }
+
+        // This is iRacing's new way of specifying Shift Light RPM. It is now specified in Live Telemetry
+        // and each gear can have different RPM values. The values are for the current gear.
+        float gearFirstRPM = g_PlayerCarSLFirstRPM.getFloat();
+        float gearShiftRPM = g_PlayerCarSLShiftRPM.getFloat();
+        float gearLastRPM = g_PlayerCarSLLastRPM.getFloat();
+        float gearBlinkRPM = g_PlayerCarSLBlinkRPM.getFloat();
+
+        if (gearFirstRPM != 0.f && gearLastRPM != 0.f && m_telemetryData.gear >= 0 &&
+            m_telemetryData.gear < plugin::kMaxGearCount)
+        {
+            m_physicsData.rpmDownshift[m_telemetryData.gear] = gearFirstRPM;
+            m_physicsData.rpmUpshift[m_telemetryData.gear] = gearLastRPM;
+        }
+
         return true;
     }
 
