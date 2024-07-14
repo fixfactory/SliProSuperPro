@@ -34,11 +34,12 @@ public:
     void deinit();
 
     bool isReceivingTelemetry() const;
+    bool fetchTelemetryData();
     const plugin::TelemetryData &getTelemetryData() const;
     const plugin::PhysicsData &getPhysicsData() const;
 
 private:
-    bool m_receivingTelemetry = false;
+    bool m_receivingTelemetry{ false };
     plugin::TelemetryData m_telemetryData{};
     plugin::PhysicsData m_physicsData{};
 };

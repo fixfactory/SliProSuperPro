@@ -95,7 +95,7 @@ extern "C"
 
     bool DLL_EXPORT getTelemetryData(plugin::TelemetryData *outTelemetryData, size_t telemetryDataSize)
     {
-        if (TelemetryManager::getSingleton().isReceivingTelemetry())
+        if (TelemetryManager::getSingleton().fetchTelemetryData())
         {
             auto &telemetryData = TelemetryManager::getSingleton().getTelemetryData();
             if (sizeof(telemetryData) >= telemetryDataSize)
@@ -109,7 +109,7 @@ extern "C"
 
     bool DLL_EXPORT getPhysicsData(plugin::PhysicsData *outPhysicsData, size_t physicsDataSize)
     {
-        if (TelemetryManager::getSingleton().isReceivingTelemetry())
+        if (TelemetryManager::getSingleton().fetchTelemetryData())
         {
             auto &physicsData = TelemetryManager::getSingleton().getPhysicsData();
             if (sizeof(physicsData) >= physicsDataSize)
