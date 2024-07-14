@@ -162,7 +162,14 @@ void DeviceManager::setTelemetry()
     sprintf_s(leftString, "   %3i", speed);
 
     char rightString[7];
-    sprintf_s(rightString, "%4i  ", (int)std::max<float>(rpm, 0.f) % 10000);
+    if (physics.rpmLimit < 10000)
+    {
+        sprintf_s(rightString, "%4i  ", (int)std::max<float>(rpm, 0.f) % 10000);
+    }
+    else
+    {
+        sprintf_s(rightString, "%5i ", (int)std::max<float>(rpm, 0.f) % 100000);
+    }
 
     bool isShiftLightOn = false;
     auto duration = std::chrono::steady_clock::now().time_since_epoch();
