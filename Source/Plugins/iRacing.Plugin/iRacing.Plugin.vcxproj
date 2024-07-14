@@ -157,6 +157,8 @@
     <ClInclude Include="..\..\..\External\irsdk\irsdk_defines.h" />
     <ClInclude Include="..\..\..\External\irsdk\irsdk_diskclient.h" />
     <ClInclude Include="..\..\..\External\irsdk\yaml_parser.h" />
+    <ClInclude Include="..\..\..\External\json\json.hpp" />
+    <ClInclude Include="..\..\..\External\json\json_fwd.hpp" />
     <ClInclude Include="..\..\Shared\Defines.h" />
     <ClInclude Include="..\..\Shared\Log.h" />
     <ClInclude Include="..\..\Shared\PluginInterface.h" />

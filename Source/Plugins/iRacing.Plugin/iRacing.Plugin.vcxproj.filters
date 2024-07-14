@@ -14,6 +14,9 @@
     <Filter Include="External Files\irsdk">
       <UniqueIdentifier>{3bf5bceb-cc43-4d58-8a81-38bccfbd8541}</UniqueIdentifier>
     </Filter>
+    <Filter Include="External Files\json">
+      <UniqueIdentifier>{53cb3d44-133a-44db-aeb2-b06a4e0fa67e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Shared\Log.h">
@@ -42,6 +45,12 @@
     </ClInclude>
     <ClInclude Include="Telemetry.h">
       <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\External\json\json.hpp">
+      <Filter>External Files\json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\External\json\json_fwd.hpp">
+      <Filter>External Files\json</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
