@@ -11,6 +11,51 @@
             "lastRPM": 6700
         },
         {
+            "id": "toyotagr86",
+            "firstRPM": 6000,
+            "lastRPM": 7100
+        },
+        {
+            "id": "subaruwrxsti",
+            "firstRPM": 5400,
+            "lastRPM": 6000
+        },
+        {
+            "id": "lotus79",
+            "firstRPM": 9500,
+            "lastRPM": 10600
+        },
+        {
+            "id": "usf2000usf17",
+            "firstRPM": 5900,
+            "lastRPM": 6900
+        },
+        {
+            "id": "raygr22",
+            "firstRPM": 4500,
+            "lastRPM": 6750
+        },
+        {
+            "id": "dallarair18",
+            "firstRPM": 9550,
+            "lastRPM": 11650
+        },
+        {
+            "id": "dallaraf3",
+            "firstRPM": 6450,
+            "lastRPM": 7150
+        },
+        {
+            "id": "formulair04",
+            "firstRPM": 6300,
+            "lastRPM": 6900
+        },
+        {
+            "id": "ferrari488gte",
+            "firstRPM": 5900,
+            "lastRPM": 6550
+        },
+        {
             "id": "mercedesw13",
             "gears": [
                 {
@@ -107,6 +152,136 @@
                     "gear": "6",
                     "firstRPM": 7950,
                     "lastRPM": 9000
+                }
+            ]
+        },
+        {
+            "id": "amvantagegt4",
+            "gears": [
+                {
+                    "gear": "R",
+                    "firstRPM": 5650,
+                    "lastRPM": 6550
+                },
+                {
+                    "gear": "N",
+                    "firstRPM": 5650,
+                    "lastRPM": 6550
+                },
+                {
+                    "gear": "1",
+                    "firstRPM": 5650,
+                    "lastRPM": 6550
+                },
+                {
+                    "gear": "2",
+                    "firstRPM": 5700,
+                    "lastRPM": 6600
+                },
+                {
+                    "gear": "3",
+                    "firstRPM": 5800,
+                    "lastRPM": 6700
+                },
+                {
+                    "gear": "4",
+                    "firstRPM": 5850,
+                    "lastRPM": 6750
+                },
+                {
+                    "gear": "5",
+                    "firstRPM": 5850,
+                    "lastRPM": 6750
+                },
+                {
+                    "gear": "6",
+                    "firstRPM": 5850,
+                    "lastRPM": 6750
+                }
+            ]
+        },
+        {
+            "id": "rt2000",
+            "gears": [
+                {
+                    "gear": "R",
+                    "firstRPM": 5700,
+                    "lastRPM": 6000
+                },
+                {
+                    "gear": "N",
+                    "firstRPM": 5700,
+                    "lastRPM": 6000
+                },
+                {
+                    "gear": "1",
+                    "firstRPM": 5700,
+                    "lastRPM": 6000
+                },
+                {
+                    "gear": "2",
+                    "firstRPM": 5700,
+                    "lastRPM": 6000
+                },
+                {
+                    "gear": "3",
+                    "firstRPM": 5700,
+                    "lastRPM": 6000
+                },
+                {
+                    "gear": "4",
+                    "firstRPM": 5700,
+                    "lastRPM": 6200
+                },
+                {
+                    "gear": "5",
+                    "firstRPM": 5700,
+                    "lastRPM": 6200
+                }
+            ]
+        },
+        {
+            "id": "dallarap217",
+            "gears": [
+                {
+                    "gear": "R",
+                    "firstRPM": 6800,
+                    "lastRPM": 8200
+                },
+                {
+                    "gear": "N",
+                    "firstRPM": 6800,
+                    "lastRPM": 8200
+                },
+                {
+                    "gear": "1",
+                    "firstRPM": 6800,
+                    "lastRPM": 8200
+                },
+                {
+                    "gear": "2",
+                    "firstRPM": 7000,
+                    "lastRPM": 8350
+                },
+                {
+                    "gear": "3",
+                    "firstRPM": 7400,
+                    "lastRPM": 8400
+                },
+                {
+                    "gear": "4",
+                    "firstRPM": 7450,
+                    "lastRPM": 8450
+                },
+                {
+                    "gear": "5",
+                    "firstRPM": 7600,
+                    "lastRPM": 8500
+                },
+                {
+                    "gear": "6",
+                    "firstRPM": 7600,
+                    "lastRPM": 8500
                 }
             ]
         }
