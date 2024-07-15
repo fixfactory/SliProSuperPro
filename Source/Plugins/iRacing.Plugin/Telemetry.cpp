@@ -27,6 +27,7 @@
 #include "irsdk/irsdk_client.h"
 #include "irsdk/yaml_parser.h"
 
+irsdkCVar g_Voltage("Voltage");
 irsdkCVar g_Gear("Gear");
 irsdkCVar g_RPM("RPM");
 irsdkCVar g_Speed("Speed");
@@ -149,6 +150,13 @@ bool TelemetryManager::fetchTelemetryData()
     // causing issues with the animations.
     if (irsdkClient::instance().waitForData(100))
     {
+        // Voltage is 0 when out of the car.
+        int voltage = g_Voltage.getInt();
+        if (voltage <= 0)
+        {
+            return false;
+        }
+
         m_telemetryData.gear = g_Gear.getInt() + 1;
         m_telemetryData.rpm = g_RPM.getFloat();
         m_telemetryData.speedKph = g_Speed.getFloat();
