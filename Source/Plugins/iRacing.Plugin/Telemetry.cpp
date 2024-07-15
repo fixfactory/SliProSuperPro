@@ -160,7 +160,12 @@ bool TelemetryManager::fetchTelemetryData()
         m_telemetryData.gear = g_Gear.getInt() + 1;
         m_telemetryData.rpm = g_RPM.getFloat();
         m_telemetryData.speedKph = g_Speed.getFloat() * 3.6f;
-        m_telemetryData.speedLimiter = g_SpeedLimiter.getBool();
+        
+        // Not every car has a speed limiter.
+        if (g_SpeedLimiter.isValid())
+        {
+            m_telemetryData.speedLimiter = g_SpeedLimiter.getBool();
+        }        
 
         if (irsdkClient::instance().wasSessionStrUpdated())
         {
