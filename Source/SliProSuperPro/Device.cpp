@@ -217,8 +217,8 @@ void DeviceManager::setTelemetry()
 
 void DeviceManager::setDashes()
 {
-    m_sliPro->setLeftString("   ---");
-    m_sliPro->setRightString("----  ");
+    m_sliPro->setLeftString("------");
+    m_sliPro->setRightString("------");
     m_sliPro->setGear('_');
 }
 
