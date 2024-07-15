@@ -149,92 +149,92 @@ bool TelemetryManager::fetchTelemetryData()
     // Wait up to 100 ms for start of session or new data
     // We could put this on a thread if iRacing's rate fluctuates too much and is 
     // causing issues with the animations.
-    if (irsdkClient::instance().waitForData(100))
+    if (!irsdkClient::instance().waitForData(100))
     {
-        // Voltage is 0 when out of the car.
-        int voltage = g_Voltage.getInt();
-        bool isReplayPlaying = g_IsReplayPlaying.getBool();
-        if (voltage <= 0 || isReplayPlaying)
-        {
-            return false;
-        }
-
-        m_telemetryData.gear = g_Gear.getInt() + 1;
-        m_telemetryData.rpm = g_RPM.getFloat();
-        m_telemetryData.speedKph = g_Speed.getFloat() * 3.6f;
-        
-        // Not every car has a speed limiter.
-        if (g_SpeedLimiter.isValid())
-        {
-            m_telemetryData.speedLimiter = g_SpeedLimiter.getBool();
-        }        
-
-        if (irsdkClient::instance().wasSessionStrUpdated())
-        {
-            const char *sessionStr = irsdkClient::instance().getSessionStr();
-            if (sessionStr && sessionStr[0])
-            {
-                char tstr[256];
-
-                int driverCarIdx;
-                char driverCarPath[256];
-                int gearNumForward;
-                float redLineRPM;
-                float firstRPM;
-                float shiftRPM;
-                float lastRPM;
-                float blinkRPM;
-
-                parseYamlInt(sessionStr, "DriverInfo:DriverCarIdx:", &driverCarIdx);
-                sprintf_s(tstr, "DriverInfo:Drivers:CarIdx:{%d}CarPath:", driverCarIdx);
-                parseYamlStr(sessionStr, tstr, driverCarPath, sizeof(driverCarPath) - 1);
-                m_carPath = driverCarPath;
-                parseOverrides();
-
-                parseYamlInt(sessionStr, "DriverInfo:DriverCarGearNumForward:", &gearNumForward);
-                parseYamlFloat(sessionStr, "DriverInfo:DriverCarRedLine:", &redLineRPM);
-                parseYamlFloat(sessionStr, "DriverInfo:DriverCarSLFirstRPM:", &firstRPM);
-                parseYamlFloat(sessionStr, "DriverInfo:DriverCarSLShiftRPM:", &shiftRPM);
-                parseYamlFloat(sessionStr, "DriverInfo:DriverCarSLLastRPM:", &lastRPM);
-                parseYamlFloat(sessionStr, "DriverInfo:DriverCarSLBlinkRPM:", &blinkRPM);
-
-                m_physicsData.gearCount = gearNumForward + 2; // Add reverse and neutral
-                m_physicsData.rpmLimit = redLineRPM;
-
-                // This was iRacing's old way of specifying Shift Light RPM. It was specified in Session Data
-                // and each gear had the same RPM values.
-                for (int i = 0; i < plugin::kMaxGearCount; i++)
-                {
-                    m_physicsData.rpmDownshift[i] = firstRPM;
-                    m_physicsData.rpmUpshift[i] = lastRPM;
-                }
-            }
-        }
-
-        // This is iRacing's new way of specifying Shift Light RPM. It is now specified in Live Telemetry
-        // and each gear can have different RPM values. The values are for the current gear.
-        float gearFirstRPM = g_PlayerCarSLFirstRPM.getFloat();
-        float gearShiftRPM = g_PlayerCarSLShiftRPM.getFloat();
-        float gearLastRPM = g_PlayerCarSLLastRPM.getFloat();
-        float gearBlinkRPM = g_PlayerCarSLBlinkRPM.getFloat();
-
-        if (gearFirstRPM != 0.f && gearLastRPM != 0.f && m_telemetryData.gear >= 0 &&
-            m_telemetryData.gear < plugin::kMaxGearCount)
-        {
-            m_physicsData.rpmDownshift[m_telemetryData.gear] = gearFirstRPM;
-            m_physicsData.rpmUpshift[m_telemetryData.gear] = gearLastRPM;
-        }
-
-        if (m_hasOverride)
-        {
-            memcpy(m_physicsData.rpmDownshift, m_rpmDownshiftOverride, sizeof(m_physicsData.rpmDownshift));
-            memcpy(m_physicsData.rpmUpshift, m_rpmUpshiftOverride, sizeof(m_physicsData.rpmUpshift));
-        }
-
-        return true;
+        return false;
     }
 
-    return false;
+    // Voltage is 0 when out of the car.
+    int voltage = g_Voltage.getInt();
+    bool isReplayPlaying = g_IsReplayPlaying.getBool();
+    if (voltage <= 0 || isReplayPlaying)
+    {
+        return false;
+    }
+
+    m_telemetryData.gear = g_Gear.getInt() + 1;
+    m_telemetryData.rpm = g_RPM.getFloat();
+    m_telemetryData.speedKph = g_Speed.getFloat() * 3.6f;
+        
+    // Not every car has a speed limiter.
+    if (g_SpeedLimiter.isValid())
+    {
+        m_telemetryData.speedLimiter = g_SpeedLimiter.getBool();
+    }        
+
+    if (irsdkClient::instance().wasSessionStrUpdated())
+    {
+        const char *sessionStr = irsdkClient::instance().getSessionStr();
+        if (sessionStr && sessionStr[0])
+        {
+            char tstr[256];
+
+            int driverCarIdx;
+            char driverCarPath[256];
+            int gearNumForward;
+            float redLineRPM;
+            float firstRPM;
+            float shiftRPM;
+            float lastRPM;
+            float blinkRPM;
+
+            parseYamlInt(sessionStr, "DriverInfo:DriverCarIdx:", &driverCarIdx);
+            sprintf_s(tstr, "DriverInfo:Drivers:CarIdx:{%d}CarPath:", driverCarIdx);
+            parseYamlStr(sessionStr, tstr, driverCarPath, sizeof(driverCarPath) - 1);
+            m_carPath = driverCarPath;
+            parseOverrides();
+
+            parseYamlInt(sessionStr, "DriverInfo:DriverCarGearNumForward:", &gearNumForward);
+            parseYamlFloat(sessionStr, "DriverInfo:DriverCarRedLine:", &redLineRPM);
+            parseYamlFloat(sessionStr, "DriverInfo:DriverCarSLFirstRPM:", &firstRPM);
+            parseYamlFloat(sessionStr, "DriverInfo:DriverCarSLShiftRPM:", &shiftRPM);
+            parseYamlFloat(sessionStr, "DriverInfo:DriverCarSLLastRPM:", &lastRPM);
+            parseYamlFloat(sessionStr, "DriverInfo:DriverCarSLBlinkRPM:", &blinkRPM);
+
+            m_physicsData.gearCount = gearNumForward + 2; // Add reverse and neutral
+            m_physicsData.rpmLimit = redLineRPM;
+
+            // This was iRacing's old way of specifying Shift Light RPM. It was specified in Session Data
+            // and each gear had the same RPM values.
+            for (int i = 0; i < plugin::kMaxGearCount; i++)
+            {
+                m_physicsData.rpmDownshift[i] = firstRPM;
+                m_physicsData.rpmUpshift[i] = lastRPM;
+            }
+        }
+    }
+
+    // This is iRacing's new way of specifying Shift Light RPM. It is now specified in Live Telemetry
+    // and each gear can have different RPM values. The values are for the current gear.
+    float gearFirstRPM = g_PlayerCarSLFirstRPM.getFloat();
+    float gearShiftRPM = g_PlayerCarSLShiftRPM.getFloat();
+    float gearLastRPM = g_PlayerCarSLLastRPM.getFloat();
+    float gearBlinkRPM = g_PlayerCarSLBlinkRPM.getFloat();
+
+    if (gearFirstRPM != 0.f && gearLastRPM != 0.f && m_telemetryData.gear >= 0 &&
+        m_telemetryData.gear < plugin::kMaxGearCount)
+    {
+        m_physicsData.rpmDownshift[m_telemetryData.gear] = gearFirstRPM;
+        m_physicsData.rpmUpshift[m_telemetryData.gear] = gearLastRPM;
+    }
+
+    if (m_hasOverride)
+    {
+        memcpy(m_physicsData.rpmDownshift, m_rpmDownshiftOverride, sizeof(m_physicsData.rpmDownshift));
+        memcpy(m_physicsData.rpmUpshift, m_rpmUpshiftOverride, sizeof(m_physicsData.rpmUpshift));
+    }
+
+    return true;
 }
 
 const plugin::TelemetryData &TelemetryManager::getTelemetryData() const
