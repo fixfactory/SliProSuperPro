@@ -1,0 +1,69 @@
+{
+    "cars": [
+        {
+            "id": "superformulalights324",
+            "firstRPM": 6200,
+            "lastRPM": 6900
+        },
+        {
+            "id": "hondacivictyper",
+            "firstRPM": 5350,
+            "lastRPM": 6700
+        },
+        {
+            "id": "mercedesw13",
+            "gears": [
+                {
+                    "gear": "R",
+                    "firstRPM": 4920,
+                    "lastRPM": 10120
+                },
+                {
+                    "gear": "N",
+                    "firstRPM": 4920,
+                    "lastRPM": 10120
+                },
+                {
+                    "gear": "1",
+                    "firstRPM": 4920,
+                    "lastRPM": 10120
+                },
+                {
+                    "gear": "2",
+                    "firstRPM": 4385,
+                    "lastRPM": 9980
+                },
+                {
+                    "gear": "3",
+                    "firstRPM": 5660,
+                    "lastRPM": 10085
+                },
+                {
+                    "gear": "4",
+                    "firstRPM": 10220,
+                    "lastRPM": 11550
+                },
+                {
+                    "gear": "5",
+                    "firstRPM": 10560,
+                    "lastRPM": 11730
+                },
+                {
+                    "gear": "6",
+                    "firstRPM": 10840,
+                    "lastRPM": 11630
+                },
+                {
+                    "gear": "7",
+                    "firstRPM": 11395,
+                    "lastRPM": 11575
+                },
+                {
+                    "gear": "8",
+                    "firstRPM": 11395,
+                    "lastRPM": 11575
+                }
+            ]
+        }
+    ]
+}
