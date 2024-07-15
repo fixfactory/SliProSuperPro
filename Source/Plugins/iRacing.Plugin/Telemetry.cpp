@@ -27,6 +27,7 @@
 #include "irsdk/irsdk_client.h"
 #include "irsdk/yaml_parser.h"
 
+irsdkCVar g_IsReplayPlaying("IsReplayPlaying");
 irsdkCVar g_Voltage("Voltage");
 irsdkCVar g_Gear("Gear");
 irsdkCVar g_RPM("RPM");
@@ -152,7 +153,8 @@ bool TelemetryManager::fetchTelemetryData()
     {
         // Voltage is 0 when out of the car.
         int voltage = g_Voltage.getInt();
-        if (voltage <= 0)
+        bool isReplayPlaying = g_IsReplayPlaying.getBool();
+        if (voltage <= 0 || isReplayPlaying)
         {
             return false;
         }
