@@ -124,6 +124,8 @@ TelemetryManager &TelemetryManager::getSingleton()
 
 TelemetryManager::TelemetryManager()
 {
+    memset(m_rpmDownshiftOverride, 0, sizeof(m_rpmDownshiftOverride));
+    memset(m_rpmUpshiftOverride, 0, sizeof(m_rpmDownshiftOverride));
 }
 
 TelemetryManager::~TelemetryManager()
@@ -132,7 +134,7 @@ TelemetryManager::~TelemetryManager()
 
 void TelemetryManager::init()
 {
-    readCarOverrides();
+    readOverrides();
 }
 
 void TelemetryManager::deinit()
@@ -172,7 +174,7 @@ bool TelemetryManager::fetchTelemetryData()
                 sprintf_s(tstr, "DriverInfo:Drivers:CarIdx:{%d}CarPath:", driverCarIdx);
                 parseYamlStr(sessionStr, tstr, driverCarPath, sizeof(driverCarPath) - 1);
                 m_carPath = driverCarPath;
-                findCarOverrides();
+                parseOverrides();
 
                 parseYamlInt(sessionStr, "DriverInfo:DriverCarGearNumForward:", &gearNumForward);
                 parseYamlFloat(sessionStr, "DriverInfo:DriverCarRedLine:", &redLineRPM);
@@ -208,7 +210,11 @@ bool TelemetryManager::fetchTelemetryData()
             m_physicsData.rpmUpshift[m_telemetryData.gear] = gearLastRPM;
         }
 
-        applyCarOverrides();
+        if (m_hasOverride)
+        {
+            memcpy(m_physicsData.rpmDownshift, m_rpmDownshiftOverride, sizeof(m_physicsData.rpmDownshift));
+            memcpy(m_physicsData.rpmUpshift, m_rpmUpshiftOverride, sizeof(m_physicsData.rpmUpshift));
+        }
 
         return true;
     }
@@ -226,57 +232,57 @@ const plugin::PhysicsData &TelemetryManager::getPhysicsData() const
     return m_physicsData;
 }
 
-void TelemetryManager::readCarOverrides()
+void TelemetryManager::readOverrides()
 {
     std::ifstream file("iRacing.Overrides.json");
     if (file.good())
     {
         LOG_INFO("Reading iRacing.Overrides.json");
-        m_carOverrides = json::parse(file);
+        m_overrides = json::parse(file);
     }
 }
 
-void TelemetryManager::findCarOverrides()
+void TelemetryManager::parseOverrides()
 {
-    m_currentOverrides = nullptr;
+    m_hasOverride = false;
+    memset(m_rpmDownshiftOverride, 0, sizeof(m_rpmDownshiftOverride));
+    memset(m_rpmUpshiftOverride, 0, sizeof(m_rpmDownshiftOverride));
+    json overrides = nullptr;
 
-    if (m_carPath.empty() || m_carOverrides.empty())
+    if (m_carPath.empty() || m_overrides.empty())
     {
         return;
     }
 
-    for (auto &element : m_carOverrides["cars"].items())
+    for (auto &element : m_overrides["cars"].items())
     {
         auto carId = element.value()["id"].template get<std::string>();
         if (carId == m_carPath)
         {
-            m_currentOverrides = element.value();
+            overrides = element.value();
             break;
         }
     }
-}
 
-void TelemetryManager::applyCarOverrides()
-{
-    if (m_currentOverrides.empty())
+    if (overrides.empty())
     {
         return;
     }
 
-    if (!m_currentOverrides["firstRPM"].empty() && !m_currentOverrides["lastRPM"].empty())
+    if (!overrides["firstRPM"].empty() && !overrides["lastRPM"].empty())
     {
-        int firstRPM = m_currentOverrides["firstRPM"].template get<int>();
-        int lastRPM = m_currentOverrides["lastRPM"].template get<int>();
+        int firstRPM = overrides["firstRPM"].template get<int>();
+        int lastRPM = overrides["lastRPM"].template get<int>();
 
         for (int i = 0; i < plugin::kMaxGearCount; i++)
         {
-            m_physicsData.rpmDownshift[i] = (float)firstRPM;
-            m_physicsData.rpmUpshift[i] = (float)lastRPM;
+            m_rpmDownshiftOverride[i] = (float)firstRPM;
+            m_rpmUpshiftOverride[i] = (float)lastRPM;
         }
     }
     else
     {
-        for (auto &gear : m_currentOverrides["gears"].items())
+        for (auto &gear : overrides["gears"].items())
         {
             if (gear.value()["gear"].empty() || gear.value()["firstRPM"].empty() || gear.value()["lastRPM"].empty())
             {
@@ -304,9 +310,12 @@ void TelemetryManager::applyCarOverrides()
 
             if (gearIdx >= 0 && gearIdx < plugin::kMaxGearCount)
             {
-                m_physicsData.rpmDownshift[gearIdx] = (float)firstRPM;
-                m_physicsData.rpmUpshift[gearIdx] = (float)lastRPM;
+                m_rpmDownshiftOverride[gearIdx] = (float)firstRPM;
+                m_rpmUpshiftOverride[gearIdx] = (float)lastRPM;
             }
         }
     }
+
+    m_hasOverride = true;
 }
+

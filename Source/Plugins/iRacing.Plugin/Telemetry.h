@@ -44,11 +44,13 @@ private:
     bool m_receivingTelemetry{ false };
     plugin::TelemetryData m_telemetryData{};
     plugin::PhysicsData m_physicsData{};
-    json m_carOverrides;
-    json m_currentOverrides;
+    json m_overrides;
     std::string m_carPath;
 
-    void readCarOverrides();
-    void findCarOverrides();
-    void applyCarOverrides();
+    bool m_hasOverride{ false };
+    float m_rpmDownshiftOverride[plugin::kMaxGearCount];
+    float m_rpmUpshiftOverride[plugin::kMaxGearCount];
+
+    void readOverrides();
+    void parseOverrides();
 };
