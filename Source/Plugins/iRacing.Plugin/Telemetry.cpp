@@ -262,23 +262,13 @@ void TelemetryManager::parseOverrides()
     m_hasOverride = false;
     memset(m_rpmDownshiftOverride, 0, sizeof(m_rpmDownshiftOverride));
     memset(m_rpmUpshiftOverride, 0, sizeof(m_rpmDownshiftOverride));
-    json overrides = nullptr;
 
     if (m_carPath.empty() || m_overrides.empty())
     {
         return;
     }
 
-    for (auto &element : m_overrides["cars"].items())
-    {
-        auto carId = element.value()["id"].template get<std::string>();
-        if (carId == m_carPath)
-        {
-            overrides = element.value();
-            break;
-        }
-    }
-
+    json overrides = m_overrides["cars"][m_carPath];  
     if (overrides.empty())
     {
         return;

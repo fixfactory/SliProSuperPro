@@ -1,62 +1,50 @@
 {
-    "cars": [
-        {
-            "id": "superformulalights324",
+    "cars": {
+        "superformulalights324": {
             "firstRPM": 6200,
             "lastRPM": 6900
         },
-        {
-            "id": "hondacivictyper",
+        "hondacivictyper": {
             "firstRPM": 5350,
             "lastRPM": 6700
         },
-        {
-            "id": "toyotagr86",
+        "toyotagr86": {
             "firstRPM": 6000,
             "lastRPM": 7100
         },
-        {
-            "id": "subaruwrxsti",
+        "subaruwrxsti": {
             "firstRPM": 5400,
             "lastRPM": 6000
         },
-        {
-            "id": "lotus79",
+        "lotus79": {
             "firstRPM": 9500,
             "lastRPM": 10600
         },
-        {
-            "id": "usf2000usf17",
+        "usf2000usf17": {
             "firstRPM": 5900,
             "lastRPM": 6900
         },
-        {
-            "id": "raygr22",
+        "raygr22": {
             "firstRPM": 4500,
             "lastRPM": 6750
         },
-        {
-            "id": "dallarair18",
+        "dallarair18": {
             "firstRPM": 9550,
             "lastRPM": 11650
         },
-        {
-            "id": "dallaraf3",
+        "dallaraf3": {
             "firstRPM": 6450,
             "lastRPM": 7150
         },
-        {
-            "id": "formulair04",
+        "formulair04": {
             "firstRPM": 6300,
             "lastRPM": 6900
         },
-        {
-            "id": "ferrari488gte",
+        "ferrari488gte": {
             "firstRPM": 5900,
             "lastRPM": 6550
         },
-        {
-            "id": "mercedesw13",
+        "mercedesw13": {
             "gears": [
                 {
                     "gear": "R",
@@ -110,8 +98,7 @@
                 }
             ]
         },
-        {
-            "id": "superformulasf23 toyota",
+        "superformulasf23 toyota": {
             "gears": [
                 {
                     "gear": "R",
@@ -155,8 +142,7 @@
                 }
             ]
         },
-        {
-            "id": "amvantagegt4",
+        "amvantagegt4": {
             "gears": [
                 {
                     "gear": "R",
@@ -200,8 +186,7 @@
                 }
             ]
         },
-        {
-            "id": "rt2000",
+        "rt2000": {
             "gears": [
                 {
                     "gear": "R",
@@ -240,8 +225,7 @@
                 }
             ]
         },
-        {
-            "id": "dallarap217",
+        "dallarap217": {
             "gears": [
                 {
                     "gear": "R",
@@ -285,5 +269,5 @@
                 }
             ]
         }
-    ]
+    }
 }
