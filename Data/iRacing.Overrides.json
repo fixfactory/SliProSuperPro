@@ -30,17 +30,17 @@
                 },
                 {
                     "gear": "2",
-                    "firstRPM": 4385,
-                    "lastRPM": 9980
+                    "firstRPM": 4460,
+                    "lastRPM": 9990
                 },
                 {
                     "gear": "3",
                     "firstRPM": 5660,
-                    "lastRPM": 10085
+                    "lastRPM": 10220
                 },
                 {
                     "gear": "4",
-                    "firstRPM": 10220,
+                    "firstRPM": 10250,
                     "lastRPM": 11550
                 },
                 {
@@ -50,18 +50,63 @@
                 },
                 {
                     "gear": "6",
-                    "firstRPM": 10840,
+                    "firstRPM": 10850,
                     "lastRPM": 11630
                 },
                 {
                     "gear": "7",
-                    "firstRPM": 11395,
-                    "lastRPM": 11575
+                    "firstRPM": 11400,
+                    "lastRPM": 11590
                 },
                 {
                     "gear": "8",
-                    "firstRPM": 11395,
-                    "lastRPM": 11575
+                    "firstRPM": 11400,
+                    "lastRPM": 11590
+                }
+            ]
+        },
+        {
+            "id": "superformulasf23 toyota",
+            "gears": [
+                {
+                    "gear": "R",
+                    "firstRPM": 7110,
+                    "lastRPM": 8740
+                },
+                {
+                    "gear": "N",
+                    "firstRPM": 7110,
+                    "lastRPM": 8740
+                },
+                {
+                    "gear": "1",
+                    "firstRPM": 7110,
+                    "lastRPM": 8740
+                },
+                {
+                    "gear": "2",
+                    "firstRPM": 7330,
+                    "lastRPM": 8840
+                },
+                {
+                    "gear": "3",
+                    "firstRPM": 7750,
+                    "lastRPM": 8870
+                },
+                {
+                    "gear": "4",
+                    "firstRPM": 7790,
+                    "lastRPM": 8940
+                },
+                {
+                    "gear": "5",
+                    "firstRPM": 7950,
+                    "lastRPM": 8970
+                },
+                {
+                    "gear": "6",
+                    "firstRPM": 7950,
+                    "lastRPM": 9000
                 }
             ]
         }
