@@ -30,6 +30,7 @@
 irsdkCVar g_Gear("Gear");
 irsdkCVar g_RPM("RPM");
 irsdkCVar g_Speed("Speed");
+irsdkCVar g_SpeedLimiter("dcPitSpeedLimiterToggle");
 irsdkCVar g_PlayerCarSLFirstRPM("PlayerCarSLFirstRPM");
 irsdkCVar g_PlayerCarSLShiftRPM("PlayerCarSLShiftRPM");
 irsdkCVar g_PlayerCarSLLastRPM("PlayerCarSLLastRPM");
@@ -149,6 +150,7 @@ bool TelemetryManager::fetchTelemetryData()
         m_telemetryData.gear = g_Gear.getInt() + 1;
         m_telemetryData.rpm = g_RPM.getFloat();
         m_telemetryData.speedKph = g_Speed.getFloat();
+        m_telemetryData.speedLimiter = g_SpeedLimiter.getBool();
 
         if (irsdkClient::instance().wasSessionStrUpdated())
         {

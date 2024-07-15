@@ -29,6 +29,7 @@ namespace plugin
         int gear;
         float rpm;
         float speedKph;
+        bool speedLimiter;
     };
 
     constexpr int kMaxGearCount = 10;

@@ -31,6 +31,7 @@
 
 constexpr float kShiftLightBlinkHz = 4.f;
 constexpr float kStalledBlinkHz = 8.f;
+constexpr float kSpeedLimiterBlinkHz = 2.f;
 constexpr float kStalledRPM = 750.f;
 const std::chrono::milliseconds kStartupAnimationDuration{ 2000 };
 
@@ -178,6 +179,12 @@ void DeviceManager::setTelemetry()
     {
         int blinkSteps = (int)(milliseconds.count() / (500 / kShiftLightBlinkHz));
         isShiftLightOn = blinkSteps % 2;
+    }
+
+    if (telemetry.speedLimiter)
+    {
+        int blinkSteps = (int)(milliseconds.count() / (500 / kSpeedLimiterBlinkHz));
+        rpmPercent = blinkSteps % 2 ? 1.f : 0.f;
     }
 
     bool isStalled = rpm < kStalledRPM;
