@@ -1,7 +1,7 @@
 
 SliProSuperPro
 A Shift Light Indicator Controller
-Copyright 2023 Fixfactory
+Copyright 2023,2024 Fixfactory
 
 
 ================
@@ -10,7 +10,11 @@ Copyright 2023 Fixfactory
 
 SliProSuperPro is a command line application that controls a Leo Bodnar Electronics SLI-Pro device (https://www.leobodnar.com/shop/index.php?main_page=product_info&products_id=185). SliProSuperPro reads the telemetry data from a sim-racing game and displays the gear, RPM, and speed on the SLI-Pro device.
 
-SliProSuperPro currently supports one game, Richard Burns Rally with NGP7 (https://rallysimfans.hu/rbr/index.php), but is architected to support additional games via plugins.
+SliProSuperPro currently supports two games:
+- Richard Burns Rally with NGP7 (https://rallysimfans.hu/rbr/index.php)
+- iRacing (https://www.iracing.com)
+
+Support for additional games can be added via plugins.
 
 
 ================
