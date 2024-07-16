@@ -1,5 +1,5 @@
 # SliProSuperPro: A Shift Light Indicator Controller
-*Copyright 2023,2024 Fixfactory*
+*Copyright 2023, 2024 Fixfactory*
 
 
 ## Overview
@@ -10,7 +10,7 @@ SliProSuperPro is a command line application that controls a [Leo Bodnar Electro
   <img src="Docs/Images/SLI-Pro-Preview.gif" width="300" height="225" />
 </p>
 
-SliProSuperPro currently supports two game:
+SliProSuperPro currently supports two games:
 - [Richard Burns Rally with NGP7](https://rallysimfans.hu/rbr/index.php)
 - [iRacing](https://www.iracing.com)
 
