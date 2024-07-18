@@ -23,6 +23,12 @@
 #include <fstream>
 #include <system_error>
 
+#ifdef _DEBUG
+    #define LOG_DEBUG(format, ...) LogManager::getSingleton().info(format, ##__VA_ARGS__);
+#else
+    #define LOG_DEBUG(format, ...)
+#endif
+
 #define LOG_INFO(format, ...) LogManager::getSingleton().info(format, ##__VA_ARGS__);
 
 #define LOG_WARN(format, ...) LogManager::getSingleton().warn(format, ##__VA_ARGS__);
