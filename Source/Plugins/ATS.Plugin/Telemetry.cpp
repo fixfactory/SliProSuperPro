@@ -31,6 +31,8 @@ const std::string kSharedMemoryName("SPSP.ATS.Plugin");
 const float kMpsToKph = 3.6f;
 const float kKphtoMph = 0.62137119f;
 
+const std::chrono::duration<float> kTryOpenInterval{ 1.f };
+
 #pragma pack(push)
 #pragma pack(1)
 
@@ -64,7 +66,7 @@ TelemetryManager::~TelemetryManager()
 
 void TelemetryManager::init()
 {
-    m_sharedMemory = new SharedMemory(kSharedMemoryName, sizeof(TelemetryState), true);
+    m_sharedMemory = new SharedMemory();
 }
 
 void TelemetryManager::deinit()
@@ -78,8 +80,18 @@ void TelemetryManager::deinit()
 
 bool TelemetryManager::fetchTelemetryData()
 {
+    if (!m_sharedMemory->isOpened())
+    {
+        auto time = std::chrono::steady_clock::now();
+        if (time - m_lastTryOpen > kTryOpenInterval)
+        {
+            m_sharedMemory->open(kSharedMemoryName, sizeof(TelemetryState), true);
+            m_lastTryOpen = time;
+        }
+    }
+
     TelemetryState *telemetryState =
-        reinterpret_cast<TelemetryState *>(m_sharedMemory ? m_sharedMemory->getBuffer() : NULL);
+        reinterpret_cast<TelemetryState *>(m_sharedMemory->getBuffer());
 
     if (!telemetryState || !telemetryState->running)
     {

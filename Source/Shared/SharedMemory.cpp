@@ -19,47 +19,60 @@
 //
 
 #include "Log.h"
-#include "StringHelper.h"
-
 #include "SharedMemory.h"
 
-SharedMemory::SharedMemory(const std::string &name, unsigned int size, bool openExistingOnly) 
+SharedMemory::SharedMemory() 
 {
+}
+
+SharedMemory::~SharedMemory()
+{
+    close();
+}
+
+bool SharedMemory::open(const std::string &name, unsigned int size, bool openExistingOnly)
+{
+    if (isOpened())
+    {
+        close();
+    }
+
     if (!openExistingOnly)
     {
-        LOG_INFO("Creating memory file %s size=%i", name.c_str(), size);
+        LOG_DEBUG("Creating memory file %s size=%i", name.c_str(), size);
         m_mapFile = CreateFileMappingA(INVALID_HANDLE_VALUE, // Use paging file
                                        nullptr,              // Default security
                                        PAGE_READWRITE,       // Read/write access
                                        0,                    // Maximum object size (high-order DWORD)
                                        size,                 // Maximum object size (low-order DWORD)
                                        name.c_str());        // Name of mapping object
-    }    
+    }
 
     if (m_mapFile == nullptr)
     {
-        LOG_INFO("Opening memory file %s size=%i", name.c_str(), size);
+        LOG_DEBUG("Try opening memory file %s size=%i", name.c_str(), size);
         m_mapFile = OpenFileMappingA(FILE_MAP_ALL_ACCESS, false, name.c_str());
     }
 
     if (m_mapFile == nullptr)
     {
-        LOG_ERROR("Could not open file mapping.");
-        return;
+        LOG_DEBUG("Could not open file mapping.");
+        return false;
     }
-    
+
     m_buffer = static_cast<void *>(MapViewOfFile(m_mapFile, FILE_MAP_ALL_ACCESS, 0, 0, size));
     if (m_buffer == nullptr)
     {
-        LOG_ERROR("Could not reserve buffer for shared memory");
+        LOG_DEBUG("Could not reserve buffer for shared memory");
         CloseHandle(m_mapFile);
-        return;
+        return false;
     }
-    
-    LOG_INFO("Memory file opened successfully.");
+
+    LOG_DEBUG("Memory file opened successfully.");
+    return true;
 }
 
-SharedMemory::~SharedMemory()
+void SharedMemory::close()
 {
     if (m_buffer != nullptr)
     {

@@ -22,10 +22,10 @@
     <ClCompile Include="..\..\Shared\Log.cpp">
       <Filter>Shared Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Shared\StringHelper.cpp">
+    <ClCompile Include="..\..\Shared\SharedMemory.cpp">
       <Filter>Shared Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Shared\SharedMemory.cpp">
+    <ClCompile Include="..\..\Shared\StringHelper.cpp">
       <Filter>Shared Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -39,10 +39,10 @@
     <ClInclude Include="..\..\Shared\PluginInterface.h">
       <Filter>Shared Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Shared\StringHelper.h">
+    <ClInclude Include="..\..\Shared\SharedMemory.h">
       <Filter>Shared Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Shared\SharedMemory.h">
+    <ClInclude Include="..\..\Shared\StringHelper.h">
       <Filter>Shared Files</Filter>
     </ClInclude>
   </ItemGroup>

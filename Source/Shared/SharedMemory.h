@@ -28,10 +28,13 @@
 class SharedMemory
 {
 public:
-    SharedMemory(const std::string &name, unsigned int size, bool openExistingOnly = false);
+    SharedMemory();
     ~SharedMemory();
 
-    bool isHooked() { return m_buffer != nullptr; }
+    bool open(const std::string &name, unsigned int size, bool openExistingOnly = false);
+    void close();
+
+    bool isOpened() { return m_buffer != nullptr; }
     void *getBuffer() { return m_buffer; }
 
 protected:

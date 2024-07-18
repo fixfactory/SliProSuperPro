@@ -20,6 +20,8 @@
 
 #pragma once
 
+#include <chrono>
+
 #include "PluginInterface.h"
 
 class SharedMemory;
@@ -44,4 +46,7 @@ private:
     plugin::TelemetryData m_telemetryData{};
     plugin::PhysicsData m_physicsData{};
     SharedMemory *m_sharedMemory{ nullptr };
+
+    using time_point = std::chrono::steady_clock::time_point;
+    time_point m_lastTryOpen = {};
 };
