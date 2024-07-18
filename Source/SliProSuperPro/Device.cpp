@@ -187,7 +187,9 @@ void DeviceManager::setTelemetry()
         rpmPercent = blinkSteps % 2 ? 1.f : 0.f;
     }
 
-    bool isStalled = rpm < kStalledRPM;
+    // Engine is assumed stalled when lower than half the idle RPM.
+    float stalledRPM = physics.rpmIdle > 0.f ? physics.rpmIdle / 2.f : kStalledRPM;
+    bool isStalled = rpm < stalledRPM;   
     if (isStalled)
     {
         int blinkSteps = (int)(milliseconds.count() / (500 / kStalledBlinkHz));

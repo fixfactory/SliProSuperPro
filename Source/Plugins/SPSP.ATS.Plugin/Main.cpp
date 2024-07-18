@@ -120,6 +120,7 @@ bool initialize_shared_memory(void)
 {
     // Setup the mapping.
     const DWORD memory_size = sizeof(telemetry_state_t);
+    log_line(SCS_LOG_TYPE_message, "Creating memory file %s size=%i", kSharedMemoryName, memory_size);
     g_memory_mapping = CreateFileMappingA(INVALID_HANDLE_VALUE, NULL, PAGE_READWRITE | SEC_COMMIT, 0, memory_size,
                                         kSharedMemoryName);
 
@@ -312,6 +313,7 @@ SCSAPI_VOID telemetry_pause(const scs_event_t event, const void *const UNUSED(ev
                             const scs_context_t UNUSED(context))
 {
     g_shared_memory->running = (event == SCS_TELEMETRY_EVENT_started) ? 1 : 0;
+    log_line(SCS_LOG_TYPE_message, "Telemetry Running %i", g_shared_memory->running);
 }
 
 /**
@@ -341,6 +343,9 @@ SCSAPI_VOID telemetry_configuration(const scs_event_t event, const void *const e
     g_shared_memory->rpmLimit = rpm_limit_attr ? rpm_limit_attr->value.value_float.value : 0.f;
     g_shared_memory->gearForwardCount = fwd_gear_count_attr ? fwd_gear_count_attr->value.value_u32.value : 0;
     g_shared_memory->gearReverseCount = reverse_gear_count_attr ? reverse_gear_count_attr->value.value_u32.value : 0;
+
+    log_line(SCS_LOG_TYPE_message, "Updated configuration rpmLimit=%f gearForward=%i gearReverse=%i", g_shared_memory->rpmLimit,
+             g_shared_memory->gearForwardCount, g_shared_memory->gearReverseCount);
 }
 
 /**
@@ -348,115 +353,121 @@ SCSAPI_VOID telemetry_configuration(const scs_event_t event, const void *const e
  *
  * See scssdk_telemetry.h
  */
-SCSAPI_RESULT scs_telemetry_init(const scs_u32_t version, const scs_telemetry_init_params_t *const params)
+extern "C"
 {
-    // We currently support only one version of the API.
-    if (version != SCS_TELEMETRY_VERSION_1_00)
+    scs_result_t __declspec(dllexport) __stdcall scs_telemetry_init(const scs_u32_t version,
+                                                                    const scs_telemetry_init_params_t *const params)
     {
-        return SCS_RESULT_unsupported;
-    }
-
-    const scs_telemetry_init_params_v100_t *const version_params =
-        static_cast<const scs_telemetry_init_params_v100_t *>(params);
-
-    g_game_log = version_params->common.log;
-
-    // Check application version.
-    log_line(SCS_LOG_TYPE_message, "Game '%s' %u.%u", version_params->common.game_id,
-             SCS_GET_MAJOR_VERSION(version_params->common.game_version),
-             SCS_GET_MINOR_VERSION(version_params->common.game_version));
-
-    if (strcmp(version_params->common.game_id, SCS_GAME_ID_EUT2) == 0)
-    {
-        // Below the minimum version there might be some missing features (only minor change) or
-        // incompatible values (major change).
-        if (version_params->common.game_version < SCS_TELEMETRY_EUT2_GAME_VERSION_1_03)
-        { // Fixed the wheels.count attribute
-            log_line(SCS_LOG_TYPE_error, "Too old version of the game");
-            g_game_log = NULL;
+        // We currently support only one version of the API.
+        if (version != SCS_TELEMETRY_VERSION_1_00)
+        {
             return SCS_RESULT_unsupported;
         }
 
-        if (version_params->common.game_version < SCS_TELEMETRY_EUT2_GAME_VERSION_1_07)
-        { // Fixed the angular acceleration calculation
-            log_line(SCS_LOG_TYPE_warning,
-                     "This version of the game has less precise output of angular acceleration of the cabin");
-        }
+        const scs_telemetry_init_params_v100_t *const version_params =
+            static_cast<const scs_telemetry_init_params_v100_t *>(params);
 
-        // Future versions are fine as long the major version is not changed.
-        const scs_u32_t IMPLEMENTED_VERSION = SCS_TELEMETRY_EUT2_GAME_VERSION_CURRENT;
-        if (SCS_GET_MAJOR_VERSION(version_params->common.game_version) > SCS_GET_MAJOR_VERSION(IMPLEMENTED_VERSION))
+        g_game_log = version_params->common.log;
+        log_line(SCS_LOG_TYPE_message, "Initializing SPSP.ATS.Plugin");
+
+        // Check application version.
+        log_line(SCS_LOG_TYPE_message, "Game '%s' %u.%u", version_params->common.game_id,
+                 SCS_GET_MAJOR_VERSION(version_params->common.game_version),
+                 SCS_GET_MINOR_VERSION(version_params->common.game_version));
+
+        if (strcmp(version_params->common.game_id, SCS_GAME_ID_EUT2) == 0)
         {
-            log_line(SCS_LOG_TYPE_warning, "Too new major version of the game, some features might behave incorrectly");
+            // Below the minimum version there might be some missing features (only minor change) or
+            // incompatible values (major change).
+            if (version_params->common.game_version < SCS_TELEMETRY_EUT2_GAME_VERSION_1_03)
+            { // Fixed the wheels.count attribute
+                log_line(SCS_LOG_TYPE_error, "Too old version of the game");
+                g_game_log = NULL;
+                return SCS_RESULT_unsupported;
+            }
+
+            if (version_params->common.game_version < SCS_TELEMETRY_EUT2_GAME_VERSION_1_07)
+            { // Fixed the angular acceleration calculation
+                log_line(SCS_LOG_TYPE_warning,
+                         "This version of the game has less precise output of angular acceleration of the cabin");
+            }
+
+            // Future versions are fine as long the major version is not changed.
+            const scs_u32_t IMPLEMENTED_VERSION = SCS_TELEMETRY_EUT2_GAME_VERSION_CURRENT;
+            if (SCS_GET_MAJOR_VERSION(version_params->common.game_version) > SCS_GET_MAJOR_VERSION(IMPLEMENTED_VERSION))
+            {
+                log_line(SCS_LOG_TYPE_warning,
+                         "Too new major version of the game, some features might behave incorrectly");
+            }
         }
-    }
-    else if (strcmp(version_params->common.game_id, SCS_GAME_ID_ATS) == 0)
-    {
-        // Below the minimum version there might be some missing features (only minor change) or
-        // incompatible values (major change).
-        const scs_u32_t MINIMAL_VERSION = SCS_TELEMETRY_ATS_GAME_VERSION_1_00;
-        if (version_params->common.game_version < MINIMAL_VERSION)
+        else if (strcmp(version_params->common.game_id, SCS_GAME_ID_ATS) == 0)
         {
-            log_line(SCS_LOG_TYPE_warning,
-                     "WARNING: Too old version of the game, some features might behave incorrectly");
-        }
+            // Below the minimum version there might be some missing features (only minor change) or
+            // incompatible values (major change).
+            const scs_u32_t MINIMAL_VERSION = SCS_TELEMETRY_ATS_GAME_VERSION_1_00;
+            if (version_params->common.game_version < MINIMAL_VERSION)
+            {
+                log_line(SCS_LOG_TYPE_warning,
+                         "WARNING: Too old version of the game, some features might behave incorrectly");
+            }
 
-        // Future versions are fine as long the major version is not changed.
-        const scs_u32_t IMPLEMENTED_VERSION = SCS_TELEMETRY_ATS_GAME_VERSION_CURRENT;
-        if (SCS_GET_MAJOR_VERSION(version_params->common.game_version) > SCS_GET_MAJOR_VERSION(IMPLEMENTED_VERSION))
+            // Future versions are fine as long the major version is not changed.
+            const scs_u32_t IMPLEMENTED_VERSION = SCS_TELEMETRY_ATS_GAME_VERSION_CURRENT;
+            if (SCS_GET_MAJOR_VERSION(version_params->common.game_version) > SCS_GET_MAJOR_VERSION(IMPLEMENTED_VERSION))
+            {
+                log_line(SCS_LOG_TYPE_warning,
+                         "WARNING: Too new major version of the game, some features might behave incorrectly");
+            }
+        }
+        else
         {
-            log_line(SCS_LOG_TYPE_warning,
-                     "WARNING: Too new major version of the game, some features might behave incorrectly");
+            log_line(SCS_LOG_TYPE_warning, "Unsupported game, some features or values might behave incorrectly");
         }
+
+        // Register for events. Note that failure to register those basic events
+        // likely indicates invalid usage of the api or some critical problem.
+        const bool events_registered =
+            (version_params->register_for_event(SCS_TELEMETRY_EVENT_paused, telemetry_pause, NULL) == SCS_RESULT_ok) &&
+            (version_params->register_for_event(SCS_TELEMETRY_EVENT_started, telemetry_pause, NULL) == SCS_RESULT_ok) &&
+            (version_params->register_for_event(SCS_TELEMETRY_EVENT_configuration, telemetry_configuration, NULL) ==
+             SCS_RESULT_ok);
+
+        if (!events_registered)
+        {
+            // Registrations created by unsuccessful initialization are
+            // cleared automatically so we can simply exit.
+            log_line(SCS_LOG_TYPE_error, "Unable to register event callbacks");
+            g_game_log = NULL;
+            return SCS_RESULT_generic_error;
+        }
+
+        // Initialize the shared memory.
+        if (!initialize_shared_memory())
+        {
+            log_line(SCS_LOG_TYPE_error, "Unable to initialize shared memory");
+            g_game_log = NULL;
+            return SCS_RESULT_generic_error;
+        }
+
+        // Register all changes we are interested in. Note that some wheel-related channels will be initialized when we
+        // receive a configuration event. The channel might be missing if the game does not support it
+        // (SCS_RESULT_not_found) or if does not support the requested type (SCS_RESULT_unsupported_type).
+        version_params->register_for_channel(SCS_TELEMETRY_TRUCK_CHANNEL_speed, SCS_U32_NIL, SCS_VALUE_TYPE_float,
+                                             SCS_TELEMETRY_CHANNEL_FLAG_no_value, telemetry_store_float,
+                                             &g_shared_memory->speedometer_speed);
+
+        version_params->register_for_channel(SCS_TELEMETRY_TRUCK_CHANNEL_engine_rpm, SCS_U32_NIL, SCS_VALUE_TYPE_float,
+                                             SCS_TELEMETRY_CHANNEL_FLAG_no_value, telemetry_store_float,
+                                             &g_shared_memory->rpm);
+
+        version_params->register_for_channel(SCS_TELEMETRY_TRUCK_CHANNEL_engine_gear, SCS_U32_NIL, SCS_VALUE_TYPE_s32,
+                                             SCS_TELEMETRY_CHANNEL_FLAG_no_value, telemetry_store_s32,
+                                             &g_shared_memory->gear);
+
+        // We are done.
+        log_line(SCS_LOG_TYPE_message, "SPSP.ATS.Plugin initialized");
+        return SCS_RESULT_ok;
     }
-    else
-    {
-        log_line(SCS_LOG_TYPE_warning, "Unsupported game, some features or values might behave incorrectly");
-    }
-
-    // Register for events. Note that failure to register those basic events
-    // likely indicates invalid usage of the api or some critical problem.
-    const bool events_registered =
-        (version_params->register_for_event(SCS_TELEMETRY_EVENT_paused, telemetry_pause, NULL) == SCS_RESULT_ok) &&
-        (version_params->register_for_event(SCS_TELEMETRY_EVENT_started, telemetry_pause, NULL) == SCS_RESULT_ok) &&
-        (version_params->register_for_event(SCS_TELEMETRY_EVENT_configuration, telemetry_configuration, NULL) ==
-         SCS_RESULT_ok);
-
-    if (!events_registered)
-    {
-        // Registrations created by unsuccessful initialization are
-        // cleared automatically so we can simply exit.
-        log_line(SCS_LOG_TYPE_error, "Unable to register event callbacks");
-        g_game_log = NULL;
-        return SCS_RESULT_generic_error;
-    }
-
-    // Initialize the shared memory.
-    if (!initialize_shared_memory())
-    {
-        log_line(SCS_LOG_TYPE_error, "Unable to initialize shared memory");
-        g_game_log = NULL;
-        return SCS_RESULT_generic_error;
-    }
-
-    // Register all changes we are interested in. Note that some wheel-related channels will be initialized when we
-    // receive a configuration event. The channel might be missing if the game does not support it
-    // (SCS_RESULT_not_found) or if does not support the requested type (SCS_RESULT_unsupported_type).
-    version_params->register_for_channel(SCS_TELEMETRY_TRUCK_CHANNEL_speed, SCS_U32_NIL, SCS_VALUE_TYPE_float,
-                                         SCS_TELEMETRY_CHANNEL_FLAG_no_value, telemetry_store_float,
-                                         &g_shared_memory->speedometer_speed);
-
-    version_params->register_for_channel(SCS_TELEMETRY_TRUCK_CHANNEL_engine_rpm, SCS_U32_NIL, SCS_VALUE_TYPE_float,
-                                         SCS_TELEMETRY_CHANNEL_FLAG_no_value, telemetry_store_float,
-                                         &g_shared_memory->rpm);
-
-    version_params->register_for_channel(SCS_TELEMETRY_TRUCK_CHANNEL_engine_gear, SCS_U32_NIL, SCS_VALUE_TYPE_float,
-                                         SCS_TELEMETRY_CHANNEL_FLAG_no_value, telemetry_store_s32,
-                                         &g_shared_memory->gear);
-
-    // We are done.
-    log_line(SCS_LOG_TYPE_message, "SPSP.ATS.Plugin initialized");
-    return SCS_RESULT_ok;
 }
 
 /**
@@ -464,13 +475,16 @@ SCSAPI_RESULT scs_telemetry_init(const scs_u32_t version, const scs_telemetry_in
  *
  * See scssdk_telemetry.h
  */
-SCSAPI_VOID scs_telemetry_shutdown(void)
+extern "C"
 {
-    // Any cleanup needed. The registrations will be removed automatically
-    // so there is no need to do that manually.
-    deinitialize_shared_memory();
+    void __declspec(dllexport) __stdcall scs_telemetry_shutdown(void)
+    {
+        // Any cleanup needed. The registrations will be removed automatically
+        // so there is no need to do that manually.
+        deinitialize_shared_memory();
 
-    g_game_log = NULL;
+        g_game_log = NULL;
+    }
 }
 
 BOOL APIENTRY DllMain(HMODULE module, DWORD reason_for_call, LPVOID reseved)

@@ -38,6 +38,7 @@ namespace plugin
     {
         int gearCount;
         float rpmLimit;
+        float rpmIdle;
         float rpmDownshift[kMaxGearCount];
         float rpmUpshift[kMaxGearCount];
     };

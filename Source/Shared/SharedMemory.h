@@ -28,16 +28,13 @@
 class SharedMemory
 {
 public:
-    SharedMemory(const std::string &name, unsigned int size);
+    SharedMemory(const std::string &name, unsigned int size, bool openExistingOnly = false);
     ~SharedMemory();
 
-    bool isHooked() { return m_isHooked; }
+    bool isHooked() { return m_buffer != nullptr; }
     void *getBuffer() { return m_buffer; }
 
 protected:
-    std::wstring m_mapName;
-    int m_mapSize;
-    HANDLE m_mapFile;
-    void *m_buffer;
-    bool m_isHooked{ false };
+    HANDLE m_mapFile{ nullptr };
+    void *m_buffer{ nullptr };
 };

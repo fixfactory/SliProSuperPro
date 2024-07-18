@@ -23,35 +23,29 @@
 
 #include "SharedMemory.h"
 
-SharedMemory::SharedMemory(const std::string &name, unsigned int size) 
-    : m_mapSize(size)
+SharedMemory::SharedMemory(const std::string &name, unsigned int size, bool openExistingOnly) 
 {
-    m_mapName = string::convertToWide(name.c_str());
-
-    m_mapFile = CreateFileMapping(INVALID_HANDLE_VALUE, // Use paging file
-                                  nullptr,              // Default security
-                                  PAGE_READWRITE,       // Read/write access
-                                  0,                    // Maximum object size (high-order DWORD)
-                                  size,                 // Maximum object size (low-order DWORD)
-                                  m_mapName.c_str());   // Name of mapping object
+    if (!openExistingOnly)
+    {
+        LOG_INFO("Creating memory file %s size=%i", name.c_str(), size);
+        m_mapFile = CreateFileMappingA(INVALID_HANDLE_VALUE, // Use paging file
+                                       nullptr,              // Default security
+                                       PAGE_READWRITE,       // Read/write access
+                                       0,                    // Maximum object size (high-order DWORD)
+                                       size,                 // Maximum object size (low-order DWORD)
+                                       name.c_str());        // Name of mapping object
+    }    
 
     if (m_mapFile == nullptr)
     {
-        if (GetLastError() == static_cast<DWORD>(183)) 
-        {
-            // File mapping already exists; try opening.
-            m_mapFile = OpenFileMapping(FILE_MAP_ALL_ACCESS, false, m_mapName.c_str());
-            if (m_mapFile == nullptr)
-            {
-                LOG_ERROR("Could not open existing file mapping.");
-                return;
-            }
-        }
-        else
-        {
-            LOG_ERROR("Could not create file mapping object");
-            return;
-        }
+        LOG_INFO("Opening memory file %s size=%i", name.c_str(), size);
+        m_mapFile = OpenFileMappingA(FILE_MAP_ALL_ACCESS, false, name.c_str());
+    }
+
+    if (m_mapFile == nullptr)
+    {
+        LOG_ERROR("Could not open file mapping.");
+        return;
     }
     
     m_buffer = static_cast<void *>(MapViewOfFile(m_mapFile, FILE_MAP_ALL_ACCESS, 0, 0, size));
@@ -62,25 +56,20 @@ SharedMemory::SharedMemory(const std::string &name, unsigned int size)
         return;
     }
     
-    memset(m_buffer, 0, size);
-    m_isHooked = true;
-    LOG_INFO("Memory file mapping hooked.");
+    LOG_INFO("Memory file opened successfully.");
 }
 
 SharedMemory::~SharedMemory()
 {
-    if (m_isHooked)
+    if (m_buffer != nullptr)
     {
-        if (m_buffer != nullptr)
-        {
-            UnmapViewOfFile(m_buffer);
-        }
-
-        if (m_mapFile != nullptr)
-        {
-            CloseHandle(m_mapFile);
-        }
+        UnmapViewOfFile(m_buffer);
+        m_buffer = nullptr;
     }
 
-    m_isHooked = false;
+    if (m_mapFile != nullptr)
+    {
+        CloseHandle(m_mapFile);
+        m_mapFile = nullptr;
+    }
 }

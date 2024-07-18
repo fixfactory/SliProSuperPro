@@ -28,6 +28,12 @@
 // Name of shared memory map. Must match the name used in SPSP.ATS.Plugin.dll
 const std::string kSharedMemoryName("SPSP.ATS.Plugin");
 
+const float kMpsToKph = 3.6f;
+const float kKphtoMph = 0.62137119f;
+
+#pragma pack(push)
+#pragma pack(1)
+
 // The layout of the shared memory.
 struct TelemetryState
 {
@@ -39,6 +45,8 @@ struct TelemetryState
     signed __int32 gearForwardCount;
     signed __int32 gearReverseCount;
 };
+
+#pragma pack(pop)
 
 TelemetryManager &TelemetryManager::getSingleton()
 {
@@ -56,7 +64,7 @@ TelemetryManager::~TelemetryManager()
 
 void TelemetryManager::init()
 {
-    m_sharedMemory = new SharedMemory(kSharedMemoryName, sizeof(TelemetryState));
+    m_sharedMemory = new SharedMemory(kSharedMemoryName, sizeof(TelemetryState), true);
 }
 
 void TelemetryManager::deinit()
@@ -78,16 +86,28 @@ bool TelemetryManager::fetchTelemetryData()
         return false;
     }
     
-    m_telemetryData.speedKph = telemetryState->speedometer_speed;
-    m_telemetryData.gear = telemetryState->gear;
+    // Return the speed in MPH because this is America.
+    // TODO: Configurable speed units.
+    m_telemetryData.speedKph = telemetryState->speedometer_speed * kMpsToKph * kKphtoMph;
+
+    if (telemetryState->gear < 0)
+    {
+        m_telemetryData.gear = 0;
+    }
+    else
+    {
+        m_telemetryData.gear = telemetryState->gear + 1;
+    }
+    
     m_telemetryData.rpm = telemetryState->rpm;
     
     m_physicsData.rpmLimit = telemetryState->rpmLimit;
+    m_physicsData.rpmIdle = 650.f;
     m_physicsData.gearCount = telemetryState->gearForwardCount;
 
     for (int i = 0; i < plugin::kMaxGearCount; ++i)
     {
-        m_physicsData.rpmDownshift[i] = 300;
+        m_physicsData.rpmDownshift[i] = m_physicsData.rpmIdle;
         m_physicsData.rpmUpshift[i] = telemetryState->rpmLimit;
     }
 
