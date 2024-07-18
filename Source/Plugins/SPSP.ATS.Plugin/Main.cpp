@@ -36,6 +36,8 @@
 
 #define UNUSED(x)
 
+const char *kSharedMemoryName = "SPSP.ATS.Plugin";
+
 /**
  * @name Callbacks remembered from the initialization info.
  */
@@ -119,7 +121,7 @@ bool initialize_shared_memory(void)
     // Setup the mapping.
     const DWORD memory_size = sizeof(telemetry_state_t);
     g_memory_mapping = CreateFileMappingA(INVALID_HANDLE_VALUE, NULL, PAGE_READWRITE | SEC_COMMIT, 0, memory_size,
-                                        "SPSP.ATS.Plugin");
+                                        kSharedMemoryName);
 
     if (!g_memory_mapping)
     {

@@ -1,7 +1,7 @@
 //
 // SliProSuperPro
 // A Shift Light Indicator controller
-// Copyright 2023 Fixfactory
+// Copyright 2024 Fixfactory
 //
 // This file is part of SliProSuperPro.
 //
@@ -20,28 +20,24 @@
 
 #pragma once
 
-#include "PluginInterface.h"
+#include <Windows.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string>
 
-class SharedMemory;
-
-class TelemetryManager
+class SharedMemory
 {
 public:
-    static TelemetryManager &getSingleton();
+    SharedMemory(const std::string &name, unsigned int size);
+    ~SharedMemory();
 
-    TelemetryManager();
-    ~TelemetryManager();
+    bool isHooked() { return m_isHooked; }
+    void *getBuffer() { return m_buffer; }
 
-    void init();
-    void deinit();
-
-    bool fetchTelemetryData();
-    const plugin::TelemetryData &getTelemetryData() const;
-    const plugin::PhysicsData &getPhysicsData() const;
-
-private:
-    bool m_receivingTelemetry{ false };
-    plugin::TelemetryData m_telemetryData{};
-    plugin::PhysicsData m_physicsData{};
-    SharedMemory *m_sharedMemory{ nullptr };
+protected:
+    std::wstring m_mapName;
+    int m_mapSize;
+    HANDLE m_mapFile;
+    void *m_buffer;
+    bool m_isHooked{ false };
 };

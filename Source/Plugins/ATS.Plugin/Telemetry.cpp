@@ -23,7 +23,22 @@
 
 #include "Telemetry.h"
 #include "Log.h"
+#include "SharedMemory.h"
 
+// Name of shared memory map. Must match the name used in SPSP.ATS.Plugin.dll
+const std::string kSharedMemoryName("SPSP.ATS.Plugin");
+
+// The layout of the shared memory.
+struct TelemetryState
+{
+    unsigned __int8 running;
+    float speedometer_speed;
+    float rpm;
+    float rpmLimit;
+    signed __int32 gear;
+    signed __int32 gearForwardCount;
+    signed __int32 gearReverseCount;
+};
 
 TelemetryManager &TelemetryManager::getSingleton()
 {
@@ -41,16 +56,42 @@ TelemetryManager::~TelemetryManager()
 
 void TelemetryManager::init()
 {
+    m_sharedMemory = new SharedMemory(kSharedMemoryName, sizeof(TelemetryState));
 }
 
 void TelemetryManager::deinit()
 {
-
+    if (m_sharedMemory)
+    {
+        delete m_sharedMemory;
+        m_sharedMemory = nullptr;
+    }
 }
 
 bool TelemetryManager::fetchTelemetryData()
 {
-    return false;
+    TelemetryState *telemetryState =
+        reinterpret_cast<TelemetryState *>(m_sharedMemory ? m_sharedMemory->getBuffer() : NULL);
+
+    if (!telemetryState || !telemetryState->running)
+    {
+        return false;
+    }
+    
+    m_telemetryData.speedKph = telemetryState->speedometer_speed;
+    m_telemetryData.gear = telemetryState->gear;
+    m_telemetryData.rpm = telemetryState->rpm;
+    
+    m_physicsData.rpmLimit = telemetryState->rpmLimit;
+    m_physicsData.gearCount = telemetryState->gearForwardCount;
+
+    for (int i = 0; i < plugin::kMaxGearCount; ++i)
+    {
+        m_physicsData.rpmDownshift[i] = 300;
+        m_physicsData.rpmUpshift[i] = telemetryState->rpmLimit;
+    }
+
+    return true;
 }
 
 const plugin::TelemetryData &TelemetryManager::getTelemetryData() const

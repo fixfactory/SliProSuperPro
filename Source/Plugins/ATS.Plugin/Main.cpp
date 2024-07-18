@@ -76,7 +76,7 @@ extern "C"
 
     void DLL_EXPORT getGameExecFileName(std::string &outExecFileName)
     {
-        outExecFileName = "iRacingSim64DX11.exe";
+        outExecFileName = "amtrucks.exe";
     }
 
     void DLL_EXPORT setGameIsRunning(bool isRunning, std::string execPath)
