@@ -11,6 +11,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RBR-NGP.Plugin", "Source\Pl
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ATS.Plugin", "Source\Plugins\ATS.Plugin\ATS.Plugin.vcxproj", "{31DD9BD4-B455-4709-9312-36362CF6BCF3}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SPSP.ATS.Plugin", "Source\Plugins\SPSP.ATS.Plugin\SPSP.ATS.Plugin.vcxproj", "{EE4D90E8-513F-4AF3-9358-CEF90E9A86DE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -51,6 +53,14 @@ Global
 		{31DD9BD4-B455-4709-9312-36362CF6BCF3}.Release|x64.Build.0 = Release|x64
 		{31DD9BD4-B455-4709-9312-36362CF6BCF3}.Release|x86.ActiveCfg = Release|Win32
 		{31DD9BD4-B455-4709-9312-36362CF6BCF3}.Release|x86.Build.0 = Release|Win32
+		{EE4D90E8-513F-4AF3-9358-CEF90E9A86DE}.Debug|x64.ActiveCfg = Debug|x64
+		{EE4D90E8-513F-4AF3-9358-CEF90E9A86DE}.Debug|x64.Build.0 = Debug|x64
+		{EE4D90E8-513F-4AF3-9358-CEF90E9A86DE}.Debug|x86.ActiveCfg = Debug|Win32
+		{EE4D90E8-513F-4AF3-9358-CEF90E9A86DE}.Debug|x86.Build.0 = Debug|Win32
+		{EE4D90E8-513F-4AF3-9358-CEF90E9A86DE}.Release|x64.ActiveCfg = Release|x64
+		{EE4D90E8-513F-4AF3-9358-CEF90E9A86DE}.Release|x64.Build.0 = Release|x64
+		{EE4D90E8-513F-4AF3-9358-CEF90E9A86DE}.Release|x86.ActiveCfg = Release|Win32
+		{EE4D90E8-513F-4AF3-9358-CEF90E9A86DE}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
