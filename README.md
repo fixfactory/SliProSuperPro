@@ -36,7 +36,7 @@ Use `SliProSuperPro.exe --help` for a list of options.
 
 ## Richard Burns Rally Configuration
 
-UDP Telemetry must be manually turned ON in your Richard Burns Rally installation for SliProSuperPro to be able to read the telemetry. In the RSF Launcher, go to *Advanced Settings* > *Telemetry* and turn ON UDP Telemetry. The address must be `127.0.0.1:6776`. If you also want to send the telemetry to another application such as Sim Hub, add another address (e.g. `127.0.0.1:6777`) and configure the app to use that address.
+UDP Telemetry must be manually turned ON in your Richard Burns Rally installation for SliProSuperPro to be able to read the telemetry. In the RSF Launcher, go to *Advanced Settings* > *Telemetry* and turn ON *UDP Telemetry*. The address must be `127.0.0.1:6776`. If you also want to send the telemetry to another application such as Sim Hub, add another address (e.g. `127.0.0.1:6777`) and configure the app to use that address.
 
 
 ## iRacing Configuration
