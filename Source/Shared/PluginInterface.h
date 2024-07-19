@@ -32,7 +32,7 @@ namespace plugin
         bool speedLimiter;
     };
 
-    constexpr int kMaxGearCount = 10;
+    constexpr int kMaxGearCount = 20;
 
     struct PhysicsData
     {
