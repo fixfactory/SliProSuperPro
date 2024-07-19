@@ -60,6 +60,8 @@ int main(int argc, char *argv[])
 {
     LogManager::getSingleton().init();
     LOG_INFO("%s version %s", version::kName.c_str(), version::getString().c_str());
+    LOG_INFO("  Run with --help for a list of options");
+    LOG_INFO("");
 
     if (!SetConsoleCtrlHandler((PHANDLER_ROUTINE)consoleCtrlHandler, TRUE))
     {
