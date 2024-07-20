@@ -96,7 +96,7 @@ void ProcessManager::update(timing::seconds deltaTimeSecs)
         pid = findProcessId(plugin->gameExecFileName);
         if (pid != 0)
         {
-            LOG_INFO("Game running: %s (pid %lu)", plugin->gameExecFileName.c_str(), pid);
+            LOG_INFO("Game running: %s (pid: %lu)", plugin->gameExecFileName.c_str(), pid);
             activePlugin = plugin;
             break;
         }
