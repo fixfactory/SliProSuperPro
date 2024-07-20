@@ -13,6 +13,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ATS.Plugin", "Source\Plugin
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SPSP.ATS.Plugin", "Source\Plugins\SPSP.ATS.Plugin\SPSP.ATS.Plugin.vcxproj", "{EE4D90E8-513F-4AF3-9358-CEF90E9A86DE}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LiveForSpeed.Plugin", "Source\Plugins\LiveForSpeed.Plugin\LiveForSpeed.Plugin.vcxproj", "{140E9275-0912-4E21-92D7-58D47CB4C3DC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -61,6 +63,14 @@ Global
 		{EE4D90E8-513F-4AF3-9358-CEF90E9A86DE}.Release|x64.Build.0 = Release|x64
 		{EE4D90E8-513F-4AF3-9358-CEF90E9A86DE}.Release|x86.ActiveCfg = Release|Win32
 		{EE4D90E8-513F-4AF3-9358-CEF90E9A86DE}.Release|x86.Build.0 = Release|Win32
+		{140E9275-0912-4E21-92D7-58D47CB4C3DC}.Debug|x64.ActiveCfg = Debug|x64
+		{140E9275-0912-4E21-92D7-58D47CB4C3DC}.Debug|x64.Build.0 = Debug|x64
+		{140E9275-0912-4E21-92D7-58D47CB4C3DC}.Debug|x86.ActiveCfg = Debug|Win32
+		{140E9275-0912-4E21-92D7-58D47CB4C3DC}.Debug|x86.Build.0 = Debug|Win32
+		{140E9275-0912-4E21-92D7-58D47CB4C3DC}.Release|x64.ActiveCfg = Release|x64
+		{140E9275-0912-4E21-92D7-58D47CB4C3DC}.Release|x64.Build.0 = Release|x64
+		{140E9275-0912-4E21-92D7-58D47CB4C3DC}.Release|x86.ActiveCfg = Release|Win32
+		{140E9275-0912-4E21-92D7-58D47CB4C3DC}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
