@@ -175,7 +175,7 @@ void DeviceManager::setTelemetry()
     bool isShiftLightOn = false;
     auto duration = std::chrono::steady_clock::now().time_since_epoch();
     auto milliseconds = std::chrono::duration_cast<std::chrono::milliseconds>(duration);
-    if (rpm >= highRPM && !isReverse && !isLastGear)
+    if (highRPM > 0.f && rpm >= highRPM && !isReverse && !isLastGear)
     {
         int blinkSteps = (int)(milliseconds.count() / (500 / kShiftLightBlinkHz));
         isShiftLightOn = blinkSteps % 2;
