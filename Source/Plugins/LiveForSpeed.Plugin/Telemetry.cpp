@@ -193,8 +193,8 @@ bool TelemetryManager::fetchTelemetryData()
     {
         if (!m_carId.empty())
         {
-            LOG_INFO("Player entered new car (id %s)", m_carId.c_str());
             parseCarData();
+            LOG_INFO("Player entered new car (id: %s) (name: %s)", m_carId.c_str(), m_carName.c_str());
         }
         else
         {
@@ -320,6 +320,16 @@ void TelemetryManager::parseCarData()
     {
         LOG_WARN("Car not found in car data file");
         return;
+    }
+
+    auto name = carData["name"];
+    if (!name.empty())
+    {
+        m_carName = name.template get<std::string>();
+    }
+    else
+    {
+        LOG_WARN("name not specified in car data file");
     }
 
     auto finalGear = carData["finalGear"];

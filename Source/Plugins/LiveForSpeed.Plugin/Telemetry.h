@@ -59,6 +59,7 @@ private:
     json m_carData;
     std::string m_carId;
     std::string m_lastCarId;
+    std::string m_carName;
 
     bool m_useInSim{ false };
     std::string m_inSimHostname;

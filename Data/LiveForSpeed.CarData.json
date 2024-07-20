@@ -1,126 +1,147 @@
 {
     "cars": {
-        "UFR": {
-            "finalGear": 5,
-            "rpmLimit": 9000,
-            "firstRPM": 7000,
-            "lastRPM": 9000
-        },
-        "FBM": {
-            "finalGear": 6,
-            "rpmLimit": 9100,
-            "firstRPM": 6500,
-            "lastRPM": 9100
-        },
         "UF1": {
+            "name": "UF 1000",
             "finalGear": 4,
             "rpmLimit": 7000,
             "firstRPM": 5800,
             "lastRPM": 6700
         },
         "XFG": {
+            "name": "XF GTI",
             "finalGear": 5,
             "rpmLimit": 7990,
             "firstRPM": 6800,
             "lastRPM": 7600
         },
         "XRG": {
+            "name": "XR GT",
             "finalGear": 5,
             "rpmLimit": 6990,
             "firstRPM": 5500,
             "lastRPM": 6500
         },
         "LX4": {
+            "name": "LX4",
             "finalGear": 6,
             "rpmLimit": 8900,
             "firstRPM": 7700,
             "lastRPM": 8600
         },
         "LX6": {
+            "name": "LX6",
             "finalGear": 6,
             "rpmLimit": 8900,
             "firstRPM": 7700,
             "lastRPM": 8600
         },
         "RB4": {
+            "name": "RB4 GT",
             "finalGear": 5,
             "rpmLimit": 7450,
             "firstRPM": 6300,
             "lastRPM": 7100
         },
         "FXO": {
+            "name": "FXO Turbo",
             "finalGear": 5,
             "rpmLimit": 7450,
             "firstRPM": 6400,
             "lastRPM": 7000
         },
         "XRT": {
+            "name": "XR GT Turbo",
             "finalGear": 5,
             "rpmLimit": 7450,
             "firstRPM": 6300,
             "lastRPM": 7000
         },
         "RAC": {
+            "name": "Raceabout",
             "finalGear": 5,
             "rpmLimit": 6950,
             "firstRPM": 5800,
             "lastRPM": 6700
         },
         "FZ5": {
+            "name": "FZ50",
             "finalGear": 6,
             "rpmLimit": 7950,
             "firstRPM": 6800,
             "lastRPM": 7500
         },
+        "UFR": {
+            "name": "UF GTR",
+            "finalGear": 5,
+            "rpmLimit": 9000,
+            "firstRPM": 7000,
+            "lastRPM": 9000
+        },
         "XFR": {
+            "name": "XF GTR",
             "finalGear": 6,
             "rpmLimit": 7950,
             "firstRPM": 6800,
             "lastRPM": 7500
         },
         "FXR": {
+            "name": "FXO GTR",
             "finalGear": 6,
             "rpmLimit": 7450,
             "firstRPM": 6100,
             "lastRPM": 7000
         },
         "XRR": {
+            "name": "XR GTR",
             "finalGear": 6,
             "rpmLimit": 7450,
             "firstRPM": 6200,
             "lastRPM": 7200
         },
         "FZR": {
+            "name": "FZ50 GTR",
             "finalGear": 6,
             "rpmLimit": 8450,
             "firstRPM": 7200,
             "lastRPM": 8200
         },
         "MRT": {
+            "name": "MRT5",
             "finalGear": 6,
             "rpmLimit": 9200,
             "firstRPM": 4000,
             "lastRPM": 9300
         },
+        "FBM": {
+            "name": "Formula BMW FB02",
+            "finalGear": 6,
+            "rpmLimit": 9100,
+            "firstRPM": 6500,
+            "lastRPM": 9100
+        },
         "FOX": {
+            "name": "Formula XR",
             "finalGear": 6,
             "rpmLimit": 7450,
             "firstRPM": 6400,
             "lastRPM": 7300
         },
         "FO8": {
+            "name": "Formula V8",
             "finalGear": 6,
             "rpmLimit": 9450,
             "firstRPM": 8400,
             "lastRPM": 9300
         },
         "BF1": {
+            "name": "BMW Sauber F1.06",
             "finalGear": 7,
             "rpmLimit": 19950,
             "firstRPM": 17600,
             "lastRPM": 19500
         },
         "511C29": {
+            "name": "Imprezzive JGT",
             "finalGear": 6,
             "rpmLimit": 7547,
             "firstRPM": 4889,
