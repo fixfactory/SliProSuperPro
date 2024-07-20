@@ -1407,11 +1407,9 @@ bool is_official_prefix(const char* prefix)
     return is_ascii_char(prefix[0]) && is_ascii_char(prefix[1]) && is_ascii_char(prefix[2]) && prefix[3]==0;
 }
 
-char* expand_prefix(const char* prefix)
+bool expand_prefix(const char *prefix, char *expanded_prefix, size_t size)
 {
-    char expanded_prefix[8];
-
-    memset(expanded_prefix, 0, 8);
+    memset(expanded_prefix, 0, size);
 
     if (prefix && prefix[3]==0) // valid prefix supplied
     {
@@ -1421,11 +1419,11 @@ char* expand_prefix(const char* prefix)
         }
         else // mod
         {
-            sprintf(expanded_prefix, "%06X", *(unsigned *)prefix); // regard the prefix as an unsigned integer and expand it as a 6-digit hexadecimal string
+            sprintf_s(expanded_prefix, size, "%06X", *(unsigned *)prefix); // regard the prefix as an unsigned integer and expand it as a 6-digit hexadecimal string
         }
+
+        return true;
     }
 
-    return expanded_prefix;
+    return false;
 }
-
-

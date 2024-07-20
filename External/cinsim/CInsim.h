@@ -251,6 +251,6 @@ char* ms2str (long milisecs, char *str, int thousands=0); // Converts milisecond
 bool is_ascii_char(char c);  // checks if character c is 0-9 / A-Z / a-z
 bool is_valid_id(unsigned id); // return 1 if the supplied id is valid as a mod's skin ID
 bool is_official_prefix(const char* prefix);
-char* expand_prefix(const char* prefix); // fill a static buffer "char expanded_prefix[8]" and return a pointer to it
+bool expand_prefix(const char *prefix, char *expanded_prefix, size_t size); // fill a static buffer "char expanded_prefix[8]" and return a pointer to it
 
 #endif
