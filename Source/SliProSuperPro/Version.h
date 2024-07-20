@@ -27,7 +27,7 @@ namespace version
 {
     const std::string kName("Sli-Pro Super Pro");
     constexpr unsigned int kMajor = 0;
-    constexpr unsigned int kMinor = 5;
+    constexpr unsigned int kMinor = 6;
     constexpr unsigned int kRevision = 0;
 
     std::string getString()
