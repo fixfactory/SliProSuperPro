@@ -18,6 +18,8 @@
 // with SliProSuperPro. If not, see <http://www.gnu.org/licenses/>.
 //
 
+#include "cinsim/CInsim.h" // Must include before Windows.h to avoid redefines
+
 #include <Windows.h>
 #include <fstream>
 
@@ -45,21 +47,49 @@ void TelemetryManager::init()
 {
     readCarData();
     readConfig();
+    openInSim();
 }
 
 void TelemetryManager::deinit()
 {
+    closeInSim();
 }
 
 bool TelemetryManager::fetchTelemetryData()
 {
+    if (CInsim::getInstance()->next_packet() < 0)
+    {
+        return false;
+    }
+
+    char packetType = CInsim::getInstance()->peek_packet();
+    void *packet = CInsim::getInstance()->get_packet();
+
+    switch (packetType)
+    {
+    case ISP_NPL: {
+        IS_NPL *npl = reinterpret_cast<IS_NPL *>(packet);
+        if (npl->UCID == 0)
+        {
+            m_carPath = npl->CName;
+        }
+    }
+        break;
+
+    default:
+        break;
+    }
+
     m_telemetryData.gear = 0;
     m_telemetryData.rpm = 0.f;
     m_telemetryData.speedKph = 3.6f;
 
-    m_carPath = "fox";
-    parseCarData();
-
+    if (m_carPath != m_lastCarPath)
+    {
+        parseCarData();
+        m_lastCarPath = m_carPath;
+    }
+    
     return true;
 }
 
@@ -194,4 +224,27 @@ void TelemetryManager::parseCarData()
             }
         }
     }
+}
+
+void TelemetryManager::openInSim()
+{
+    CInsim::getInstance()->setHost(m_inSimHostname);
+    CInsim::getInstance()->setTCPPort(m_inSimPort);
+    CInsim::getInstance()->setPassword(m_inSimPassword);
+    CInsim::getInstance()->setProduct("SliProSuperPro");
+    CInsim::getInstance()->setVersion(9);
+
+    if (CInsim::getInstance()->init() < 0)
+    {
+        LOG_ERROR("Could not open InSim connection at %s:%i", m_inSimHostname.c_str(), m_inSimPort);
+        return;
+    }
+
+    LOG_INFO("InSim connection established at %s:%i", m_inSimHostname.c_str(), m_inSimPort);
+}
+
+void TelemetryManager::closeInSim()
+{
+    CInsim::getInstance()->disconnect();
+    CInsim::getInstance()->removeInstance();
 }

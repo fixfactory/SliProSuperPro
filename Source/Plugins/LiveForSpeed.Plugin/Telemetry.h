@@ -46,6 +46,7 @@ private:
     plugin::PhysicsData m_physicsData{};
     json m_carData;
     std::string m_carPath;
+    std::string m_lastCarPath;
 
     std::string m_inSimHostname;
     int m_inSimPort{ 0 };
@@ -54,4 +55,6 @@ private:
     void readConfig();
     void readCarData();
     void parseCarData();
+    void openInSim();
+    void closeInSim();
 };
