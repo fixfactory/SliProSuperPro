@@ -51,7 +51,7 @@ The plugin supports specifying global RPM values that are the same for every gea
 
 ## American Truck Simulator Configuration
 
-The plugin `SPSP.ATS.Plugin.dll` must be copied in your American Truck Simulator plugin folder which is typically found at `C:\Program Files (x86)\Steam\steamapps\common\American Truck Simulator\bin\win_x64\plugins`. The .dll to copy can be found in the `\Game Plugins\American Truck Simulator` folder in the zip file. Then when launching American Truck Simulator, the game will warn you about advanced SDK features being used. Simply ckick OK.
+The plugin `SPSP.ATS.Plugin.dll` must be copied in your American Truck Simulator plugin folder which is typically found at `C:\Program Files (x86)\Steam\steamapps\common\American Truck Simulator\bin\win_x64\plugins`. The .dll to copy can be found in the `\Game Plugins\American Truck Simulator` folder in the zip file. Then when launching American Truck Simulator, the game will warn you about advanced SDK features being used. Simply click OK.
 
 
 ## Live For Speed Configuration
