@@ -10,10 +10,11 @@ Copyright 2023-2024 Fixfactory
 
 SliProSuperPro is a command line application that controls a Leo Bodnar Electronics SLI-Pro device (https://www.leobodnar.com/shop/index.php?main_page=product_info&products_id=185). SliProSuperPro reads the telemetry data from a sim-racing game and displays the gear, RPM, and speed on the SLI-Pro device.
 
-SliProSuperPro currently supports my three favorite games:
+SliProSuperPro currently supports the following games:
 - Richard Burns Rally (https://rallysimfans.hu/rbr/index.php)
 - iRacing (https://www.iracing.com)
 - American Truck Simulator (https://americantrucksimulator.com)
+- Live For Speed (https://www.lfs.net)
 
 Support for additional games can be added via plugins.
 

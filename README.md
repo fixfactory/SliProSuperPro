@@ -10,10 +10,11 @@ SliProSuperPro is a command line application that controls a [Leo Bodnar Electro
   <img src="Docs/Images/SLI-Pro-Preview.gif" width="300" height="225" />
 </p>
 
-SliProSuperPro currently supports my three favorite games:
+SliProSuperPro currently supports the following games:
 - [Richard Burns Rally](https://rallysimfans.hu/rbr/index.php)
 - [iRacing](https://www.iracing.com)
 - [American Truck Simulator](https://americantrucksimulator.com)
+- [Live For Speed](https://www.lfs.net)
 
 Support for additional games can be added via plugins.
 
@@ -51,6 +52,23 @@ The plugin supports specifying global RPM values that are the same for every gea
 ## American Truck Simulator Configuration
 
 The plugin `SPSP.ATS.Plugin.dll` must be copied in your American Truck Simulator plugin folder which is typically found at `C:\Program Files (x86)\Steam\steamapps\common\American Truck Simulator\bin\win_x64\plugins`. The .dll to copy can be found in the `\Game Plugins\American Truck Simulator` folder in the zip file. Then when launching American Truck Simulator, the game will warn you about advanced SDK features being used. Simply ckick OK.
+
+
+## Live For Speed Configuration
+
+To instruct LFS to send OutGauge packets, update this section of your `LFS\cfg.txt` file:
+
+```
+OutGauge Mode 1
+OutGauge Delay 1
+OutGauge IP 127.0.0.1
+OutGauge Port 30000
+OutGauge ID 0
+```
+
+If for some reason you need to use a different UDP port, you can change it in `LiveForSpeed.Config.json`.
+
+Base S2 cars are supported by default, but the RPM values for modded cars have to be manually enterred in `LiveForSpeed.CarData.json`. Follow the pattern of the existing Imprezzive JGT car at the bottom of the file. You can obtain the car ID from the SliProSuperPro log when driving the car.
 
 
 ## Build Instructions
