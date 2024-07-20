@@ -35,6 +35,9 @@
     <ClCompile Include="Telemetry.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Shared\Network.cpp">
+      <Filter>Shared Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Shared\Log.h">
@@ -63,6 +66,9 @@
     </ClInclude>
     <ClInclude Include="Libraries.h">
       <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Shared\Network.h">
+      <Filter>Shared Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

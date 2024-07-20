@@ -24,10 +24,16 @@
 #include <fstream>
 
 #include "Telemetry.h"
+#include "Network.h"
 #include "Log.h"
 
 const char *kConfigFileName = "LiveForSpeed.Config.json";
 const char *kCarDataFileName = "LiveForSpeed.CarData.json";
+const float kMpsToKph = 3.6f;
+const std::chrono::duration<float> kDataTimeout{ 2.f };
+
+// Because when no ID is specified, the ID field is omitted.
+const size_t kOutGaugePackSizeNoId = sizeof(OutGaugePack) - sizeof(int);
 
 TelemetryManager &TelemetryManager::getSingleton()
 {
@@ -47,57 +53,166 @@ void TelemetryManager::init()
 {
     readCarData();
     readConfig();
-    openInSim();
+    initOutGauge();
+
+    if (m_useInSim)
+    {
+        openInSim();
+    }
 }
 
 void TelemetryManager::deinit()
 {
-    closeInSim();
+    if (m_useInSim)
+    {
+        closeInSim();
+    }
+    
+    deinitOutGauge();
+}
+
+void TelemetryManager::initOutGauge()
+{
+    m_session = new WSASession();
+    m_udpSocket = new UDPSocket();
+
+    try
+    {
+        m_udpSocket->bindTo(m_outGaugePort);
+        LOG_INFO("Listening to OutGauge data on port %i", m_outGaugePort);
+    }
+    catch (const std::system_error &error)
+    {
+        LOG_ERROR(error);
+    }
+
+    m_recvBuf.resize(kOutGaugePackSizeNoId);
+}
+
+void TelemetryManager::deinitOutGauge()
+{
+    if (m_udpSocket)
+    {
+        delete m_udpSocket;
+        m_udpSocket = nullptr;
+    }    
+
+    if (m_session)
+    {
+        delete m_session;
+        m_session = nullptr;
+    }    
+}
+
+bool TelemetryManager::recvOutGauge(OutGaugePack &outGaugePack)
+{
+    sockaddr_in fromAddr;
+    bool gotData = false;
+
+    try
+    {
+        while (m_udpSocket->hasData())
+        {
+            m_udpSocket->recvData(m_recvBuf, fromAddr);
+            if (m_recvBuf.size() != kOutGaugePackSizeNoId)
+            {
+                LOG_ERROR("Malformed OutGauge data (size %i, expected %i)", m_recvBuf.size(), kOutGaugePackSizeNoId);
+                continue;
+            }
+
+            outGaugePack = *reinterpret_cast<OutGaugePack *>(m_recvBuf.data());
+            gotData = true;
+        }
+    }
+    catch (const std::system_error &error)
+    {
+        LOG_ERROR(error);
+    }
+
+    return gotData;
 }
 
 bool TelemetryManager::fetchTelemetryData()
 {
-    if (CInsim::getInstance()->next_packet() < 0)
+    // We currently don't use InSim because we get all the data we need from OutGauge.
+    // TODO refactor CInsim to avoid blocking calls.
+    if (m_useInSim)
     {
-        return false;
-    }
-
-    char packetType = CInsim::getInstance()->peek_packet();
-    void *packet = CInsim::getInstance()->get_packet();
-
-    switch (packetType)
-    {
-    case ISP_NPL: {
-        // New player joining race
-        IS_NPL *npl = reinterpret_cast<IS_NPL *>(packet);
-
-        // 0 is local player
-        if (npl->UCID == 0)
+        if (CInsim::getInstance()->next_packet() == 0)
         {
-            const size_t kSize = 8;
-            char expanded_name[kSize];
-            expand_prefix(npl->CName, expanded_name, kSize);
-            m_carPath = expanded_name;
+            char packetType = CInsim::getInstance()->peek_packet();
+            void *packet = CInsim::getInstance()->get_packet();
+
+            switch (packetType)
+            {
+            case ISP_NPL: {
+                // New player joining race
+                IS_NPL *npl = reinterpret_cast<IS_NPL *>(packet);
+
+                // 0 is local player
+                if (npl->UCID == 0)
+                {
+                    const size_t kSize = 8;
+                    char expanded_name[kSize];
+                    expand_prefix(npl->CName, expanded_name, kSize);
+                    m_carId = expanded_name;
+                }
+            }
+            break;
+
+            default:
+                break;
+            }
         }
     }
-        break;
 
-    default:
-        break;
+    auto time = std::chrono::steady_clock::now();
+    if (m_udpSocket && m_udpSocket->isBound())
+    {
+        OutGaugePack outGaugePack;
+        if (recvOutGauge(outGaugePack))
+        {
+            m_telemetryData.gear = outGaugePack.Gear;
+            m_telemetryData.rpm = outGaugePack.RPM;
+            m_telemetryData.speedKph = outGaugePack.Speed * kMpsToKph;
+
+            const size_t kSize = 8;
+            char expanded_name[kSize];
+            expand_prefix(outGaugePack.Car, expanded_name, kSize);
+            m_carId = expanded_name;
+
+            if (!m_receivingTelemetry)
+            {
+                LOG_INFO("Started receiving OutGauge data");
+                m_receivingTelemetry = true;
+            }
+
+            m_lastDataTime = time;
+        }
     }
 
-    m_telemetryData.gear = 0;
-    m_telemetryData.rpm = 0.f;
-    m_telemetryData.speedKph = 3.6f;
-
-    if (m_carPath != m_lastCarPath)
+    if (m_receivingTelemetry && time - m_lastDataTime > kDataTimeout)
     {
-        LOG_INFO("Player entered car id=%s", m_carPath.c_str());
-        parseCarData();
-        m_lastCarPath = m_carPath;
+        LOG_INFO("Stopped receiving OutGauge data");
+        m_receivingTelemetry = false;
+    }
+
+    if (m_carId != m_lastCarId)
+    {
+        if (!m_carId.empty())
+        {
+            LOG_INFO("Player entered new car (id %s)", m_carId.c_str());
+            parseCarData();
+        }
+        else
+        {
+            LOG_INFO("Player exited car", m_carId.c_str());
+        }
+        
+        m_lastCarId = m_carId;
     }
     
-    return true;
+    return m_receivingTelemetry;
 }
 
 const plugin::TelemetryData &TelemetryManager::getTelemetryData() const
@@ -122,38 +237,59 @@ void TelemetryManager::readConfig()
     auto config = json::parse(file);
     if (!config.empty())
     {
-        auto inSim = config["InSim"];
-        if (!inSim.empty())
+        if (m_useInSim)
         {
-            auto hostname = inSim["hostname"];
-            if (!hostname.empty())
+            auto inSim = config["InSim"];
+            if (!inSim.empty())
             {
-                m_inSimHostname = hostname.template get<std::string>();
+                auto hostname = inSim["hostname"];
+                if (!hostname.empty())
+                {
+                    m_inSimHostname = hostname.template get<std::string>();
+                }
+                else
+                {
+                    LOG_ERROR("Missing hostname in config file");
+                }
+
+                auto port = inSim["port"];
+                if (!port.empty())
+                {
+                    m_inSimPort = port.template get<int>();
+                }
+                else
+                {
+                    LOG_ERROR("Missing port in config file");
+                }
+
+                auto password = inSim["password"];
+                if (!password.empty())
+                {
+                    m_inSimPassword = password.template get<std::string>();
+                }
             }
             else
             {
-                LOG_ERROR("Missing hostname in config file");
+                LOG_ERROR("Missing InSim settings in config file");
             }
+        }
 
-            auto port = inSim["port"];
+        auto outGauge = config["OutGauge"];
+        if (!outGauge.empty())
+        {
+            auto port = outGauge["port"];
             if (!port.empty())
             {
-                m_inSimPort = port.template get<int>();
+                m_outGaugePort = port.template get<int>();
             }
             else
             {
                 LOG_ERROR("Missing port in config file");
             }
-
-            auto password = inSim["password"];
-            if (!password.empty())
-            {
-                m_inSimPassword = password.template get<std::string>();
-            }
         }
         else
         {
-            LOG_ERROR("Missing InSim settings in config file");
+            LOG_ERROR("Missing OutGauge settings in config file");
         }
     }
     else
@@ -176,7 +312,7 @@ void TelemetryManager::parseCarData()
 {
     memset(&m_physicsData, 0, sizeof(m_physicsData));
 
-    if (m_carPath.empty())
+    if (m_carId.empty())
     {
         return;
     }
@@ -187,7 +323,7 @@ void TelemetryManager::parseCarData()
         return;
     }
 
-    auto carData = m_carData["cars"][m_carPath];
+    auto carData = m_carData["cars"][m_carId];
     if (carData.empty())
     {
         LOG_WARN("Car not found in car data file");

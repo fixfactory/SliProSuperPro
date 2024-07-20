@@ -25,6 +25,10 @@
 #include "json/json.hpp"
 using json = nlohmann::json;
 
+class WSASession;
+class UDPSocket;
+struct OutGaugePack;
+
 class TelemetryManager
 {
 public:
@@ -41,20 +45,36 @@ public:
     const plugin::PhysicsData &getPhysicsData() const;
 
 private:
+    WSASession *m_session = nullptr;
+    UDPSocket *m_udpSocket = nullptr;
+    std::vector<char> m_recvBuf;
     bool m_receivingTelemetry{ false };
+
+    using time_point = std::chrono::steady_clock::time_point;
+    time_point m_lastDataTime = {};
+
     plugin::TelemetryData m_telemetryData{};
     plugin::PhysicsData m_physicsData{};
-    json m_carData;
-    std::string m_carPath;
-    std::string m_lastCarPath;
 
+    json m_carData;
+    std::string m_carId;
+    std::string m_lastCarId;
+
+    bool m_useInSim{ false };
     std::string m_inSimHostname;
     int m_inSimPort{ 0 };
     std::string m_inSimPassword;
 
+    int m_outGaugePort{ 0 };
+
     void readConfig();
     void readCarData();
     void parseCarData();
+
     void openInSim();
     void closeInSim();
+
+    void initOutGauge();
+    void deinitOutGauge();
+    bool recvOutGauge(OutGaugePack &outGaugePack);
 };
