@@ -1,0 +1,124 @@
+{
+    "cars": {
+        "ufr": {
+            "finalGear": 5,
+            "rpmLimit": 9000,
+            "firstRPM": 7000,
+            "lastRPM": 9000
+        },
+        "fbm": {
+            "finalGear": 6,
+            "rpmLimit": 9100,
+            "firstRPM": 6500,
+            "lastRPM": 9100
+        },
+        "uf1": {
+            "finalGear": 4,
+            "rpmLimit": 7000,
+            "firstRPM": 5800,
+            "lastRPM": 6700
+        },
+        "xfg": {
+            "finalGear": 5,
+            "rpmLimit": 7990,
+            "firstRPM": 6800,
+            "lastRPM": 7600
+        },
+        "xrg": {
+            "finalGear": 5,
+            "rpmLimit": 6990,
+            "firstRPM": 5500,
+            "lastRPM": 6500
+        },
+        "lx4": {
+            "finalGear": 6,
+            "rpmLimit": 8900,
+            "firstRPM": 7700,
+            "lastRPM": 8600
+        },
+        "lx6": {
+            "finalGear": 6,
+            "rpmLimit": 8900,
+            "firstRPM": 7700,
+            "lastRPM": 8600
+        },
+        "rb4": {
+            "finalGear": 5,
+            "rpmLimit": 7450,
+            "firstRPM": 6300,
+            "lastRPM": 7100
+        },
+        "fxo": {
+            "finalGear": 5,
+            "rpmLimit": 7450,
+            "firstRPM": 6400,
+            "lastRPM": 7000
+        },
+        "xrt": {
+            "finalGear": 5,
+            "rpmLimit": 7450,
+            "firstRPM": 6300,
+            "lastRPM": 7000
+        },
+        "rac": {
+            "finalGear": 5,
+            "rpmLimit": 6950,
+            "firstRPM": 5800,
+            "lastRPM": 6700
+        },
+        "fz5": {
+            "finalGear": 6,
+            "rpmLimit": 7950,
+            "firstRPM": 6800,
+            "lastRPM": 7500
+        },
+        "xfr": {
+            "finalGear": 6,
+            "rpmLimit": 7950,
+            "firstRPM": 6800,
+            "lastRPM": 7500
+        },
+        "fxr": {
+            "finalGear": 6,
+            "rpmLimit": 7450,
+            "firstRPM": 6100,
+            "lastRPM": 7000
+        },
+        "xrr": {
+            "finalGear": 6,
+            "rpmLimit": 7450,
+            "firstRPM": 6200,
+            "lastRPM": 7200
+        },
+        "fzr": {
+            "finalGear": 6,
+            "rpmLimit": 8450,
+            "firstRPM": 7200,
+            "lastRPM": 8200
+        },
+        "mrt": {
+            "finalGear": 6,
+            "rpmLimit": 9200,
+            "firstRPM": 4000,
+            "lastRPM": 9300
+        },
+        "fox": {
+            "finalGear": 6,
+            "rpmLimit": 7450,
+            "firstRPM": 6400,
+            "lastRPM": 7300
+        },
+        "fo8": {
+            "finalGear": 6,
+            "rpmLimit": 9450,
+            "firstRPM": 8400,
+            "lastRPM": 9300
+        },
+        "bf1": {
+            "finalGear": 7,
+            "rpmLimit": 19950,
+            "firstRPM": 17600,
+            "lastRPM": 19500
+        }
+    }
+}
