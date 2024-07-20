@@ -24,6 +24,7 @@
 #include "Telemetry.h"
 #include "Log.h"
 
+const char *kConfigFileName = "LiveForSpeed.Config.json";
 const char *kCarDataFileName = "LiveForSpeed.CarData.json";
 
 TelemetryManager &TelemetryManager::getSingleton()
@@ -43,6 +44,7 @@ TelemetryManager::~TelemetryManager()
 void TelemetryManager::init()
 {
     readCarData();
+    readConfig();
 }
 
 void TelemetryManager::deinit()
@@ -71,6 +73,43 @@ const plugin::PhysicsData &TelemetryManager::getPhysicsData() const
     return m_physicsData;
 }
 
+void TelemetryManager::readConfig()
+{
+    std::ifstream file(kConfigFileName);
+    if (!file.good())
+    {
+        LOG_ERROR("Could not open %s", kConfigFileName);
+        return;
+    }
+
+    auto config = json::parse(file);
+
+    if (!config.empty())
+    {
+        auto inSim = config["InSim"];
+        if (!inSim.empty())
+        {
+            auto hostname = inSim["hostname"];
+            if (!hostname.empty())
+            {
+                m_inSimHostname = hostname.template get<std::string>();
+            }
+
+            auto port = inSim["port"];
+            if (!port.empty())
+            {
+                m_inSimPort = port.template get<int>();
+            }
+
+            auto password = inSim["password"];
+            if (!password.empty())
+            {
+                m_inSimPassword = password.template get<std::string>();
+            }
+        }
+    }
+}
+
 void TelemetryManager::readCarData()
 {
     std::ifstream file(kCarDataFileName);
@@ -91,14 +130,23 @@ void TelemetryManager::parseCarData()
         return;
     }
 
-    json carData = m_carData["cars"][m_carPath];
+    auto carData = m_carData["cars"][m_carPath];
     if (carData.empty())
     {
         return;
     }
 
-    m_physicsData.gearCount = carData["finalGear"].template get<int>() + 2; // Add reverse and neutral
-    m_physicsData.rpmLimit = carData["rpmLimit"].template get<float>();
+    auto finalGear = carData["finalGear"];
+    if (!finalGear.empty())
+    {
+        m_physicsData.gearCount = finalGear.template get<int>() + 2; // Add reverse and neutral
+    }
+    
+    auto rpmLimit = carData["rpmLimit"];
+    if (!rpmLimit.empty())
+    {
+        m_physicsData.rpmLimit = rpmLimit.template get<float>();
+    }    
 
     if (!carData["firstRPM"].empty() && !carData["lastRPM"].empty())
     {

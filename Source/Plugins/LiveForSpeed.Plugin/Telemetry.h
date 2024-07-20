@@ -1,4 +1,3 @@
-#pragma once
 //
 // SliProSuperPro
 // A Shift Light Indicator controller
@@ -48,6 +47,11 @@ private:
     json m_carData;
     std::string m_carPath;
 
+    std::string m_inSimHostname;
+    int m_inSimPort{ 0 };
+    std::string m_inSimPassword;
+
+    void readConfig();
     void readCarData();
     void parseCarData();
 };
