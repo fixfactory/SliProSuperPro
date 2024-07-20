@@ -3,5 +3,8 @@
         "hostname": "127.0.0.1",
         "port": 29999,
         "password": ""
+    },
+    "OutGauge": {
+        "port": 30000
     }
 }
