@@ -127,7 +127,7 @@ bool TelemetryManager::recvOutGauge(OutGaugePack &outGaugePack)
 bool TelemetryManager::fetchTelemetryData()
 {
     // We currently don't use InSim because we get all the data we need from OutGauge.
-    // TODO refactor CInsim to avoid blocking calls.
+    // TODO: refactor CInsim::next_packet() to avoid a blocking call.
     if (m_useInSim)
     {
         if (CInsim::getInstance()->next_packet() == 0)
