@@ -54,20 +54,12 @@ void TelemetryManager::init()
     readCarData();
     readConfig();
     initOutGauge();
-
-    if (m_useInSim)
-    {
-        openInSim();
-    }
+    openInSim();
 }
 
 void TelemetryManager::deinit()
 {
-    if (m_useInSim)
-    {
-        closeInSim();
-    }
-    
+    closeInSim();
     deinitOutGauge();
 }
 
@@ -408,6 +400,11 @@ void TelemetryManager::parseCarData()
 
 void TelemetryManager::openInSim()
 {
+    if (!m_useInSim)
+    {
+        return;
+    }
+
     CInsim::getInstance()->setHost(m_inSimHostname);
     CInsim::getInstance()->setTCPPort(m_inSimPort);
     CInsim::getInstance()->setPassword(m_inSimPassword);
@@ -425,6 +422,11 @@ void TelemetryManager::openInSim()
 
 void TelemetryManager::closeInSim()
 {
+    if (!m_useInSim)
+    {
+        return;
+    }
+
     CInsim::getInstance()->disconnect();
     CInsim::getInstance()->removeInstance();
 }
