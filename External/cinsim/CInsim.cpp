@@ -32,7 +32,10 @@
  * *NIX compatibility and additional code and corrections provided by MadCatX.
  */
 
-#include <CInsim.h>
+#define _CRT_SECURE_NO_WARNINGS 1
+#define _WINSOCK_DEPRECATED_NO_WARNINGS 1
+
+#include "CInsim.h"
 
 #ifdef CIS_LINUX
 #define INVALID_SOCKET -1
