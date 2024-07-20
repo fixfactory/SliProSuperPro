@@ -68,10 +68,16 @@ bool TelemetryManager::fetchTelemetryData()
     switch (packetType)
     {
     case ISP_NPL: {
+        // New player joining race
         IS_NPL *npl = reinterpret_cast<IS_NPL *>(packet);
+
+        // 0 is local player
         if (npl->UCID == 0)
         {
-            m_carPath = npl->CName;
+            const size_t kSize = 8;
+            char expanded_name[kSize];
+            expand_prefix(npl->CName, expanded_name, kSize);
+            m_carPath = expanded_name;
         }
     }
         break;
@@ -86,6 +92,7 @@ bool TelemetryManager::fetchTelemetryData()
 
     if (m_carPath != m_lastCarPath)
     {
+        LOG_INFO("Player entered car id=%s", m_carPath.c_str());
         parseCarData();
         m_lastCarPath = m_carPath;
     }
@@ -113,7 +120,6 @@ void TelemetryManager::readConfig()
     }
 
     auto config = json::parse(file);
-
     if (!config.empty())
     {
         auto inSim = config["InSim"];
@@ -124,11 +130,19 @@ void TelemetryManager::readConfig()
             {
                 m_inSimHostname = hostname.template get<std::string>();
             }
+            else
+            {
+                LOG_ERROR("Missing hostname in config file");
+            }
 
             auto port = inSim["port"];
             if (!port.empty())
             {
                 m_inSimPort = port.template get<int>();
+            }
+            else
+            {
+                LOG_ERROR("Missing port in config file");
             }
 
             auto password = inSim["password"];
@@ -137,6 +151,14 @@ void TelemetryManager::readConfig()
                 m_inSimPassword = password.template get<std::string>();
             }
         }
+        else
+        {
+            LOG_ERROR("Missing InSim settings in config file");
+        }
+    }
+    else
+    {
+        LOG_ERROR("Empty config file");
     }
 }
 
@@ -152,17 +174,23 @@ void TelemetryManager::readCarData()
 
 void TelemetryManager::parseCarData()
 {
-    memset(m_physicsData.rpmDownshift, 0, sizeof(m_physicsData.rpmDownshift));
-    memset(m_physicsData.rpmUpshift, 0, sizeof(m_physicsData.rpmUpshift));
+    memset(&m_physicsData, 0, sizeof(m_physicsData));
 
-    if (m_carPath.empty() || m_carData.empty())
+    if (m_carPath.empty())
     {
+        return;
+    }
+
+    if (m_carData.empty())
+    {
+        LOG_WARN("Empty car data file");
         return;
     }
 
     auto carData = m_carData["cars"][m_carPath];
     if (carData.empty())
     {
+        LOG_WARN("Car not found in car data file");
         return;
     }
 
@@ -171,13 +199,22 @@ void TelemetryManager::parseCarData()
     {
         m_physicsData.gearCount = finalGear.template get<int>() + 2; // Add reverse and neutral
     }
+    else
+    {
+        LOG_WARN("finalGear not specified in car data file");
+    }
     
     auto rpmLimit = carData["rpmLimit"];
     if (!rpmLimit.empty())
     {
         m_physicsData.rpmLimit = rpmLimit.template get<float>();
     }    
+    else
+    {
+        LOG_WARN("rpmLimit not specified in car data file");
+    }
 
+    int gearFound = 0;
     if (!carData["firstRPM"].empty() && !carData["lastRPM"].empty())
     {
         float firstRPM = carData["firstRPM"].template get<float>();
@@ -187,6 +224,7 @@ void TelemetryManager::parseCarData()
         {
             m_physicsData.rpmDownshift[i] = firstRPM;
             m_physicsData.rpmUpshift[i] = lastRPM;
+            gearFound++;
         }
     }
     else
@@ -221,8 +259,14 @@ void TelemetryManager::parseCarData()
             {
                 m_physicsData.rpmDownshift[gearIdx] = firstRPM;
                 m_physicsData.rpmUpshift[gearIdx] = lastRPM;
+                gearFound++;
             }
         }
+    }
+
+    if (gearFound < m_physicsData.gearCount)
+    {
+        LOG_WARN("missing rpm info in car data file");
     }
 }
 
