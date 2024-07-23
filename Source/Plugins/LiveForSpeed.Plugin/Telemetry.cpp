@@ -167,6 +167,8 @@ bool TelemetryManager::fetchTelemetryData()
             m_telemetryData.gear = outGaugePack.Gear;
             m_telemetryData.rpm = outGaugePack.RPM;
             m_telemetryData.speedKph = outGaugePack.Speed * kMpsToKph;
+            const unsigned kSpeedLimiterFlag = 1 << DL_PITSPEED;
+            m_telemetryData.speedLimiter = outGaugePack.ShowLights & kSpeedLimiterFlag;
 
             const size_t kSize = 8;
             char expanded_name[kSize];
