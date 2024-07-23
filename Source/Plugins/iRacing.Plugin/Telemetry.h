@@ -41,15 +41,17 @@ public:
     const plugin::PhysicsData &getPhysicsData() const;
 
 private:
-    bool m_receivingTelemetry{ false };
     plugin::TelemetryData m_telemetryData{};
     plugin::PhysicsData m_physicsData{};
+
     json m_overrides;
+
     std::string m_carPath;
+    int m_hardcoreLevel{ 0 };
 
     bool m_hasOverride{ false };
-    float m_rpmDownshiftOverride[plugin::kMaxGearCount];
-    float m_rpmUpshiftOverride[plugin::kMaxGearCount];
+    float m_rpmDownshiftOverride[plugin::kMaxGearCount]{};
+    float m_rpmUpshiftOverride[plugin::kMaxGearCount]{};
 
     void readOverrides();
     void parseOverrides();
