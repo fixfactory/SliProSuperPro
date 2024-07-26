@@ -592,9 +592,9 @@
             "898A50": {
                 "name": "PROTECH 92 GT3",
                 "finalGear": 0,
-                "rpmLimit": 8238,
+                "rpmLimit": 9100,
                 "rpmDownshift": 6793,
-                "rpmUpshift": 8238
+                "rpmUpshift": 9100
             },
             "B7364B": {
                 "name": "VALUTA V8",
