@@ -320,8 +320,12 @@ void TelemetryManager::parseCarData()
     auto carData = m_carData["cars"][m_carId];
     if (carData.empty())
     {
-        LOG_WARN("Car not found in car data file");
-        return;
+        carData = m_carData["cars"]["mods"][m_carId];
+        if (carData.empty())
+        {
+            LOG_WARN("Car not found in car data file");
+            return;
+        }
     }
 
     auto name = carData["name"];
@@ -337,7 +341,18 @@ void TelemetryManager::parseCarData()
     auto finalGear = carData["finalGear"];
     if (!finalGear.empty())
     {
-        m_physicsData.gearCount = finalGear.template get<int>() + 2; // Add reverse and neutral
+        m_physicsData.gearCount = finalGear.template get<int>();
+        if (m_physicsData.gearCount == 0)
+        {
+            // When finalGear is 0 it means we don't know the value for that car.
+            // The shift lights will blink when reaching the upshift rpm on the last gear.
+            m_physicsData.gearCount = plugin::kMaxGearCount;
+        }
+        else
+        {
+            // Add reverse and neutral
+            m_physicsData.gearCount += 2;
+        }        
     }
     else
     {
@@ -355,15 +370,15 @@ void TelemetryManager::parseCarData()
     }
 
     int gearFound = 0;
-    if (!carData["firstRPM"].empty() && !carData["lastRPM"].empty())
+    if (!carData["rpmDownshift"].empty() && !carData["rpmUpshift"].empty())
     {
-        float firstRPM = carData["firstRPM"].template get<float>();
-        float lastRPM = carData["lastRPM"].template get<float>();
+        float rpmDownshift = carData["rpmDownshift"].template get<float>();
+        float rpmUpshift = carData["rpmUpshift"].template get<float>();
 
         for (int i = 0; i < plugin::kMaxGearCount; i++)
         {
-            m_physicsData.rpmDownshift[i] = firstRPM;
-            m_physicsData.rpmUpshift[i] = lastRPM;
+            m_physicsData.rpmDownshift[i] = rpmDownshift;
+            m_physicsData.rpmUpshift[i] = rpmUpshift;
             gearFound++;
         }
     }
@@ -371,14 +386,14 @@ void TelemetryManager::parseCarData()
     {
         for (auto &gear : carData["gears"].items())
         {
-            if (gear.value()["gear"].empty() || gear.value()["firstRPM"].empty() || gear.value()["lastRPM"].empty())
+            if (gear.value()["gear"].empty() || gear.value()["rpmDownshift"].empty() || gear.value()["rpmUpshift"].empty())
             {
                 continue;
             }
 
             std::string gearName = gear.value()["gear"].template get<std::string>();
-            float firstRPM = gear.value()["firstRPM"].template get<float>();
-            float lastRPM = gear.value()["lastRPM"].template get<float>();
+            float rpmDownshift = gear.value()["rpmDownshift"].template get<float>();
+            float rpmUpshift = gear.value()["rpmUpshift"].template get<float>();
 
             int gearIdx = -1;
             if (gearName == "R")
@@ -397,8 +412,8 @@ void TelemetryManager::parseCarData()
 
             if (gearIdx >= 0 && gearIdx < plugin::kMaxGearCount)
             {
-                m_physicsData.rpmDownshift[gearIdx] = firstRPM;
-                m_physicsData.rpmUpshift[gearIdx] = lastRPM;
+                m_physicsData.rpmDownshift[gearIdx] = rpmDownshift;
+                m_physicsData.rpmUpshift[gearIdx] = rpmUpshift;
                 gearFound++;
             }
         }
