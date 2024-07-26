@@ -66,12 +66,25 @@ car_data = None
 with open("..\\Data\\LiveForSpeed.CarData.json", "r") as read_file:
     car_data = json.load(read_file)
 
-car_count = 1
-car_total_count = len(vehicle_mods['data'])
-car_data_mods = {}
+if 'mods' not in car_data['cars']:
+    car_data['cars']['mods'] = {}
+
+# Count the number of new cars so that we have progress info
+new_car_count = 0
 for car in vehicle_mods['data']:
-    print("Fetching car " + str(car_count) + "/" + str(car_total_count) + " " + car['id'] + " " + car['name'])
+    if car['id'] in car_data['cars']['mods']:
+        continue
+    new_car_count = new_car_count + 1
+
+# Fetch all the new cars
+car_count = 0
+for car in vehicle_mods['data']:
+    if car['id'] in car_data['cars']['mods']:
+        continue
+
     car_count = car_count + 1
+    print("Fetching car " + str(car_count) + "/" + str(new_car_count) + " " + car['id'] + " " + car['name'])
+    
     endpointUrl = 'https://api.lfs.net/vehiclemod/' + car['id']
     headers = {"Authorization": "Bearer " + access_token}
     result = requests.get(endpointUrl, headers=headers)
@@ -80,26 +93,28 @@ for car in vehicle_mods['data']:
     #with open("LFS_vehiclemoddetails.json", "w") as write_file:
     #    json.dump(vehicle, write_file, indent=4)
 
-    car_data_mods[car['id']] = {}
-    car_data_mods[car['id']]['name'] = car['name']
+    car_data['cars']['mods'][car['id']] = {}
+    car_data['cars']['mods'][car['id']]['name'] = car['name']
 
     # The number of gear isn't specified. Shift ligths will blink at last gear.
-    car_data_mods[car['id']]['finalGear'] = 0 
+    car_data['cars']['mods'][car['id']]['finalGear'] = 0 
 
     # The rpm limit isn't specified. Use the maxPowerRpm as this is when we shift.
-    car_data_mods[car['id']]['rpmLimit'] = vehicle['data']['vehicle']['maxPowerRpm']
+    car_data['cars']['mods'][car['id']]['rpmLimit'] = vehicle['data']['vehicle']['maxPowerRpm']
 
     # We use maxTorqueRpm as an estimated downshift point. 
-    car_data_mods[car['id']]['rpmDownshift'] = vehicle['data']['vehicle']['maxTorqueRpm']
+    car_data['cars']['mods'][car['id']]['rpmDownshift'] = vehicle['data']['vehicle']['maxTorqueRpm']
 
     # We use maxPowerRpm as an estimated upshift point.
-    car_data_mods[car['id']]['rpmUpshift'] = vehicle['data']['vehicle']['maxPowerRpm']
+    car_data['cars']['mods'][car['id']]['rpmUpshift'] = vehicle['data']['vehicle']['maxPowerRpm']
 
-# Update the car data file
-print("Writing car data file...")
-car_data['cars']['mods'] = car_data_mods
-with open("..\\Data\\LiveForSpeed.CarData.json", "w") as write_file:
-    json.dump(car_data, write_file, indent=4)
-    write_file.truncate()
+if new_car_count > 0:
+    # Update the car data file
+    print("Writing car data file...")
+    with open("..\\Data\\LiveForSpeed.CarData.json", "w") as write_file:
+        json.dump(car_data, write_file, indent=4)
+        write_file.truncate()
+else:
+    print("No new car found")
 
 print("Done")
