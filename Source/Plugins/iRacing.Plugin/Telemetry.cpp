@@ -233,6 +233,10 @@ bool TelemetryManager::fetchTelemetryData()
         // Not every car has a speed limiter.
         m_telemetryData.speedLimiter = g_SpeedLimiter.getBool();
     }
+    else
+    {
+        m_telemetryData.speedLimiter = false;
+    }
 
     // This is iRacing's new way of specifying Shift Light RPM. It is now specified in Live Telemetry
     // and each gear can have different RPM values. The values are for the current gear.
