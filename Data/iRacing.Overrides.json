@@ -48,37 +48,37 @@
             "gears": [
                 {
                     "gear": "R",
-                    "firstRPM": 4920,
-                    "lastRPM": 10120
+                    "firstRPM": 4940,
+                    "lastRPM": 10130
                 },
                 {
                     "gear": "N",
-                    "firstRPM": 4920,
-                    "lastRPM": 10120
+                    "firstRPM": 4940,
+                    "lastRPM": 101330
                 },
                 {
                     "gear": "1",
-                    "firstRPM": 4920,
-                    "lastRPM": 10120
+                    "firstRPM": 4940,
+                    "lastRPM": 10130
                 },
                 {
                     "gear": "2",
-                    "firstRPM": 4460,
-                    "lastRPM": 9990
+                    "firstRPM": 4410,
+                    "lastRPM": 10010
                 },
                 {
                     "gear": "3",
-                    "firstRPM": 5660,
-                    "lastRPM": 10220
+                    "firstRPM": 5670,
+                    "lastRPM": 10210
                 },
                 {
                     "gear": "4",
-                    "firstRPM": 10250,
+                    "firstRPM": 10260,
                     "lastRPM": 11550
                 },
                 {
                     "gear": "5",
-                    "firstRPM": 10560,
+                    "firstRPM": 10570,
                     "lastRPM": 11730
                 },
                 {
@@ -89,12 +89,12 @@
                 {
                     "gear": "7",
                     "firstRPM": 11400,
-                    "lastRPM": 11590
+                    "lastRPM": 11600
                 },
                 {
                     "gear": "8",
                     "firstRPM": 11400,
-                    "lastRPM": 11590
+                    "lastRPM": 11600
                 }
             ]
         },
