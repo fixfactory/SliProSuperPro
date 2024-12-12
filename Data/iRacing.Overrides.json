@@ -229,43 +229,92 @@
             "gears": [
                 {
                     "gear": "R",
-                    "firstRPM": 6800,
-                    "lastRPM": 8200
+                    "firstRPM": 2000,
+                    "lastRPM": 7000
                 },
                 {
                     "gear": "N",
-                    "firstRPM": 6800,
-                    "lastRPM": 8200
+                    "firstRPM": 2000,
+                    "lastRPM": 7000
                 },
                 {
                     "gear": "1",
-                    "firstRPM": 6800,
-                    "lastRPM": 8200
+                    "firstRPM": 6200,
+                    "lastRPM": 7600
                 },
                 {
                     "gear": "2",
-                    "firstRPM": 7000,
-                    "lastRPM": 8350
+                    "firstRPM": 6400,
+                    "lastRPM": 7750
                 },
                 {
                     "gear": "3",
-                    "firstRPM": 7400,
-                    "lastRPM": 8400
+                    "firstRPM": 6800,
+                    "lastRPM": 7800
                 },
                 {
                     "gear": "4",
-                    "firstRPM": 7450,
-                    "lastRPM": 8450
+                    "firstRPM": 6850,
+                    "lastRPM": 7850
                 },
                 {
                     "gear": "5",
-                    "firstRPM": 7600,
-                    "lastRPM": 8500
+                    "firstRPM": 7000,
+                    "lastRPM": 7900
                 },
                 {
                     "gear": "6",
-                    "firstRPM": 7600,
-                    "lastRPM": 8500
+                    "firstRPM": 7500,
+                    "lastRPM": 8400
+                }
+            ]
+        },
+        "ferrari499p": {
+            "gears": [
+                {
+                    "gear": "R",
+                    "firstRPM": 3830,
+                    "lastRPM": 6740
+                },
+                {
+                    "gear": "N",
+                    "firstRPM": 3830,
+                    "lastRPM": 6740
+                },
+                {
+                    "gear": "1",
+                    "firstRPM": 3830,
+                    "lastRPM": 6740
+                },
+                {
+                    "gear": "2",
+                    "firstRPM": 5990,
+                    "lastRPM": 7180
+                },
+                {
+                    "gear": "3",
+                    "firstRPM": 6460,
+                    "lastRPM": 7350
+                },
+                {
+                    "gear": "4",
+                    "firstRPM": 6540,
+                    "lastRPM": 7430
+                },
+                {
+                    "gear": "5",
+                    "firstRPM": 6660,
+                    "lastRPM": 7470
+                },
+                {
+                    "gear": "6",
+                    "firstRPM": 6720,
+                    "lastRPM": 7670
+                },
+                {
+                    "gear": "7",
+                    "firstRPM": 7030,
+                    "lastRPM": 7670
                 }
             ]
         }
