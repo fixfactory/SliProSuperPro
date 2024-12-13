@@ -367,3 +367,6 @@ Releases/
 
 # Credentials file
 Scripts/secret.py
+
+# VS Code workspace files
+*.code-workspace
