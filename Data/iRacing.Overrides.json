@@ -317,6 +317,50 @@
                     "lastRPM": 7670
                 }
             ]
+        },
+        "audir8lmsevo2gt3": {
+            "gears": [
+                {
+                    "gear": "R",
+                    "firstRPM": 3880,
+                    "lastRPM": 8160
+                },
+                {
+                    "gear": "N",
+                    "firstRPM": 3890,
+                    "lastRPM": 8170
+                },
+                {
+                    "gear": "1",
+                    "firstRPM": 3870,
+                    "lastRPM": 8160
+                },
+                {
+                    "gear": "2",
+                    "firstRPM": 5810,
+                    "lastRPM": 8150
+                },
+                {
+                    "gear": "3",
+                    "firstRPM": 6800,
+                    "lastRPM": 8150
+                },
+                {
+                    "gear": "4",
+                    "firstRPM": 7150,
+                    "lastRPM": 8050
+                },
+                {
+                    "gear": "5",
+                    "firstRPM": 7330,
+                    "lastRPM": 8000
+                },
+                {
+                    "gear": "6",
+                    "firstRPM": 7780,
+                    "lastRPM": 8000
+                }
+            ]
         }
     }
 }
