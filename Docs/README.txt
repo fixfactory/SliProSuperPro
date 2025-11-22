@@ -1,7 +1,7 @@
 
 SliProSuperPro
 A Shift Light Indicator Controller
-Copyright 2023-2024 Fixfactory
+Copyright 2023-2025 Fixfactory
 
 
 ================
@@ -15,6 +15,7 @@ SliProSuperPro currently supports the following games:
 - iRacing (https://www.iracing.com)
 - American Truck Simulator (https://americantrucksimulator.com)
 - Live For Speed (https://www.lfs.net)
+- Assetto Corsa Rally (https://assettocorsa.gg/assetto-corsa-rally/)
 
 Support for additional games can be added via plugins.
 

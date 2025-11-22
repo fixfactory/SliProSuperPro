@@ -1,0 +1,54 @@
+{
+    "cars": {
+        "Lancia Delta Integrale Evo": {
+            "gearCount": 5,
+            "rpmDownshift": 1450,
+            "rpmUpshift": 6500
+        },
+        "Hyundai i20N Rally2": {
+            "gearCount": 5,
+            "rpmDownshift": 1820,
+            "rpmUpshift": 6750
+        },
+        "FIAT Abarth 124 Rally": {
+            "gearCount": 5,
+            "rpmDownshift": 1089,
+            "rpmUpshift": 7200
+        },
+        "FIAT 131 Abarth": {
+            "gearCount": 5,
+            "rpmDownshift": 859,
+            "rpmUpshift": 7200
+        },
+        "Peugeot 208 Rally4": {
+            "gearCount": 5,
+            "rpmDownshift": 1448,
+            "rpmUpshift": 6100
+        },
+        "Alfa_Romeo_GTA": {
+            "gearCount": 5,
+            "rpmDownshift": 935,
+            "rpmUpshift": 7700
+        },
+        "Mini Cooper S 1275": {
+            "gearCount": 4,
+            "rpmDownshift": 1135,
+            "rpmUpshift": 6800
+        },
+        "Lancia 037": {
+            "gearCount": 5,
+            "rpmDownshift": 1199,
+            "rpmUpshift": 7600
+        },
+        "Lancia Stratos HF": {
+            "gearCount": 5,
+            "rpmDownshift": 1439,
+            "rpmUpshift": 7650
+        },
+        "Citroen Xsara WRC": {
+            "gearCount": 5,
+            "rpmDownshift": 1658,
+            "rpmUpshift": 6750
+        }
+    }
+}

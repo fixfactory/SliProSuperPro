@@ -1,7 +1,7 @@
 #
 # SliProSuperPro
 # A Shift Light Indicator controller
-# Copyright 2024 Fixfactory
+# Copyright 2024-2025 Fixfactory
 #
 # This file is part of SliProSuperPro.
 #
@@ -62,7 +62,9 @@ zf.write(".\\Bin\\x64\\Release\\iRacing.Plugin.dll", "iRacing.Plugin.dll")
 zf.write(".\\Bin\\x64\\Release\\ATS.Plugin.dll", "ATS.Plugin.dll")
 zf.write(".\\Bin\\x64\\Release\\SPSP.ATS.Plugin.dll", "Game Plugins\\American Truck Simulator\\SPSP.ATS.Plugin.dll")
 zf.write(".\\Bin\\x64\\Release\\LiveForSpeed.Plugin.dll", "LiveForSpeed.Plugin.dll")
+zf.write(".\\Bin\\x64\\Release\\ACR.Plugin.dll", "ACR.Plugin.dll")
 zf.write(".\\Data\\iRacing.Overrides.json", "iRacing.Overrides.json")
 zf.write(".\\Data\\LiveForSpeed.Config.json", "LiveForSpeed.Config.json")
 zf.write(".\\Data\\LiveForSpeed.CarData.json", "LiveForSpeed.CarData.json")
+zf.write(".\\Data\\ACR.Overrides.json", "ACR.Overrides.json")
 zf.close()
