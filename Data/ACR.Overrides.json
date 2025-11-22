@@ -1,7 +1,7 @@
 {
     "cars": {
         "Lancia Delta Integrale Evo": {
-            "gearCount": 5,
+            "gearCount": 6,
             "rpmDownshift": 1450,
             "rpmUpshift": 6500
         },
@@ -46,7 +46,7 @@
             "rpmUpshift": 7650
         },
         "Citroen Xsara WRC": {
-            "gearCount": 5,
+            "gearCount": 6,
             "rpmDownshift": 1658,
             "rpmUpshift": 6750
         }

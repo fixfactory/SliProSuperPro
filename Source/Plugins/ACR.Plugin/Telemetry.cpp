@@ -154,7 +154,7 @@ bool TelemetryManager::fetchTelemetryData()
     m_telemetryData.rpm = (float)pfPhysics->rpms;
     m_telemetryData.speedKph = pfPhysics->speedKmh;
 
-    m_physicsData.gearCount = 6;
+    m_physicsData.gearCount = 8;
     m_physicsData.rpmIdle = 800.0f;
     m_physicsData.rpmLimit = (float)pfPhysics->currentMaxRpm;
 
@@ -214,7 +214,7 @@ void TelemetryManager::parseOverrides()
 
     if (!overrides["gearCount"].empty() && !overrides["rpmDownshift"].empty() && !overrides["rpmUpshift"].empty())
     {
-        m_gearCountOverride = overrides["gearCount"].template get<int>();
+        m_gearCountOverride = overrides["gearCount"].template get<int>() + 2; // Add reverse and neutral
         int rpmDownshift = overrides["rpmDownshift"].template get<int>();
         int rpmUpshift = overrides["rpmUpshift"].template get<int>();
 
