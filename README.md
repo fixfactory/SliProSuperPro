@@ -20,7 +20,7 @@ SliProSuperPro currently supports the following games:
 
 Support for additional games can be added via plugins.
 
-## How To Get It
+## How To Get
 
 Windows builds are available via the [releases page](https://github.com/fixfactory/SliProSuperPro/releases).
 
@@ -75,3 +75,7 @@ The optional `ACR.Overrides.json` file can be used to specify RPM overrides for 
 ## Build Instructions
 
 The preferred method for building SliProSuperPro from source is with Microsoft Visual Studio 2022. Open the solution `SliProSuperPro.sln` and build. Generate a .zip package with `py Package.py`.
+
+## Help
+
+For help with the application, please join my Discord server: [Ben's Official Server](https://discord.gg/s2834nmdYx).
