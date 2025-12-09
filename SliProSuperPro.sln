@@ -17,6 +17,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LiveForSpeed.Plugin", "Sour
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ACR.Plugin", "Source\Plugins\ACR.Plugin\ACR.Plugin.vcxproj", "{14F27F45-9CC3-4966-B5C9-97F387852200}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ACC.Plugin", "Source\Plugins\ACC.Plugin\ACC.Plugin.vcxproj", "{33CCC14A-018E-4005-BA3B-9565C4D83CC3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -81,6 +83,14 @@ Global
 		{14F27F45-9CC3-4966-B5C9-97F387852200}.Release|x64.Build.0 = Release|x64
 		{14F27F45-9CC3-4966-B5C9-97F387852200}.Release|x86.ActiveCfg = Release|Win32
 		{14F27F45-9CC3-4966-B5C9-97F387852200}.Release|x86.Build.0 = Release|Win32
+		{33CCC14A-018E-4005-BA3B-9565C4D83CC3}.Debug|x64.ActiveCfg = Debug|x64
+		{33CCC14A-018E-4005-BA3B-9565C4D83CC3}.Debug|x64.Build.0 = Debug|x64
+		{33CCC14A-018E-4005-BA3B-9565C4D83CC3}.Debug|x86.ActiveCfg = Debug|Win32
+		{33CCC14A-018E-4005-BA3B-9565C4D83CC3}.Debug|x86.Build.0 = Debug|Win32
+		{33CCC14A-018E-4005-BA3B-9565C4D83CC3}.Release|x64.ActiveCfg = Release|x64
+		{33CCC14A-018E-4005-BA3B-9565C4D83CC3}.Release|x64.Build.0 = Release|x64
+		{33CCC14A-018E-4005-BA3B-9565C4D83CC3}.Release|x86.ActiveCfg = Release|Win32
+		{33CCC14A-018E-4005-BA3B-9565C4D83CC3}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
